@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
 		A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945112CCFB02600F4AF89 /* ContentView.swift */; };
-		A79945142CCFB02600F4AF89 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945132CCFB02600F4AF89 /* Item.swift */; };
 		A79945162CCFB02800F4AF89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79945152CCFB02800F4AF89 /* Assets.xcassets */; };
 		A79945192CCFB02800F4AF89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79945182CCFB02800F4AF89 /* Preview Assets.xcassets */; };
 		A79945202CCFDC7100F4AF89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A799451F2CCFDC7100F4AF89 /* GoogleService-Info.plist */; };
@@ -38,7 +37,7 @@
 		A799454F2CCFDCEE00F4AF89 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A799454E2CCFDCEE00F4AF89 /* FirebaseStorageCombine-Community */; };
 		A79945512CCFDCEE00F4AF89 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = A79945502CCFDCEE00F4AF89 /* FirebaseVertexAI */; };
 		A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799455E2CD0110500F4AF89 /* LoginView.swift */; };
-		A79945612CD0110F00F4AF89 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945602CD0110F00F4AF89 /* RegisterView.swift */; };
+		A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945602CD0110F00F4AF89 /* RegistrationView.swift */; };
 		A79945632CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */; };
 		A79945652CD0116800F4AF89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945642CD0116800F4AF89 /* HomeView.swift */; };
 		A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945662CD0119A00F4AF89 /* AddPostView.swift */; };
@@ -59,18 +58,24 @@
 		A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945862CD0145100F4AF89 /* PostTypeEnum.swift */; };
 		A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945882CD0150B00F4AF89 /* ExchangeCoinEnum.swift */; };
 		A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799458A2CD0154100F4AF89 /* CategoriesEnum.swift */; };
+		A799458D2CD0D78600F4AF89 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */; };
+		A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */; };
+		A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */; };
+		A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */; };
+		A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */; };
+		A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */; };
+		A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A799450F2CCFB02600F4AF89 /* Care4UApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Care4UApp.swift; sourceTree = "<group>"; };
 		A79945112CCFB02600F4AF89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A79945132CCFB02600F4AF89 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A79945152CCFB02800F4AF89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A79945182CCFB02800F4AF89 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A799451F2CCFDC7100F4AF89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A799455E2CD0110500F4AF89 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		A79945602CD0110F00F4AF89 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		A79945602CD0110F00F4AF89 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPersonalDetailsView.swift; sourceTree = "<group>"; };
 		A79945642CD0116800F4AF89 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A79945662CD0119A00F4AF89 /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
@@ -91,6 +96,13 @@
 		A79945862CD0145100F4AF89 /* PostTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTypeEnum.swift; sourceTree = "<group>"; };
 		A79945882CD0150B00F4AF89 /* ExchangeCoinEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCoinEnum.swift; sourceTree = "<group>"; };
 		A799458A2CD0154100F4AF89 /* CategoriesEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesEnum.swift; sourceTree = "<group>"; };
+		A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOderEnum.swift; sourceTree = "<group>"; };
+		A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToLoginOrRegistrationSheetView.swift; sourceTree = "<group>"; };
+		A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
+		A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSecureFieldView.swift; sourceTree = "<group>"; };
+		A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +159,8 @@
 		A799450E2CCFB02600F4AF89 /* Care4U */ = {
 			isa = PBXGroup;
 			children = (
+				A79945972CD110C800F4AF89 /* SubViews */,
+				A79945962CD110A400F4AF89 /* Utils */,
 				A79945572CD0106B00F4AF89 /* Enums */,
 				A79945562CD0105B00F4AF89 /* ViewModels */,
 				A79945552CD0105200F4AF89 /* Manager */,
@@ -156,7 +170,6 @@
 				A799451F2CCFDC7100F4AF89 /* GoogleService-Info.plist */,
 				A799450F2CCFB02600F4AF89 /* Care4UApp.swift */,
 				A79945112CCFB02600F4AF89 /* ContentView.swift */,
-				A79945132CCFB02600F4AF89 /* Item.swift */,
 				A79945152CCFB02800F4AF89 /* Assets.xcassets */,
 				A79945172CCFB02800F4AF89 /* Preview Content */,
 			);
@@ -186,6 +199,7 @@
 		A79945532CD0102B00F4AF89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A79945932CD1014800F4AF89 /* Sheets */,
 				A79945772CD0126A00F4AF89 /* Reviews */,
 				A799455D2CD010CB00F4AF89 /* Inbox */,
 				A799455C2CD010BB00F4AF89 /* Bookmarks */,
@@ -207,6 +221,7 @@
 		A79945552CD0105200F4AF89 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -214,6 +229,7 @@
 		A79945562CD0105B00F4AF89 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -224,6 +240,7 @@
 				A79945862CD0145100F4AF89 /* PostTypeEnum.swift */,
 				A79945882CD0150B00F4AF89 /* ExchangeCoinEnum.swift */,
 				A799458A2CD0154100F4AF89 /* CategoriesEnum.swift */,
+				A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -240,7 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				A799455E2CD0110500F4AF89 /* LoginView.swift */,
-				A79945602CD0110F00F4AF89 /* RegisterView.swift */,
+				A79945602CD0110F00F4AF89 /* RegistrationView.swift */,
 				A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */,
 			);
 			path = Auth;
@@ -289,6 +306,31 @@
 				A799457A2CD0129100F4AF89 /* AddReviewView.swift */,
 			);
 			path = Reviews;
+			sourceTree = "<group>";
+		};
+		A79945932CD1014800F4AF89 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
+		A79945962CD110A400F4AF89 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A79945972CD110C800F4AF89 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */,
+				A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */,
+				A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,29 +434,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				A79945632CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift in Sources */,
+				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A799456D2CD011CB00F4AF89 /* BookmarksView.swift in Sources */,
 				A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */,
+				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
+				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799456F2CD011D700F4AF89 /* MyProfileView.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
 				A79945732CD0123A00F4AF89 /* ChatDetailsView.swift in Sources */,
-				A79945612CD0110F00F4AF89 /* RegisterView.swift in Sources */,
-				A79945142CCFB02600F4AF89 /* Item.swift in Sources */,
+				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
+				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
+				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
+				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,
 				A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */,
 				A79945852CD012D500F4AF89 /* Message.swift in Sources */,
 				A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */,
 				A799457F2CD012B600F4AF89 /* Post.swift in Sources */,
 				A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */,
+				A799458D2CD0D78600F4AF89 /* AuthViewModel.swift in Sources */,
 				A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
