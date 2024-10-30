@@ -26,6 +26,7 @@ struct Care4UApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(authViewModel)
+            
         }
     }
 }

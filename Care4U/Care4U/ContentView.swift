@@ -13,7 +13,9 @@ struct ContentView: View {
     @StateObject var postsViewModel = PostsViewModel()
     
     var body: some View {
-            HomeView()
+        HomeView()
+            .environmentObject(postsViewModel)
+            .environmentObject(authViewModel)
     }
 }
 

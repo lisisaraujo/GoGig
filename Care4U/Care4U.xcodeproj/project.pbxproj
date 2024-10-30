@@ -43,8 +43,6 @@
 		A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945662CD0119A00F4AF89 /* AddPostView.swift */; };
 		A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945682CD011A500F4AF89 /* FilterPostView.swift */; };
 		A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799456A2CD011B100F4AF89 /* PostDetailsView.swift */; };
-		A799456D2CD011CB00F4AF89 /* BookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799456C2CD011CB00F4AF89 /* BookmarksView.swift */; };
-		A799456F2CD011D700F4AF89 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799456E2CD011D700F4AF89 /* MyProfileView.swift */; };
 		A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945702CD0122B00F4AF89 /* InboxChatsView.swift */; };
 		A79945732CD0123A00F4AF89 /* ChatDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945722CD0123A00F4AF89 /* ChatDetailsView.swift */; };
 		A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945742CD0125700F4AF89 /* UserDetailsView.swift */; };
@@ -61,7 +59,7 @@
 		A799458D2CD0D78600F4AF89 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */; };
 		A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */; };
 		A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */; };
-		A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */; };
+		A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift */; };
 		A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */; };
 		A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */; };
 		A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */; };
@@ -74,6 +72,9 @@
 		A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */; };
 		A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945AE2CD123E700F4AF89 /* PostsRepository.swift */; };
 		A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */; };
+		A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945B22CD264F300F4AF89 /* PopupView.swift */; };
+		A79945B52CD27A9800F4AF89 /* LoadingSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */; };
+		A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,8 +91,6 @@
 		A79945662CD0119A00F4AF89 /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
 		A79945682CD011A500F4AF89 /* FilterPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPostView.swift; sourceTree = "<group>"; };
 		A799456A2CD011B100F4AF89 /* PostDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsView.swift; sourceTree = "<group>"; };
-		A799456C2CD011CB00F4AF89 /* BookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksView.swift; sourceTree = "<group>"; };
-		A799456E2CD011D700F4AF89 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		A79945702CD0122B00F4AF89 /* InboxChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxChatsView.swift; sourceTree = "<group>"; };
 		A79945722CD0123A00F4AF89 /* ChatDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsView.swift; sourceTree = "<group>"; };
 		A79945742CD0125700F4AF89 /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
@@ -108,7 +107,7 @@
 		A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOderEnum.swift; sourceTree = "<group>"; };
-		A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToLoginOrRegistrationSheetView.swift; sourceTree = "<group>"; };
+		A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToLoginOrRegistrationPopupView.swift; sourceTree = "<group>"; };
 		A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSecureFieldView.swift; sourceTree = "<group>"; };
 		A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -121,6 +120,9 @@
 		A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		A79945AE2CD123E700F4AF89 /* PostsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsRepository.swift; sourceTree = "<group>"; };
 		A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataErrorEnum.swift; sourceTree = "<group>"; };
+		A79945B22CD264F300F4AF89 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
+		A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,8 +223,6 @@
 				A79945932CD1014800F4AF89 /* Sheets */,
 				A79945772CD0126A00F4AF89 /* Reviews */,
 				A799455D2CD010CB00F4AF89 /* Inbox */,
-				A799455C2CD010BB00F4AF89 /* Bookmarks */,
-				A799455B2CD010A400F4AF89 /* MyProfile */,
 				A799455A2CD0109300F4AF89 /* Post */,
 				A79945592CD0108200F4AF89 /* Auth */,
 				A79945582CD0107B00F4AF89 /* Home */,
@@ -263,6 +263,7 @@
 				A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */,
 				A79945A72CD11FA900F4AF89 /* HomeTabsEnum.swift */,
 				A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */,
+				A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -297,22 +298,6 @@
 			path = Post;
 			sourceTree = "<group>";
 		};
-		A799455B2CD010A400F4AF89 /* MyProfile */ = {
-			isa = PBXGroup;
-			children = (
-				A799456E2CD011D700F4AF89 /* MyProfileView.swift */,
-			);
-			path = MyProfile;
-			sourceTree = "<group>";
-		};
-		A799455C2CD010BB00F4AF89 /* Bookmarks */ = {
-			isa = PBXGroup;
-			children = (
-				A799456C2CD011CB00F4AF89 /* BookmarksView.swift */,
-			);
-			path = Bookmarks;
-			sourceTree = "<group>";
-		};
 		A799455D2CD010CB00F4AF89 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,7 +319,7 @@
 		A79945932CD1014800F4AF89 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift */,
+				A79945942CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -342,6 +327,8 @@
 		A79945962CD110A400F4AF89 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A79945B22CD264F300F4AF89 /* PopupView.swift */,
+				A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -477,17 +464,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A79945632CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift in Sources */,
+				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
-				A799456D2CD011CB00F4AF89 /* BookmarksView.swift in Sources */,
 				A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
 				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
-				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift in Sources */,
+				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
-				A799456F2CD011D700F4AF89 /* MyProfileView.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
 				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
@@ -503,6 +489,7 @@
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
+				A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
@@ -513,6 +500,7 @@
 				A79945852CD012D500F4AF89 /* Message.swift in Sources */,
 				A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */,
 				A799457F2CD012B600F4AF89 /* Post.swift in Sources */,
+				A79945B52CD27A9800F4AF89 /* LoadingSpinnerView.swift in Sources */,
 				A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */,
 				A799458D2CD0D78600F4AF89 /* AuthViewModel.swift in Sources */,
 				A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */,
