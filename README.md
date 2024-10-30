@@ -1,52 +1,49 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lf0EMZwr)
-# Name der App
 
-**Füge hier einen kurzen, knackigen Slogan ein, um deine App zu bewerben.**
+# Care4U
 
-Beschreibe hier in ein paar Sätzen, was deine App bietet.
+**Your go-to app for finding and offering services like cooking, cleaning, or personal assistance.**
 
-Für wen ist sie geeignet? Welches Problem löst sie? Was macht deine App anders/besser als andere Apps?
-Vermeide es, hier allzusehr in technische Details zu gehen.
-
+Care4U is a social support app that allows users to offer or seek services such as cooking, cleaning, or personal assistance. Users can mark their services as paid, in exchange, or both. The app serves as a network to quickly find someone to help with tasks while also providing opportunities for individuals to earn extra money by sharing their hobbies, like cooking.
 
 ## Design
-Füge hier am Ende die Screenshots deiner App ein (achte hierbei auf die Guidelines).
-
 <p>
   <img src="./img/screen1.png" width="200">
   <img src="./img/screen2.png" width="200">
   <img src="./img/screen3.png" width="200">
 </p>
 
-
 ## Features
-Hier kommen alle Features rein, welche deine App bietet.
+Here are the features that Care4U offers:
 
-**Tipp: Du kannst diese Punkte auch am Anfang ausfüllen und mit der Zeit abhaken, sodass am Ende eine vollständige Liste entsteht.**
+- [x] User Authentication (Login and Register)
+- [x] Profile Management (Edit Profile, View My Posts)
+- [x] Tab Navigation Menu
+- [x] Homepage with Search and Offers
+- [x] Add Post Functionality
+- [x] Bookmarking Posts
+- [x] User Inbox for Messaging (Bonus Feature)
+- [x] User Reviews and Ratings
 
-- [x] Feature 1
-- [x] Feature 2
-- [ ] ...
+## Technical Structure
 
+#### Project Structure
+The project follows the MVVM and Repository architecture pattern. 
 
-## Technischer Aufbau
-
-#### Projektaufbau
-Eine kurze Beschreibung deiner Ordnerstruktur und Architektur (MVVM, Repositories) um Außenstehenden zu helfen, sich in deinem Projekt zurecht zu finden.
-
-#### Datenspeicherung
-Welche Daten speicherst du? Wo und wie (Firebase, Core Data)? Erkläre hier auch, warum du den jeweiligen Dienst nutzt (offline-first, Sync usw.).
+#### Data Storage
+Data is stored using Firebase. User authentication details, posts, and user profiles are managed through Firebase Firestore. This choice allows for real-time data synchronization and easy scalability.
 
 #### API Calls
-Welche APIs verwendest du?
+The app utilizes the Google Places API to enhance the search functionality for services offered by users.
 
 #### 3rd-Party Frameworks
-Verwendest du Frameworks, die nicht von dir stammen? Bspw. Swift Packages für Firebase, fertige SwiftUI-Views o.Ä.? Gib diese hier an.
+Care4U integrates several third-party frameworks:
+- ...
+- ...
 
+## Outlook
+In the future, we plan to enhance Care4U with additional features:
 
-## Ausblick
-Beschreibe hier, wo die Reise nach deinem Praxisprojekt hin geht. Was möchtest du in Zukunft noch ergänzen?
-
-- [ ] Geplantes Feature 1
-- [ ] Geplantes Feature 2
-- [ ] ...
+- [ ] Planned Feature: Advanced Filtering Options for Posts
+- [ ] Planned Feature: Live Messaging Chat
+- [ ] Push Notifications for Updates 
