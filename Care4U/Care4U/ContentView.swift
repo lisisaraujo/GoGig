@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var postsViewModel = PostsViewModel()
     
     var body: some View {
             HomeView()
@@ -19,4 +20,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(AuthViewModel())
+        .environmentObject(PostsViewModel())
 }

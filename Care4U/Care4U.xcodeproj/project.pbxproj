@@ -65,6 +65,15 @@
 		A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */; };
 		A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */; };
 		A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */; };
+		A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799459E2CD11EC500F4AF89 /* SearchTabView.swift */; };
+		A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945A12CD11EE400F4AF89 /* BookmarksTabView.swift */; };
+		A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945A32CD11EF000F4AF89 /* InboxTabView.swift */; };
+		A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945A52CD11F0700F4AF89 /* PersonalTabView.swift */; };
+		A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945A72CD11FA900F4AF89 /* HomeTabsEnum.swift */; };
+		A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945A92CD121E400F4AF89 /* PostItemView.swift */; };
+		A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */; };
+		A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945AE2CD123E700F4AF89 /* PostsRepository.swift */; };
+		A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +112,15 @@
 		A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSecureFieldView.swift; sourceTree = "<group>"; };
 		A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		A799459E2CD11EC500F4AF89 /* SearchTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabView.swift; sourceTree = "<group>"; };
+		A79945A12CD11EE400F4AF89 /* BookmarksTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTabView.swift; sourceTree = "<group>"; };
+		A79945A32CD11EF000F4AF89 /* InboxTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxTabView.swift; sourceTree = "<group>"; };
+		A79945A52CD11F0700F4AF89 /* PersonalTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalTabView.swift; sourceTree = "<group>"; };
+		A79945A72CD11FA900F4AF89 /* HomeTabsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabsEnum.swift; sourceTree = "<group>"; };
+		A79945A92CD121E400F4AF89 /* PostItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemView.swift; sourceTree = "<group>"; };
+		A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
+		A79945AE2CD123E700F4AF89 /* PostsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsRepository.swift; sourceTree = "<group>"; };
+		A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataErrorEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +177,7 @@
 		A799450E2CCFB02600F4AF89 /* Care4U */ = {
 			isa = PBXGroup;
 			children = (
+				A79945AD2CD123D800F4AF89 /* Repository */,
 				A79945972CD110C800F4AF89 /* SubViews */,
 				A79945962CD110A400F4AF89 /* Utils */,
 				A79945572CD0106B00F4AF89 /* Enums */,
@@ -230,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */,
+				A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -241,6 +261,8 @@
 				A79945882CD0150B00F4AF89 /* ExchangeCoinEnum.swift */,
 				A799458A2CD0154100F4AF89 /* CategoriesEnum.swift */,
 				A79945902CD0DA0000F4AF89 /* SortOderEnum.swift */,
+				A79945A72CD11FA900F4AF89 /* HomeTabsEnum.swift */,
+				A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -249,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				A79945642CD0116800F4AF89 /* HomeView.swift */,
+				A79945A02CD11ECA00F4AF89 /* TabViews */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -329,8 +352,28 @@
 				A79945982CD110ED00F4AF89 /* CustomTextFieldView.swift */,
 				A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */,
 				A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */,
+				A79945A92CD121E400F4AF89 /* PostItemView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		A79945A02CD11ECA00F4AF89 /* TabViews */ = {
+			isa = PBXGroup;
+			children = (
+				A799459E2CD11EC500F4AF89 /* SearchTabView.swift */,
+				A79945A12CD11EE400F4AF89 /* BookmarksTabView.swift */,
+				A79945A32CD11EF000F4AF89 /* InboxTabView.swift */,
+				A79945A52CD11F0700F4AF89 /* PersonalTabView.swift */,
+			);
+			path = TabViews;
+			sourceTree = "<group>";
+		};
+		A79945AD2CD123D800F4AF89 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A79945AE2CD123E700F4AF89 /* PostsRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,21 +483,30 @@
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
+				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
 				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationSheetView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799456F2CD011D700F4AF89 /* MyProfileView.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
+				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
+				A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */,
 				A79945732CD0123A00F4AF89 /* ChatDetailsView.swift in Sources */,
 				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
+				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
+				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
+				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
+				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
+				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
+				A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */,
 				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
 				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,
 				A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */,
