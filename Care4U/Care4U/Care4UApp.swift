@@ -19,7 +19,7 @@ struct Care4UApp: App {
     init() {
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         FirebaseApp.configure()
-        Auth.auth().signInAnonymously()
+   
     }
 
     var body: some Scene {
