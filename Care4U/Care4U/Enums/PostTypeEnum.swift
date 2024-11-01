@@ -7,7 +7,9 @@
 
 import Foundation
 
-enum PostType: String, CaseIterable {
-    case search = "Search",
+enum PostTypeEnum: String, CaseIterable {
+    case
+         search = "Search",
          offer = "Offer"
+    
 }

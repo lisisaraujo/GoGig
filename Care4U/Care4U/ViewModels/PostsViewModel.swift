@@ -16,6 +16,8 @@ class PostsViewModel: ObservableObject {
     @Published var selectedPost: Post?
     @Published var updateSuccess: Bool = false
     
+    @Published var filteredPosts: [Post]?
+    
     init() {
         Task {
             await listenToAllPosts()
@@ -82,6 +84,18 @@ class PostsViewModel: ObservableObject {
         await repo.fetchSelectedPost(with: id)
         
         self.selectedPost = repo.selectedPost
+    }
+    
+    func filterPosts(selectedPostType: PostTypeEnum?, searchText: String) -> [Post] {
+        let filtered = allPosts.filter { post in
+            (selectedPostType == nil || post.type == selectedPostType?.rawValue) &&
+            (searchText.isEmpty || post.title.localizedCaseInsensitiveContains(searchText) ||
+             post.description.localizedCaseInsensitiveContains(searchText))
+        }
+        
+        self.filteredPosts = filtered
+        
+        return filtered
     }
 }
 

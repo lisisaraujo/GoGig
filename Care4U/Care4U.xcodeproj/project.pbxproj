@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
 		A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945112CCFB02600F4AF89 /* ContentView.swift */; };
 		A79945162CCFB02800F4AF89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79945152CCFB02800F4AF89 /* Assets.xcassets */; };
@@ -78,6 +79,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A799450F2CCFB02600F4AF89 /* Care4UApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Care4UApp.swift; sourceTree = "<group>"; };
 		A79945112CCFB02600F4AF89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */,
 				A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */,
 				A79945A92CD121E400F4AF89 /* PostItemView.swift */,
+				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */,
+				A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,

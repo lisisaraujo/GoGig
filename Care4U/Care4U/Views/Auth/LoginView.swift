@@ -13,6 +13,8 @@ struct LoginView: View {
     
     @State var email = ""
     @State var password = ""
+    
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack {
@@ -32,8 +34,11 @@ struct LoginView: View {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(10)
                 
+                
+                
                 Button(action: {
                     authViewModel.login(email: email, password: password)
+                    dismiss()
                 }) {
                     Text("Login")
                         .foregroundColor(.white)
