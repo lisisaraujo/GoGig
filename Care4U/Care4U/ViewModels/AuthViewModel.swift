@@ -2,6 +2,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseStorage
 import PhotosUI
+import CoreLocation
 
 class AuthViewModel: ObservableObject {
     
@@ -9,8 +10,6 @@ class AuthViewModel: ObservableObject {
     
     @Published var user: User?
     @Published var loadingState: LoadingStateEnum = .idle
-    
-    @Published var showLoginOrRegistrationSheet = true
     
     var isUserLoggedIn: Bool {
         return user != nil
@@ -22,13 +21,12 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    private func checkAuth() async {
+    func checkAuth() async {
         guard let currentUser = firebaseManager.auth.currentUser else {
-            self.showLoginOrRegistrationSheet = true
             print("Not logged in")
+            self.user = nil
             return
         }
-        self.showLoginOrRegistrationSheet = false
         await fetchUser(with: currentUser.uid)
     }
     
@@ -54,14 +52,14 @@ class AuthViewModel: ObservableObject {
         do {
             try firebaseManager.auth.signOut()
             self.user = nil
-            self.showLoginOrRegistrationSheet = true
             print("User is logged out")
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    func register(email: String, password: String, fullName: String, birthDate: Date, location: String, profileImage: UIImage?) {
+    
+    func register(email: String, password: String, fullName: String, birthDate: Date, location: String, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
         loadingState = .loading
         
         Task {
@@ -75,18 +73,25 @@ class AuthViewModel: ObservableObject {
                     profilePicUrl = await uploadProfilePicture(image, for: userID)
                 }
                 
-                await createUser(withId: userID, email: email, fullName: fullName, birthDate: birthDate, location: location, profilePicUrl: profilePicUrl)
+                await createUser(withId: userID, email: email, fullName: fullName, birthDate: birthDate, location: location, latitude: latitude, longitude: longitude, profilePicUrl: profilePicUrl)
                 loadingState = .loaded
                 await checkAuth()
+                
+                completion(true)
+                
             } catch {
                 print("Registration failed:", error.localizedDescription)
                 loadingState = .error(error)
+                
+                DispatchQueue.main.async {
+                    completion(false)
+                }
             }
         }
     }
     
-    private func createUser(withId id: String, email: String, fullName: String, birthDate: Date, location: String, profilePicUrl: String?) async {
-        let user = User(id: id, email: email, fullName: fullName, birthDate: birthDate, location: location, memberSince: Date(), profilePicURL: profilePicUrl)
+    private func createUser(withId id: String, email: String, fullName: String, birthDate: Date, location: String, latitude: Double?, longitude: Double?, profilePicUrl: String?) async {
+        let user = User(id: id, email: email, fullName: fullName, birthDate: birthDate, location: location, latitude: latitude, longitude: longitude, memberSince: Date(), profilePicURL: profilePicUrl)
         
         do {
             try firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).setData(from: user)
@@ -94,6 +99,7 @@ class AuthViewModel: ObservableObject {
             print("Saving user failed:", error)
         }
     }
+    
     
     private func uploadProfilePicture(_ image: UIImage, for userID: String) async -> String? {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
@@ -121,8 +127,7 @@ class AuthViewModel: ObservableObject {
             }
             
             guard let authResult else { return }
-            self.showLoginOrRegistrationSheet = false
-            print("User with email '\(authResult.user.email ?? "")' is logged in with id ‘\(authResult.user.uid)'")
+            print("User with email '\(authResult.user.email ?? "")' is logged in with id '\(authResult.user.uid)'")
             Task {
                 await self.fetchUser(with: authResult.user.uid)
             }
@@ -138,24 +143,11 @@ class AuthViewModel: ObservableObject {
                 }
                 
                 guard let authResult else { return }
-                self.showLoginOrRegistrationSheet = false
-                print("Anonymous user logged in with id ‘\(authResult.user.uid)'")
+                print("Anonymous user logged in with id '\(authResult.user.uid)'")
                 Task {
                     await self.fetchUser(with: authResult.user.uid)
                 }
             }
         }
-    }
-    
-    func onTabChanged(tab: HomeTabEnum) {
-        if tab == .search {
-            showLoginOrRegistrationSheet = false
-        } else {
-            showLoginOrRegistrationSheet = !isUserLoggedIn
-        }
-    }
-    
-    func checkSheetState(){
-        showLoginOrRegistrationSheet = !isUserLoggedIn
     }
 }

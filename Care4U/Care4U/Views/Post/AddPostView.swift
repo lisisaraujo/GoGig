@@ -13,7 +13,7 @@ struct AddPostView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Environment(\.dismiss) private var dismiss
- 
+    
     @State private var title: String = ""
     @State private var description: String = ""
     @State private var selectedType: PostTypeEnum = .offer
@@ -25,12 +25,12 @@ struct AddPostView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // if authViewModel.isUserLoggedIn {
+            if authViewModel.isUserLoggedIn {
                 Form {
                     Section(header: Text("Post Details")) {
                         CustomTextFieldView(placeholder: "Title", text: $title)
                         
-                       
+                        
                         CustomTextEditorView(placeholder: "Description", text: $description)
                         
                         Picker("Type", selection: $selectedType) {
@@ -42,7 +42,7 @@ struct AddPostView: View {
                         
                         Toggle("Is Active", isOn: $isActive)
                     }
-                
+                    
                     Section(header: HStack {
                         Text("Exchange Coins")
                         Spacer()
@@ -65,7 +65,7 @@ struct AddPostView: View {
                             }
                         }
                     }
-
+                    
                     Section(header: HStack {
                         Text("Categories")
                         Spacer()
@@ -88,7 +88,7 @@ struct AddPostView: View {
                             }
                         }
                     }
-
+                    
                     Button(action: createPost) {
                         Text("Create Post")
                             .frame(maxWidth: .infinity)
@@ -98,16 +98,16 @@ struct AddPostView: View {
                             .cornerRadius(10)
                     }
                 }
-
-//            } else {
-//                GoToLoginOrRegistrationSheetView()
-//            }
+                
+            } else {
+                GoToLoginOrRegistrationSheetView()
+            }
         }
         .navigationTitle("Add Post")
         .navigationBarTitleDisplayMode(.inline)
         .padding()
     }
-
+    
     private func createPost() {
         postsViewModel.createPost(
             type: selectedType.rawValue,

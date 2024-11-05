@@ -30,7 +30,7 @@ struct PostItemView: View {
                 
   
                 HStack {
-                    Text("Type: \(post.type)")
+                    Text(post.type)
                         .font(.caption)
                         .foregroundColor(.blue)
                     

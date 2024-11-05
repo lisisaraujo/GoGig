@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A74174EF2CD8F83E007DA925 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A74174EE2CD8F83E007DA925 /* GooglePlaces */; };
+		A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
+		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
+		A78AD7F92CD8DBC50074EB6E /* PlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F82CD8DBC50074EB6E /* PlacesManager.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
 		A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945112CCFB02600F4AF89 /* ContentView.swift */; };
 		A79945162CCFB02800F4AF89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79945152CCFB02800F4AF89 /* Assets.xcassets */; };
@@ -79,7 +83,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteControllerView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
+		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A78AD7F82CD8DBC50074EB6E /* PlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesManager.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A799450F2CCFB02600F4AF89 /* Care4UApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Care4UApp.swift; sourceTree = "<group>"; };
 		A79945112CCFB02600F4AF89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -155,6 +162,7 @@
 				A79945452CCFDCEE00F4AF89 /* FirebaseMLModelDownloader in Frameworks */,
 				A799454D2CCFDCEE00F4AF89 /* FirebaseStorage in Frameworks */,
 				A79945312CCFDCEE00F4AF89 /* FirebaseCore in Frameworks */,
+				A74174EF2CD8F83E007DA925 /* GooglePlaces in Frameworks */,
 				A79945252CCFDCEE00F4AF89 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,6 +170,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A78AD7F52CD8DB830074EB6E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		A79945032CCFB02600F4AF89 = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +197,7 @@
 		A799450E2CCFB02600F4AF89 /* Care4U */ = {
 			isa = PBXGroup;
 			children = (
+				A78AD7F52CD8DB830074EB6E /* API */,
 				A79945AD2CD123D800F4AF89 /* Repository */,
 				A79945972CD110C800F4AF89 /* SubViews */,
 				A79945962CD110A400F4AF89 /* Utils */,
@@ -243,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */,
+				A78AD7F82CD8DBC50074EB6E /* PlacesManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -343,6 +361,7 @@
 				A799459C2CD1120B00F4AF89 /* ImagePickerView.swift */,
 				A79945A92CD121E400F4AF89 /* PostItemView.swift */,
 				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
+				A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -407,6 +426,7 @@
 				A799454C2CCFDCEE00F4AF89 /* FirebaseStorage */,
 				A799454E2CCFDCEE00F4AF89 /* FirebaseStorageCombine-Community */,
 				A79945502CCFDCEE00F4AF89 /* FirebaseVertexAI */,
+				A74174EE2CD8F83E007DA925 /* GooglePlaces */,
 			);
 			productName = Care4U;
 			productReference = A799450C2CCFB02600F4AF89 /* Care4U.app */;
@@ -438,6 +458,7 @@
 			mainGroup = A79945032CCFB02600F4AF89;
 			packageReferences = (
 				A79945212CCFDCEE00F4AF89 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A74174ED2CD8F83E007DA925 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 			);
 			productRefGroup = A799450D2CCFB02600F4AF89 /* Products */;
 			projectDirPath = "";
@@ -471,6 +492,7 @@
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */,
 				A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */,
+				A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
@@ -487,6 +509,7 @@
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
 				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
+				A78AD7F92CD8DBC50074EB6E /* PlacesManager.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
 				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
@@ -497,6 +520,7 @@
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
+				A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */,
 				A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */,
 				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
 				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,
@@ -713,6 +737,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A74174ED2CD8F83E007DA925 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 		A79945212CCFDCEE00F4AF89 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -724,6 +756,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A74174EE2CD8F83E007DA925 /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A74174ED2CD8F83E007DA925 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
 		A79945222CCFDCEE00F4AF89 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A79945212CCFDCEE00F4AF89 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

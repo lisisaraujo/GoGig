@@ -36,9 +36,6 @@ struct HomeView: View {
                     .tabItem {
                         Label("Personal", systemImage: "person.crop.circle")
                     }.tag(HomeTabEnum.personal)
-            }.onChange(of: selectedTab) {oldValue, newValue in
-                authViewModel.onTabChanged(tab: newValue)
-                
             }
         }
         
