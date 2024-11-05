@@ -39,9 +39,11 @@ class AuthViewModel: ObservableObject {
                 self.user = nil
                 return
             }
-            
-            let fetchedUser = try document.data(as: User.self)
+
+                let fetchedUser = try document.data(as: User.self)
+            DispatchQueue.main.async {
             self.user = fetchedUser
+            }
         } catch {
             print("Error fetching user:", error)
             self.user = nil

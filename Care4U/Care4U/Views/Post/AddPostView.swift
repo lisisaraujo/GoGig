@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 
 struct AddPostView: View {
@@ -109,18 +110,35 @@ struct AddPostView: View {
     }
     
     private func createPost() {
+        guard let userLocation = getUserLocation() else {
+            
+            print("User location is not available")
+            return
+        }
+        
         postsViewModel.createPost(
             type: selectedType.rawValue,
             title: title,
             description: description,
             selectedCategories: selectedCategories,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
-            isActive: isActive
+            isActive: isActive,
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude
         )
         
         dismiss()
     }
+    
+    private func getUserLocation() -> CLLocationCoordinate2D? {
+        guard let latitude = authViewModel.user?.latitude,
+              let longitude = authViewModel.user?.longitude else {
+            return nil
+        }
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }
+
 
 struct MultipleSelectionRow: View {
     var title: String

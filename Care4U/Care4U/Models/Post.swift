@@ -8,9 +8,9 @@
 import Foundation
 import FirebaseFirestore
 
-struct Post: Codable, Identifiable, Hashable{
+struct Post: Codable, Identifiable {
     @DocumentID var id: String?
-    let userId: String
+    var userId: String
     var type: String
     var title: String
     var description: String
@@ -18,8 +18,10 @@ struct Post: Codable, Identifiable, Hashable{
     var exchangeCoins: [String]
     var categories: [String]
     var createdOn: Date
+    var latitude: Double
+    var longitude: Double
     
-    init(id: String? = nil, userId: String, type: String, title: String, description: String, isActive: Bool, exchangeCoins: [String], categories: [String], createdOn: Date = Date()) {
+    init(id: String? = nil, userId: String, type: String, title: String, description: String, isActive: Bool, exchangeCoins: [String], categories: [String], createdOn: Date, latitude: Double, longitude: Double) {
         self.id = id
         self.userId = userId
         self.type = type
@@ -29,5 +31,7 @@ struct Post: Codable, Identifiable, Hashable{
         self.exchangeCoins = exchangeCoins
         self.categories = categories
         self.createdOn = createdOn
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

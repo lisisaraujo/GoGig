@@ -7,11 +7,14 @@
 
 import Foundation
 import FirebaseFirestore
+import CoreLocation
 
 class PostsRepository {
     
     private let firebaseManager = FirebaseManager.shared
     @Published var selectedPost: Post?
+    
+    private var userLocation: CLLocationCoordinate2D?
 
     func createPost(post: Post) async throws {
         let document = firebaseManager.database.collection(firebaseManager.postsCollectionName).document()
@@ -82,5 +85,27 @@ class PostsRepository {
             
             return favorites
         }
+    
+    // obviously used AI help for this
+    func fetchPostsWithinRadius(center: CLLocationCoordinate2D, radiusInKm: Double) async throws -> [Post] {
+           let earthRadiusInKm: Double = 6371
+           let lat = center.latitude
+           let lon = center.longitude
+           let angularRadius = radiusInKm / earthRadiusInKm
+
+           let minLat = lat - angularRadius * 180 / .pi
+           let maxLat = lat + angularRadius * 180 / .pi
+           let minLon = lon - angularRadius * 180 / (.pi * cos(lat * .pi / 180))
+           let maxLon = lon + angularRadius * 180 / (.pi * cos(lat * .pi / 180))
+
+           let query = firebaseManager.database.collection(firebaseManager.postsCollectionName)
+               .whereField("latitude", isGreaterThan: minLat)
+               .whereField("latitude", isLessThan: maxLat)
+               .whereField("longitude", isGreaterThan: minLon)
+               .whereField("longitude", isLessThan: maxLon)
+
+           let snapshot = try await query.getDocuments()
+           return snapshot.documents.compactMap { try? $0.data(as: Post.self) }
+       }
     
 }
