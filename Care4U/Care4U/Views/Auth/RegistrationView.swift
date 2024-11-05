@@ -11,7 +11,7 @@ import GooglePlaces
 
 struct RegistrationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @State var navigateToHome = false 
+    @Environment(\.dismiss) private var dismiss
     
     @State private var fullName = ""
     @State private var email = ""
@@ -96,8 +96,12 @@ struct RegistrationView: View {
                         longitude: selectedCoordinate?.longitude,
                         profileImage: selectedImage
                     ) { success in
-                        if success {
-                            navigateToHome = true
+                        DispatchQueue.main.async {
+                            if success {
+                                dismiss()
+                            } else {
+                                print("Registration failed")
+                            }
                         }
                     }
                 }
@@ -107,9 +111,6 @@ struct RegistrationView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.horizontal)
-                .navigationDestination(isPresented: $navigateToHome) {
-                    HomeView()
-                }
             }
         }
         .navigationTitle("Register")

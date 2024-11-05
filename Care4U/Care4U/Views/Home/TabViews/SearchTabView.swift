@@ -15,6 +15,7 @@ struct SearchTabView: View {
     @State private var selectedDistance: Double = 50
     @State private var isDistanceFilterActive = false
     @State private var showDistanceSlider = false
+    @Binding var selectedTab: HomeTabEnum
     
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -88,7 +89,7 @@ struct SearchTabView: View {
                 }
             }
             
-            NavigationLink(destination: AddPostView().environmentObject(postsViewModel)
+            NavigationLink(destination: AddPostView(selectedTab: $selectedTab).environmentObject(postsViewModel)
                 .environmentObject(authViewModel)) {
                 Text("Add Post")
                     .foregroundColor(.white)
@@ -126,7 +127,7 @@ struct SearchTabView: View {
 }
 
 #Preview {
-    SearchTabView()
+    SearchTabView(selectedTab: .constant(.search))
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }

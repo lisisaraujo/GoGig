@@ -21,7 +21,10 @@ struct BookmarksTabView: View {
                             .font(.largeTitle)
                             .padding()
                     } else {
-                      GoToLoginOrRegistrationSheetView()
+                        GoToLoginOrRegistrationSheetView(onClose: {
+                                                    selectedTab = .search
+                                                })
+                                                .environmentObject(authViewModel)
                     }
                 }
                 .navigationTitle("Bookmarks")

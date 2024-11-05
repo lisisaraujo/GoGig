@@ -3,7 +3,8 @@ import SwiftUI
 struct GoToLoginOrRegistrationSheetView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
-   // var onCancel: () -> Void
+    
+    var onClose: () -> Void  = {}
 
     
     var body: some View {
@@ -40,7 +41,7 @@ struct GoToLoginOrRegistrationSheetView: View {
                 
                 Button(action: {
                     
-                    //onCancel()
+                    onClose()
 
                 }) {
                     Text("Close")

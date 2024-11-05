@@ -34,7 +34,10 @@ struct InboxTabView: View {
                         }
                         .padding(.horizontal)
                     } else {
-                        GoToLoginOrRegistrationSheetView()
+                        GoToLoginOrRegistrationSheetView(onClose: {
+                                                    selectedTab = .search
+                                                })
+                                                .environmentObject(authViewModel)
                     }
                 }
          

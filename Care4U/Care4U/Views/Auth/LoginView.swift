@@ -51,11 +51,6 @@ struct LoginView: View {
                 .padding(.horizontal)
             }
             
-            NavigationLink(destination: RegistrationView().environmentObject(authViewModel)) {
-                Text("Don't have an account? Register")
-                    .font(.footnote)
-                    .foregroundColor(.blue)
-            }
         }
     
         }

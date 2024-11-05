@@ -14,6 +14,7 @@ struct AddPostView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Environment(\.dismiss) private var dismiss
+    @Binding var selectedTab: HomeTabEnum
     
     @State private var title: String = ""
     @State private var description: String = ""
@@ -101,7 +102,12 @@ struct AddPostView: View {
                 }
                 
             } else {
-                GoToLoginOrRegistrationSheetView()
+                GoToLoginOrRegistrationSheetView(onClose: {
+                                            selectedTab = .search
+                    dismiss()
+                                        })
+                                        .environmentObject(authViewModel)
+      
             }
         }
         .navigationTitle("Add Post")
@@ -163,7 +169,7 @@ struct MultipleSelectionRow: View {
 }
 
 #Preview {
-    AddPostView()
+    AddPostView(selectedTab: .constant(.search))
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
 }

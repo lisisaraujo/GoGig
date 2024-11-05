@@ -21,7 +21,10 @@ struct PersonalTabView: View {
                     if authViewModel.user != nil {
                         
                     } else {
-                       GoToLoginOrRegistrationSheetView()
+                        GoToLoginOrRegistrationSheetView(onClose: {
+                                                    selectedTab = .search
+                                                })
+                                                .environmentObject(authViewModel)
                     }
                 }
                 .navigationTitle("Personal")

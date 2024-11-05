@@ -16,7 +16,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedTab) {
-                SearchTabView()
+                SearchTabView(selectedTab: $selectedTab)
                     .environmentObject(postsViewModel)
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
