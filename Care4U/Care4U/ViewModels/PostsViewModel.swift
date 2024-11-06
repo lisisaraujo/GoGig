@@ -20,6 +20,11 @@ class PostsViewModel: ObservableObject {
     
     @Published var filteredPosts: [Post]?
     
+    @Published var bookmarkedPostsIds: [String] = []
+    @Published var bookmarkedPosts: [Post] = []
+    
+    @Published var errorMessage: String?
+    
     private var currentFilters: (type: PostTypeEnum?, searchText: String?, maxDistance: Double?, userLocation: CLLocationCoordinate2D?) = (nil, nil, nil, nil)
     
     init() {
@@ -121,5 +126,53 @@ class PostsViewModel: ObservableObject {
         currentFilters = (nil, nil, nil, nil)
         self.filteredPosts = self.allPosts
     }
+    
+
+    func addBookmark(postId: String) {
+        Task {
+            do {
+                try await repo.addBookmark(postId: postId)
+                await fetchBookmarkedPosts()
+            } catch {
+                handleError(error)
+            }
+        }
+    }
+
+    func removeBookmark(postId: String) {
+        Task {
+            do {
+                try await repo.removeBookmark(postId: postId)
+                await fetchBookmarkedPosts()
+            } catch {
+                handleError(error)
+            }
+        }
+    }
+
+    func fetchBookmarkedPosts() async {
+        do {
+            let fetchedPosts = try await repo.fetchBookmarkedPosts()
+            await MainActor.run {
+                self.bookmarkedPosts = fetchedPosts
+            }
+        } catch {
+            await MainActor.run {
+                self.errorMessage = "Failed to fetch bookmarks: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    func isPostBookmarked(_ postId: String) -> Bool {
+        return bookmarkedPosts.contains { $0.id == postId }
+    }
+    
+
+    private func handleError(_ error: Error) {
+        DispatchQueue.main.async {
+            self.errorMessage = "An error occurred: \(error.localizedDescription)"
+        }
+    }
+    
 }
 

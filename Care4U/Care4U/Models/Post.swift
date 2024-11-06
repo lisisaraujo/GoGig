@@ -20,6 +20,7 @@ struct Post: Codable, Identifiable {
     var createdOn: Date
     var latitude: Double
     var longitude: Double
+    // var postLocation: String
     
     init(id: String? = nil, userId: String, type: String, title: String, description: String, isActive: Bool, exchangeCoins: [String], categories: [String], createdOn: Date, latitude: Double, longitude: Double) {
         self.id = id

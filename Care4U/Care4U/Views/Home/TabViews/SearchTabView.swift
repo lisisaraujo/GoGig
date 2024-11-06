@@ -82,11 +82,7 @@ struct SearchTabView: View {
             }
             
             List(postsViewModel.filteredPosts ?? postsViewModel.allPosts) { post in
-                NavigationLink(destination: PostDetailsView(postId: post.id!)
-                    .environmentObject(postsViewModel)
-                    .environmentObject(authViewModel)) {
-                    PostItemView(post: post)
-                }
+                PostItemView(post: post)
             }
             
             NavigationLink(destination: AddPostView(selectedTab: $selectedTab).environmentObject(postsViewModel)

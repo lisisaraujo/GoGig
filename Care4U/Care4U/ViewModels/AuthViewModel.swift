@@ -152,4 +152,5 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
+    
 }

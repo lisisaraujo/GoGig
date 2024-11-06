@@ -18,14 +18,14 @@ struct User: Codable, Identifiable, Hashable {
     var longitude: Double?
     var memberSince: Date
     var profilePicURL: String?
-    var favorites: [String]?
+    var bookmarks: [String]?
 
-    var coordinate: (latitude: Double, longitude: Double)? {
+    var locationCoordinates: (latitude: Double, longitude: Double)? {
         guard let latitude = latitude, let longitude = longitude else { return nil }
         return (latitude, longitude)
     }
 
-    init(id: String? = nil, email: String, fullName: String, birthDate: Date, location: String, latitude: Double? = nil, longitude: Double? = nil, memberSince: Date = Date(), profilePicURL: String? = nil, favorites: [String]? = nil) {
+    init(id: String? = nil, email: String, fullName: String, birthDate: Date, location: String, latitude: Double? = nil, longitude: Double? = nil, memberSince: Date = Date(), profilePicURL: String? = nil, bookmarks: [String]? = nil) {
         self.id = id
         self.email = email
         self.fullName = fullName
@@ -35,6 +35,6 @@ struct User: Codable, Identifiable, Hashable {
         self.longitude = longitude
         self.memberSince = memberSince
         self.profilePicURL = profilePicURL
-        self.favorites = favorites
+        self.bookmarks = bookmarks
     }
 }

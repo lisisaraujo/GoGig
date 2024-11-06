@@ -8,59 +8,85 @@
 import SwiftUI
 
 struct PostItemView: View {
+    @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
-    var post: Post?
+    let post: Post
+    
+    @State private var isBookmarked = false
     
     var body: some View {
-      
-        VStack(alignment: .leading) {
-            if let post = post {
+        HStack(alignment: .top, spacing: 0) {
             
-                Text(post.title)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 2)
-                
-           
-                Text(post.description)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .lineLimit(2)
-                    .padding(.bottom, 5)
-                
-  
-                HStack {
-                    Text(post.type)
-                        .font(.caption)
-                        .foregroundColor(.blue)
+            NavigationLink(destination: PostDetailsView(postId: post.id!)
+                .environmentObject(postsViewModel)
+                .environmentObject(authViewModel)) {
                     
-                    Spacer()
-                    
-                    Text("Posted on \(formattedDate(post.createdOn))")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                    VStack(alignment: .leading) {
+                        Text(post.title)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .padding(.bottom, 2)
+                        
+                        Text(post.description)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .lineLimit(2)
+                            .padding(.bottom, 5)
+                        
+                        HStack {
+                            Text(post.type)
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                            
+                            Spacer()
+                            
+                            Text("Posted on \(formattedDate(post.createdOn))")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+            // show bookmark button if user is logged in
+            if authViewModel.isUserLoggedIn {
+                
+                Button(action: {
+                    if isBookmarked {
+                        postsViewModel.removeBookmark(postId: post.id!)
+                    } else {
+                        postsViewModel.addBookmark(postId: post.id!)
+                    }
+                    isBookmarked.toggle()
+                }) {
+                    Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                        .padding(8)
                 }
-            } else {
-                Text("Post not available")
-                    .foregroundColor(.red)
+                .buttonStyle(PlainButtonStyle())
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-        .padding(.horizontal)
+        .onAppear(perform: updateBookmarkStatus)
+        .onChange(of: postsViewModel.bookmarkedPostsIds) { _,_ in
+            updateBookmarkStatus()
+        }
     }
     
-   
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .none
         return formatter.string(from: date)
     }
+    
+    private func updateBookmarkStatus() {
+        isBookmarked = postsViewModel.isPostBookmarked(post.id ?? "")
+    }
 }
 
 #Preview {
     PostItemView(post: Post(id: "1", userId: "user123", type: "Offer", title: "Looking for a roommate", description: "I have a room available in my apartment. Looking for someone responsible and clean.", isActive: true, exchangeCoins: [], categories: [], createdOn: Date(), latitude: 22.000, longitude: 23.000))
+        .environmentObject(PostsViewModel())
+        .environmentObject(AuthViewModel())
 }
