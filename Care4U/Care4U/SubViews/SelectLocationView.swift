@@ -12,7 +12,7 @@ import GooglePlaces
 struct SelectLocationView: View {
     
     @Binding  var selectedLocation: String
-    @Binding  var selectedCoordinate: CLLocationCoordinate2D?
+    @Binding  var selectedCoordinates: CLLocationCoordinate2D?
     
     @Binding  var isAutocompletePresented: Bool
     
@@ -30,12 +30,12 @@ struct SelectLocationView: View {
             }
             .padding(.horizontal)
             .sheet(isPresented: $isAutocompletePresented) {
-                AutocompleteControllerView(location: $selectedLocation, coordinate: $selectedCoordinate)
+                AutocompleteControllerView(location: $selectedLocation, selectedCoordinates: $selectedCoordinates)
             }
             
             if !selectedLocation.isEmpty {
                 Text("Selected Location: \(selectedLocation)")
-                if let coordinate = selectedCoordinate {
+                if let coordinate = selectedCoordinates {
                     Text("Coordinates: \(coordinate.latitude), \(coordinate.longitude)")
                 }
             }
@@ -46,7 +46,7 @@ struct SelectLocationView: View {
 #Preview {
     SelectLocationView(
         selectedLocation: .constant(""),
-        selectedCoordinate: .constant(CLLocationCoordinate2D(latitude: 23.00, longitude: 20.11)),
+        selectedCoordinates: .constant(CLLocationCoordinate2D(latitude: 23.00, longitude: 20.11)),
         isAutocompletePresented: .constant(false)
     )
 }

@@ -10,7 +10,7 @@ import GooglePlaces
 
 struct AutocompleteControllerView: UIViewControllerRepresentable {
     @Binding var location: String
-    @Binding var coordinate: CLLocationCoordinate2D?
+    @Binding var selectedCoordinates: CLLocationCoordinate2D?
     @Environment(\.presentationMode) var presentationMode
 
     class Coordinator: NSObject, GMSAutocompleteViewControllerDelegate {
@@ -22,7 +22,7 @@ struct AutocompleteControllerView: UIViewControllerRepresentable {
 
         func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
             parent.location = place.name ?? "Unknown"
-            parent.coordinate = place.coordinate
+            parent.selectedCoordinates = place.coordinate
             parent.presentationMode.wrappedValue.dismiss()
         }
 

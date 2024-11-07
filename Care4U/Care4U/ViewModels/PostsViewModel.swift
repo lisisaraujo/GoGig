@@ -1,3 +1,4 @@
+
 //
 //  PostsViewModel.swift
 //  Care4U
@@ -115,7 +116,7 @@ class PostsViewModel: ObservableObject {
             filtered = filtered.filter { post in
                 let postLocation = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
                 let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-                let distance = postLocation.distance(from: userCLLocation) / 1000 // Convert to km
+                let distance = postLocation.distance(from: userCLLocation) / 1000 // convert to km
                 return distance <= maxDistance
             }
         }
@@ -176,4 +177,3 @@ class PostsViewModel: ObservableObject {
     }
     
 }
-

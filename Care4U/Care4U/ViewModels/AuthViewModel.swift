@@ -1,3 +1,11 @@
+
+//
+//  PostsViewModel.swift
+//  Care4U
+//
+//  Created by Lisis Ruschel on 29.10.24.
+
+
 import Foundation
 import FirebaseAuth
 import FirebaseStorage
@@ -40,9 +48,10 @@ class AuthViewModel: ObservableObject {
                 return
             }
 
-                let fetchedUser = try document.data(as: User.self)
+            let fetchedUser = try document.data(as: User.self)
             DispatchQueue.main.async {
-            self.user = fetchedUser
+                self.user = fetchedUser
+                print("User location: \(fetchedUser.latitude), \(fetchedUser.longitude)") 
             }
         } catch {
             print("Error fetching user:", error)

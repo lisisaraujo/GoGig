@@ -26,7 +26,7 @@ struct AddPostView: View {
     @State private var showCategories: Bool = false
     
     @State private var selectedLocation = ""
-    @State private var selectedCoordinate: CLLocationCoordinate2D?
+    @State private var selectedCoordinates: CLLocationCoordinate2D?
     
     @State private var isAutocompletePresented = false
     
@@ -96,7 +96,7 @@ struct AddPostView: View {
                         }
                     }
                     
-                    SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinate: $selectedCoordinate, isAutocompletePresented: $isAutocompletePresented)
+                    SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinates: $selectedCoordinates, isAutocompletePresented: $isAutocompletePresented)
 
                     Button(action: createPost) {
                         Text("Create Post")
@@ -123,11 +123,6 @@ struct AddPostView: View {
     }
     
     private func createPost() {
-        guard let userLocation = getUserLocation() else {
-            
-            print("User location is not available")
-            return
-        }
         
         postsViewModel.createPost(
             type: selectedType.rawValue,
@@ -136,21 +131,21 @@ struct AddPostView: View {
             selectedCategories: selectedCategories,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
             isActive: isActive,
-            latitude: selectedCoordinate?.latitude,
-            longitude: selectedCoordinate?.longitude,
+            latitude: selectedCoordinates?.latitude,
+            longitude: selectedCoordinates?.longitude,
             postLocation: selectedLocation
         )
         
         dismiss()
     }
     
-    private func getUserLocation() -> CLLocationCoordinate2D? {
-        guard let latitude = authViewModel.user?.latitude,
-              let longitude = authViewModel.user?.longitude else {
-            return nil
-        }
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
+//    private func getUserLocation() -> CLLocationCoordinate2D? {
+//        guard let latitude = authViewModel.user?.latitude,
+//              let longitude = authViewModel.user?.longitude else {
+//            return nil
+//        }
+//        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//    }
 }
 
 

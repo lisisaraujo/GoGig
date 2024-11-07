@@ -12,9 +12,8 @@ struct SearchTabView: View {
     @State private var searchText = ""
     @State private var selectedPostType: PostTypeEnum?
     @State private var errorMessage: String?
-    @State private var selectedDistance: Double = 50
-    @State private var isDistanceFilterActive = false
-    @State private var showDistanceSlider = false
+    @State private var selectedDistance: Double = 10
+    @State private var isDistanceFilterActive = true
     @Binding var selectedTab: HomeTabEnum
     
     @EnvironmentObject var postsViewModel: PostsViewModel
@@ -22,6 +21,7 @@ struct SearchTabView: View {
     
     var body: some View {
         VStack {
+            // filter based on selected tab
             Picker("Post Type", selection: $selectedPostType) {
                 Text("All").tag(nil as PostTypeEnum?)
                 ForEach(PostTypeEnum.allCases, id: \.self) { type in
@@ -33,7 +33,8 @@ struct SearchTabView: View {
                 filterPosts()
             }
             
-            TextField("Search", text: $searchText)
+            // filter based search word that matches title or description
+            TextField("Search in \(authViewModel.user?.location ?? "your area")", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
                 .onChange(of: searchText) { _, _ in
@@ -47,34 +48,15 @@ struct SearchTabView: View {
             }
             
             HStack {
-                Button(action: {
-                    withAnimation {
-                        isDistanceFilterActive.toggle()
-                        showDistanceSlider = isDistanceFilterActive
-                    }
-                    filterPosts()
-                }) {
-                    HStack {
-                        Image(systemName: isDistanceFilterActive ? "location.fill" : "location")
-                        Text(isDistanceFilterActive ? "Remove Distance Filter" : "Add Distance Filter")
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 12)
-                    .background(isDistanceFilterActive ? Color.blue : Color.gray.opacity(0.2))
-                    .foregroundColor(isDistanceFilterActive ? .white : .primary)
-                    .cornerRadius(8)
-                }
-                
+                Text("Radius: \(selectedDistance == 1000 ? "Worldwide" : "\(Int(selectedDistance)) km")")
                 Spacer()
-                
-                if isDistanceFilterActive {
-                    Text("\(Int(selectedDistance)) km")
-                }
+                Toggle("", isOn: $isDistanceFilterActive)
             }
             .padding(.horizontal)
             
-            if showDistanceSlider {
-                Slider(value: $selectedDistance, in: 1...100, step: 1)
+            // filter based on selected radius distance
+            if isDistanceFilterActive {
+                Slider(value: $selectedDistance, in: 1...1000, step: 1)
                     .padding(.horizontal)
                     .onChange(of: selectedDistance) { _, _ in
                         filterPosts()
@@ -97,31 +79,26 @@ struct SearchTabView: View {
             }
         }
         .onAppear {
-            postsViewModel.resetFilters()
+            filterPosts()
         }
     }
     
     private func filterPosts() {
-        Task {
-            let userLocation: CLLocationCoordinate2D?
-            if isDistanceFilterActive,
-               let latitude = authViewModel.user?.latitude,
-               let longitude = authViewModel.user?.longitude {
-                userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            } else {
-                userLocation = nil
-            }
-            
-             postsViewModel.filterPosts(
-                selectedPostType: selectedPostType,
-                searchText: searchText.isEmpty ? nil : searchText,
-                maxDistance: isDistanceFilterActive ? selectedDistance : nil,
-                userLocation: userLocation
-            )
+        guard let userLocation = authViewModel.user?.locationCoordinates else {
+            errorMessage = "User location not available"
+            return
         }
+        
+        errorMessage = nil
+        
+        postsViewModel.filterPosts(
+            selectedPostType: selectedPostType,
+            searchText: searchText.isEmpty ? nil : searchText,
+            maxDistance: isDistanceFilterActive ? (selectedDistance == 1000 ? nil : selectedDistance) : nil,
+            userLocation: CLLocationCoordinate2D(latitude:  userLocation.latitude, longitude: userLocation.longitude)
+        )
     }
 }
-
 #Preview {
     SearchTabView(selectedTab: .constant(.search))
         .environmentObject(PostsViewModel())
