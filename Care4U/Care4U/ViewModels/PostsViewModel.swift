@@ -52,7 +52,7 @@ class PostsViewModel: ObservableObject {
         }
     }
     
-    func createPost(type: String, title: String, description: String, selectedCategories: [CategoriesEnum], exchangeCoins: [String], isActive: Bool, latitude: Double, longitude: Double) {
+    func createPost(type: String, title: String, description: String, selectedCategories: [CategoriesEnum], exchangeCoins: [String], isActive: Bool, latitude: Double?, longitude: Double?, postLocation: String) {
         
         guard let userId = firebaseManager.userId else {
             print("User ID is not available")
@@ -71,7 +71,8 @@ class PostsViewModel: ObservableObject {
             categories: categoryStrings,
             createdOn: Date(),
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            postLocation: postLocation
         )
         
         Task {
@@ -112,7 +113,7 @@ class PostsViewModel: ObservableObject {
         
         if let maxDistance = currentFilters.maxDistance, let userLocation = currentFilters.userLocation {
             filtered = filtered.filter { post in
-                let postLocation = CLLocation(latitude: post.latitude, longitude: post.longitude)
+                let postLocation = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
                 let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
                 let distance = postLocation.distance(from: userCLLocation) / 1000 // Convert to km
                 return distance <= maxDistance

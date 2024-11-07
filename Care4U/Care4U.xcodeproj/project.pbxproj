@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A74174EF2CD8F83E007DA925 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A74174EE2CD8F83E007DA925 /* GooglePlaces */; };
 		A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */; };
+		A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -42,7 +43,6 @@
 		A79945512CCFDCEE00F4AF89 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = A79945502CCFDCEE00F4AF89 /* FirebaseVertexAI */; };
 		A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799455E2CD0110500F4AF89 /* LoginView.swift */; };
 		A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945602CD0110F00F4AF89 /* RegistrationView.swift */; };
-		A79945632CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */; };
 		A79945652CD0116800F4AF89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945642CD0116800F4AF89 /* HomeView.swift */; };
 		A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945662CD0119A00F4AF89 /* AddPostView.swift */; };
 		A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945682CD011A500F4AF89 /* FilterPostView.swift */; };
@@ -83,6 +83,7 @@
 
 /* Begin PBXFileReference section */
 		A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteControllerView.swift; sourceTree = "<group>"; };
+		A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +94,6 @@
 		A799451F2CCFDC7100F4AF89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A799455E2CD0110500F4AF89 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A79945602CD0110F00F4AF89 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
-		A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPersonalDetailsView.swift; sourceTree = "<group>"; };
 		A79945642CD0116800F4AF89 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A79945662CD0119A00F4AF89 /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
 		A79945682CD011A500F4AF89 /* FilterPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPostView.swift; sourceTree = "<group>"; };
@@ -299,7 +299,6 @@
 			children = (
 				A799455E2CD0110500F4AF89 /* LoginView.swift */,
 				A79945602CD0110F00F4AF89 /* RegistrationView.swift */,
-				A79945622CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -359,6 +358,7 @@
 				A79945A92CD121E400F4AF89 /* PostItemView.swift */,
 				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
 				A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */,
+				A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -484,7 +484,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A79945632CD0111D00F4AF89 /* RegisterPersonalDetailsView.swift in Sources */,
 				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A79945692CD011A500F4AF89 /* FilterPostView.swift in Sources */,
@@ -517,6 +516,7 @@
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
 				A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */,
+				A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */,
 				A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */,
 				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
 				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,

@@ -18,11 +18,17 @@ struct Post: Codable, Identifiable {
     var exchangeCoins: [String]
     var categories: [String]
     var createdOn: Date
-    var latitude: Double
-    var longitude: Double
-    // var postLocation: String
+    var latitude: Double?
+    var longitude: Double?
+    var postLocation: String
     
-    init(id: String? = nil, userId: String, type: String, title: String, description: String, isActive: Bool, exchangeCoins: [String], categories: [String], createdOn: Date, latitude: Double, longitude: Double) {
+    var locationCoordinates: (latitude: Double, longitude: Double)? {
+        guard let latitude = latitude, let longitude = longitude else { return nil }
+        return (latitude, longitude)
+    }
+
+    
+    init(id: String? = nil, userId: String, type: String, title: String, description: String, isActive: Bool, exchangeCoins: [String], categories: [String], createdOn: Date = Date.now, latitude: Double? = nil, longitude: Double? = nil, postLocation: String) {
         self.id = id
         self.userId = userId
         self.type = type
@@ -34,5 +40,6 @@ struct Post: Codable, Identifiable {
         self.createdOn = createdOn
         self.latitude = latitude
         self.longitude = longitude
+        self.postLocation = postLocation
     }
 }

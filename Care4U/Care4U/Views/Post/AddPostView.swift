@@ -25,6 +25,11 @@ struct AddPostView: View {
     @State private var showExchangeCoins: Bool = false
     @State private var showCategories: Bool = false
     
+    @State private var selectedLocation = ""
+    @State private var selectedCoordinate: CLLocationCoordinate2D?
+    
+    @State private var isAutocompletePresented = false
+    
     var body: some View {
         VStack(spacing: 20) {
             if authViewModel.isUserLoggedIn {
@@ -91,6 +96,8 @@ struct AddPostView: View {
                         }
                     }
                     
+                    SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinate: $selectedCoordinate, isAutocompletePresented: $isAutocompletePresented)
+
                     Button(action: createPost) {
                         Text("Create Post")
                             .frame(maxWidth: .infinity)
@@ -129,8 +136,9 @@ struct AddPostView: View {
             selectedCategories: selectedCategories,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
             isActive: isActive,
-            latitude: userLocation.latitude,
-            longitude: userLocation.longitude
+            latitude: selectedCoordinate?.latitude,
+            longitude: selectedCoordinate?.longitude,
+            postLocation: selectedLocation
         )
         
         dismiss()

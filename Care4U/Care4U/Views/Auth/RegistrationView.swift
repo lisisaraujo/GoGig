@@ -63,27 +63,7 @@ struct RegistrationView: View {
                     .padding(.horizontal)
                 
                 
-                Button(action: {
-                    isAutocompletePresented.toggle()
-                }) {
-                    Text("Select Location")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
-                .sheet(isPresented: $isAutocompletePresented) {
-                    AutocompleteControllerView(location: $selectedLocation, coordinate: $selectedCoordinate)
-                }
-                
-                if !selectedLocation.isEmpty {
-                    Text("Selected Location: \(selectedLocation)")
-                    if let coordinate = selectedCoordinate {
-                        Text("Coordinates: \(coordinate.latitude), \(coordinate.longitude)")
-                    }
-                }
+                SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinate: $selectedCoordinate, isAutocompletePresented: $isAutocompletePresented)
                 
                 Button("Register") {
                     authViewModel.register(
