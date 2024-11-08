@@ -48,7 +48,7 @@ struct AutocompleteControllerView: UIViewControllerRepresentable {
         autocompleteController.placeFields = fields
 
         let filter = GMSAutocompleteFilter()
-        filter.types = ["country", "locality", "sublocality", "postal_code"]
+        filter.types = ["locality"]
         autocompleteController.autocompleteFilter = filter
 
         return autocompleteController

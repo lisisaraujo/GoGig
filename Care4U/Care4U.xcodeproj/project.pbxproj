@@ -11,6 +11,7 @@
 		A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */; };
 		A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */; };
 		A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F42CDCEE4D007DA925 /* LocationManager.swift */; };
+		A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -86,6 +87,7 @@
 		A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteControllerView.swift; sourceTree = "<group>"; };
 		A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationView.swift; sourceTree = "<group>"; };
 		A74174F42CDCEE4D007DA925 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -362,6 +364,7 @@
 				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
 				A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */,
 				A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */,
+				A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
+				A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
 				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
 				A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */,

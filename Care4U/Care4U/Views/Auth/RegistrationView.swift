@@ -21,7 +21,7 @@ struct RegistrationView: View {
     @State private var isImagePickerPresented = false
     
     @State private var selectedLocation = ""
-    @State private var selectedCoordinate: CLLocationCoordinate2D?
+    @State private var selectedCoordinates: CLLocationCoordinate2D?
     
     @State private var isAutocompletePresented = false
     
@@ -63,7 +63,7 @@ struct RegistrationView: View {
                     .padding(.horizontal)
                 
                 
-                SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinates: $selectedCoordinate, isAutocompletePresented: $isAutocompletePresented)
+                SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinates: $selectedCoordinates, isAutocompletePresented: $isAutocompletePresented)
                 
                 Button("Register") {
                     authViewModel.register(
@@ -72,8 +72,8 @@ struct RegistrationView: View {
                         fullName: fullName,
                         birthDate: birthday,
                         location: selectedLocation,
-                        latitude: selectedCoordinate?.latitude,
-                        longitude: selectedCoordinate?.longitude,
+                        latitude: selectedCoordinates?.latitude,
+                        longitude: selectedCoordinates?.longitude,
                         profileImage: selectedImage
                     ) { success in
                         DispatchQueue.main.async {

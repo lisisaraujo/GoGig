@@ -51,7 +51,6 @@ class AuthViewModel: ObservableObject {
             let fetchedUser = try document.data(as: User.self)
             DispatchQueue.main.async {
                 self.user = fetchedUser
-                print("User location: \(fetchedUser.latitude), \(fetchedUser.longitude)") 
             }
         } catch {
             print("Error fetching user:", error)

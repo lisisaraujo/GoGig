@@ -19,7 +19,7 @@ class PostsViewModel: ObservableObject {
     @Published var selectedPost: Post?
     @Published var updateSuccess: Bool = false
     
-    @Published var filteredPosts: [Post]?
+    @Published var filteredPosts: [Post] = []
     
     @Published var bookmarkedPostsIds: [String] = []
     @Published var bookmarkedPosts: [Post] = []
@@ -127,6 +127,19 @@ class PostsViewModel: ObservableObject {
     func resetFilters() {
         currentFilters = (nil, nil, nil, nil)
         self.filteredPosts = self.allPosts
+    }
+    
+    func sortPostsByDistance(from location: CLLocationCoordinate2D) {
+        filteredPosts.sort { (post1, post2) -> Bool in
+            guard let lat1 = post1.latitude, let lon1 = post1.longitude,
+                  let lat2 = post2.latitude, let lon2 = post2.longitude else {
+                return false
+            }
+            let location1 = CLLocation(latitude: lat1, longitude: lon1)
+            let location2 = CLLocation(latitude: lat2, longitude: lon2)
+            let userLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+            return location1.distance(from: userLocation) < location2.distance(from: userLocation)
+        }
     }
     
 
