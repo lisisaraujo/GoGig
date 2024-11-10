@@ -63,7 +63,7 @@ struct RegistrationView: View {
                     .padding(.horizontal)
                 
                 
-                SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinates: $selectedCoordinates, isAutocompletePresented: $isAutocompletePresented)
+                SelectLocationView( isAutocompletePresented: $isAutocompletePresented)
                 
                 Button("Register") {
                     authViewModel.register(

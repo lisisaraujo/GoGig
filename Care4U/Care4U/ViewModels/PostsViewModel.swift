@@ -15,6 +15,11 @@ class PostsViewModel: ObservableObject {
     private var firebaseManager = FirebaseManager.shared
     private let repo = PostsRepository()
     
+    @Published var selectedLocation: String = ""
+    @Published var selectedCoordinates: CLLocationCoordinate2D?
+    @Published var selectedDistance: Double = 0
+    @Published var isWorldwideMode: Bool = false
+    
     @Published var allPosts: [Post] = []
     @Published var selectedPost: Post?
     @Published var updateSuccess: Bool = false
@@ -30,6 +35,60 @@ class PostsViewModel: ObservableObject {
     
     init() {
         setupPostsListener()
+    }
+    
+    func updateLocation(location: String, coordinates: CLLocationCoordinate2D?) {
+        selectedLocation = location
+        selectedCoordinates = coordinates
+        isWorldwideMode = (location == "Worldwide")
+        
+        applyCurrentFilters()
+    }
+    func resetFilters() {
+        currentFilters = (type: nil, searchText: nil, maxDistance: nil, userLocation: nil)
+        selectedLocation = "Worldwide"
+        selectedCoordinates = nil
+        selectedDistance = 0
+        isWorldwideMode = true
+        applyCurrentFilters()
+    }
+    
+    func filterPosts(selectedPostType: PostTypeEnum?, searchText: String?, maxDistance: Double?) {
+        isWorldwideMode = false
+        currentFilters = (selectedPostType, searchText, maxDistance, selectedCoordinates)
+        applyCurrentFilters()
+    }
+    
+    private func applyCurrentFilters() {
+        if isWorldwideMode {
+            self.filteredPosts = self.allPosts
+            return
+        }
+        
+        var filtered = allPosts
+        
+        if let selectedPostType = currentFilters.type {
+            filtered = filtered.filter { $0.type == selectedPostType.rawValue }
+        }
+        
+        if let searchText = currentFilters.searchText, !searchText.isEmpty {
+            filtered = filtered.filter { post in
+                post.title.localizedCaseInsensitiveContains(searchText) ||
+                post.description.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+        
+        if let maxDistance = currentFilters.maxDistance, let userLocation = currentFilters.userLocation {
+            filtered = filtered.filter { post in
+                guard let postLat = post.latitude, let postLon = post.longitude else { return false }
+                let postLocation = CLLocation(latitude: postLat, longitude: postLon)
+                let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+                let distance = postLocation.distance(from: userCLLocation) / 1000 // convert to km
+                return distance <= maxDistance
+            }
+        }
+        
+        self.filteredPosts = filtered
     }
     
     private func setupPostsListener() {
@@ -93,41 +152,6 @@ class PostsViewModel: ObservableObject {
         self.selectedPost = repo.selectedPost
     }
     
-    func filterPosts(selectedPostType: PostTypeEnum?, searchText: String?, maxDistance: Double?, userLocation: CLLocationCoordinate2D?) {
-        currentFilters = (selectedPostType, searchText, maxDistance, userLocation)
-        applyCurrentFilters()
-    }
-    
-    private func applyCurrentFilters() {
-        var filtered = allPosts
-        
-        if let selectedPostType = currentFilters.type {
-            filtered = filtered.filter { $0.type == selectedPostType.rawValue }
-        }
-        
-        if let searchText = currentFilters.searchText, !searchText.isEmpty {
-            filtered = filtered.filter { post in
-                post.title.localizedCaseInsensitiveContains(searchText) ||
-                post.description.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-        
-        if let maxDistance = currentFilters.maxDistance, let userLocation = currentFilters.userLocation {
-            filtered = filtered.filter { post in
-                let postLocation = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-                let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-                let distance = postLocation.distance(from: userCLLocation) / 1000 // convert to km
-                return distance <= maxDistance
-            }
-        }
-        
-        self.filteredPosts = filtered
-    }
-    
-    func resetFilters() {
-        currentFilters = (nil, nil, nil, nil)
-        self.filteredPosts = self.allPosts
-    }
     
     func sortPostsByDistance(from location: CLLocationCoordinate2D) {
         filteredPosts.sort { (post1, post2) -> Bool in
@@ -142,7 +166,7 @@ class PostsViewModel: ObservableObject {
         }
     }
     
-
+    
     func addBookmark(postId: String) {
         Task {
             do {
@@ -153,7 +177,7 @@ class PostsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func removeBookmark(postId: String) {
         Task {
             do {
@@ -164,7 +188,7 @@ class PostsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func fetchBookmarkedPosts() async {
         do {
             let fetchedPosts = try await repo.fetchBookmarkedPosts()
@@ -177,12 +201,12 @@ class PostsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func isPostBookmarked(_ postId: String) -> Bool {
         return bookmarkedPosts.contains { $0.id == postId }
     }
     
-
+    
     private func handleError(_ error: Error) {
         DispatchQueue.main.async {
             self.errorMessage = "An error occurred: \(error.localizedDescription)"

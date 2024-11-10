@@ -96,7 +96,7 @@ struct AddPostView: View {
                         }
                     }
                     
-                    SelectLocationView(selectedLocation: $selectedLocation, selectedCoordinates: $selectedCoordinates, isAutocompletePresented: $isAutocompletePresented)
+                    SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
 
                     Button(action: createPost) {
                         Text("Create Post")

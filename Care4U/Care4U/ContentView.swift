@@ -16,6 +16,7 @@ struct ContentView: View {
         HomeView()
             .environmentObject(postsViewModel)
             .environmentObject(authViewModel)
+        
     }
 }
 

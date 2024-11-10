@@ -10,10 +10,9 @@ import CoreLocation
 import GooglePlaces
 
 struct SelectLocationView: View {
-    
-    @Binding  var selectedLocation: String
-    @Binding  var selectedCoordinates: CLLocationCoordinate2D?
-    
+    @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     @Binding  var isAutocompletePresented: Bool
     
     var body: some View {
@@ -30,12 +29,12 @@ struct SelectLocationView: View {
             }
             .padding(.horizontal)
             .sheet(isPresented: $isAutocompletePresented) {
-                AutocompleteControllerView(location: $selectedLocation, selectedCoordinates: $selectedCoordinates)
+                AutocompleteControllerView(location: $postsViewModel.selectedLocation, selectedCoordinates: $postsViewModel.selectedCoordinates)
             }
             
-            if !selectedLocation.isEmpty {
-                Text("Selected Location: \(selectedLocation)")
-                if let coordinate = selectedCoordinates {
+            if !postsViewModel.selectedLocation.isEmpty {
+                Text("Selected Location: \(postsViewModel.selectedLocation)")
+                if let coordinate = postsViewModel.selectedCoordinates {
                     Text("Coordinates: \(coordinate.latitude), \(coordinate.longitude)")
                 }
             }
@@ -45,8 +44,6 @@ struct SelectLocationView: View {
 
 #Preview {
     SelectLocationView(
-        selectedLocation: .constant(""),
-        selectedCoordinates: .constant(CLLocationCoordinate2D(latitude: 23.00, longitude: 20.11)),
         isAutocompletePresented: .constant(false)
     )
 }
