@@ -15,6 +15,7 @@
 		A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F92CE106C0007DA925 /* EditProfileView.swift */; };
 		A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FB2CE1078C007DA925 /* MenuView.swift */; };
 		A74175002CE10B4F007DA925 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FF2CE10B4F007DA925 /* SampleData.swift */; };
+		A74175022CE23EA3007DA925 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175012CE23EA3007DA925 /* SideMenu.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -94,6 +95,7 @@
 		A74174F92CE106C0007DA925 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		A74174FB2CE1078C007DA925 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		A74174FF2CE10B4F007DA925 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		A74175012CE23EA3007DA925 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +313,7 @@
 				A79945642CD0116800F4AF89 /* HomeView.swift */,
 				A79945A02CD11ECA00F4AF89 /* TabViews */,
 				A74174FB2CE1078C007DA925 /* MenuView.swift */,
+				A74175012CE23EA3007DA925 /* SideMenu.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */,
+				A74175022CE23EA3007DA925 /* SideMenu.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
