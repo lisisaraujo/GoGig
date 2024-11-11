@@ -14,6 +14,7 @@ struct User: Codable, Identifiable, Hashable {
     var fullName: String
     var birthDate: Date
     var location: String
+    var description: String?
     var latitude: Double?
     var longitude: Double?
     var memberSince: Date
@@ -21,12 +22,13 @@ struct User: Codable, Identifiable, Hashable {
     var bookmarks: [String]?
 
 
-    init(id: String? = nil, email: String, fullName: String, birthDate: Date, location: String, latitude: Double? = nil, longitude: Double? = nil, memberSince: Date = Date(), profilePicURL: String? = nil, bookmarks: [String]? = nil) {
+    init(id: String? = nil, email: String, fullName: String, birthDate: Date, location: String, description: String? = nil, latitude: Double? = nil, longitude: Double? = nil, memberSince: Date, profilePicURL: String? = nil, bookmarks: [String]? = nil) {
         self.id = id
         self.email = email
         self.fullName = fullName
         self.birthDate = birthDate
         self.location = location
+        self.description = description
         self.latitude = latitude
         self.longitude = longitude
         self.memberSince = memberSince

@@ -12,6 +12,9 @@
 		A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */; };
 		A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F42CDCEE4D007DA925 /* LocationManager.swift */; };
 		A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */; };
+		A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F92CE106C0007DA925 /* EditProfileView.swift */; };
+		A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FB2CE1078C007DA925 /* MenuView.swift */; };
+		A74175002CE10B4F007DA925 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FF2CE10B4F007DA925 /* SampleData.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -88,6 +91,9 @@
 		A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationView.swift; sourceTree = "<group>"; };
 		A74174F42CDCEE4D007DA925 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
+		A74174F92CE106C0007DA925 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		A74174FB2CE1078C007DA925 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		A74174FF2CE10B4F007DA925 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +178,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A74174F82CE106AC007DA925 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				A74174F92CE106C0007DA925 /* EditProfileView.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		A78AD7F52CD8DB830074EB6E /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +255,7 @@
 		A79945532CD0102B00F4AF89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A74174F82CE106AC007DA925 /* EditProfile */,
 				A79945932CD1014800F4AF89 /* Sheets */,
 				A79945772CD0126A00F4AF89 /* Reviews */,
 				A799455D2CD010CB00F4AF89 /* Inbox */,
@@ -295,6 +310,7 @@
 			children = (
 				A79945642CD0116800F4AF89 /* HomeView.swift */,
 				A79945A02CD11ECA00F4AF89 /* TabViews */,
+				A74174FB2CE1078C007DA925 /* MenuView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -350,6 +366,7 @@
 			children = (
 				A79945B22CD264F300F4AF89 /* PopupView.swift */,
 				A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */,
+				A74174FF2CE10B4F007DA925 /* SampleData.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -508,12 +525,14 @@
 				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
 				A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */,
 				A79945732CD0123A00F4AF89 /* ChatDetailsView.swift in Sources */,
+				A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */,
 				A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */,
 				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
 				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
+				A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */,
 				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
@@ -531,6 +550,7 @@
 				A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */,
 				A79945852CD012D500F4AF89 /* Message.swift in Sources */,
 				A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */,
+				A74175002CE10B4F007DA925 /* SampleData.swift in Sources */,
 				A799457F2CD012B600F4AF89 /* Post.swift in Sources */,
 				A79945B52CD27A9800F4AF89 /* LoadingSpinnerView.swift in Sources */,
 				A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */,

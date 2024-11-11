@@ -9,6 +9,7 @@ import SwiftUI
 import CoreLocation
 
 struct SearchTabView: View {
+
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var searchText = ""
@@ -60,14 +61,6 @@ struct SearchTabView: View {
             }
         }
         .onAppear {
-            if postsViewModel.selectedLocation.isEmpty {
-                if let user = authViewModel.user{
-                    postsViewModel.updateLocation(
-                        location: authViewModel.user?.location ?? "Worldwide",
-                        coordinates:  CLLocationCoordinate2D(latitude: user.latitude!, longitude: user.longitude!)
-                    )
-                }
-            }
             filterPosts()
         }
         .sheet(isPresented: $showLocationPicker) {

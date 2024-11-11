@@ -34,9 +34,6 @@ struct SelectLocationView: View {
             
             if !postsViewModel.selectedLocation.isEmpty {
                 Text("Selected Location: \(postsViewModel.selectedLocation)")
-                if let coordinate = postsViewModel.selectedCoordinates {
-                    Text("Coordinates: \(coordinate.latitude), \(coordinate.longitude)")
-                }
             }
         }
     }

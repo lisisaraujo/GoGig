@@ -15,7 +15,7 @@ class PostsViewModel: ObservableObject {
     private var firebaseManager = FirebaseManager.shared
     private let repo = PostsRepository()
     
-    @Published var selectedLocation: String = ""
+    @Published var selectedLocation: String = "Worldwide"
     @Published var selectedCoordinates: CLLocationCoordinate2D?
     @Published var selectedDistance: Double = 0
     @Published var isWorldwideMode: Bool = false
@@ -34,16 +34,13 @@ class PostsViewModel: ObservableObject {
     private var currentFilters: (type: PostTypeEnum?, searchText: String?, maxDistance: Double?, userLocation: CLLocationCoordinate2D?) = (nil, nil, nil, nil)
     
     init() {
+        
+        if firebaseManager.auth.currentUser != nil {
+    
+        }
         setupPostsListener()
     }
     
-    func updateLocation(location: String, coordinates: CLLocationCoordinate2D?) {
-        selectedLocation = location
-        selectedCoordinates = coordinates
-        isWorldwideMode = (location == "Worldwide")
-        
-        applyCurrentFilters()
-    }
     func resetFilters() {
         currentFilters = (type: nil, searchText: nil, maxDistance: nil, userLocation: nil)
         selectedLocation = "Worldwide"

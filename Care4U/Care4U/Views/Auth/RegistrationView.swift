@@ -19,12 +19,14 @@ struct RegistrationView: View {
     @State private var birthday = Date()
     @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
+    @State private var description = ""
     
     @State private var selectedLocation = ""
     @State private var selectedCoordinates: CLLocationCoordinate2D?
     
     @State private var isAutocompletePresented = false
-    
+
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -61,10 +63,14 @@ struct RegistrationView: View {
                 DatePicker("Birthday", selection: $birthday, displayedComponents: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .padding(.horizontal)
-                
-                
-                SelectLocationView( isAutocompletePresented: $isAutocompletePresented)
-                
+
+                // About Me Text Field
+                TextField("About Me", text: $description)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+
+                SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
+
                 Button("Register") {
                     authViewModel.register(
                         email: email,
@@ -72,9 +78,9 @@ struct RegistrationView: View {
                         fullName: fullName,
                         birthDate: birthday,
                         location: selectedLocation,
-                        latitude: selectedCoordinates?.latitude,
+                        description: description, latitude: selectedCoordinates?.latitude,
                         longitude: selectedCoordinates?.longitude,
-                        profileImage: selectedImage
+                        profileImage: selectedImage 
                     ) { success in
                         DispatchQueue.main.async {
                             if success {

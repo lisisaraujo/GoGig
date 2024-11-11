@@ -22,6 +22,7 @@ class FirebaseManager {
     let postsCollectionName = "posts"
     let userReviewsCollectionName = "userReviews"
     let chatsCollectionName = "chats"
+    let profilePicStorageRef = "profile_pictures"
     
     var userId: String? {
         auth.currentUser?.uid
