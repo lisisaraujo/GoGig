@@ -21,8 +21,7 @@ struct EditProfileView: View {
     @State private var description = ""
     @State private var isImagePickerPresented = false
     
-    @State private var selectedLocation = ""
-    @State private var selectedCoordinates: CLLocationCoordinate2D?
+   // @State private var selectedLocation = ""
     
     @State private var isAutocompletePresented = false
 
@@ -89,7 +88,7 @@ struct EditProfileView: View {
         if let user = authViewModel.user {
             fullName = user.fullName
             description = user.description ?? ""
-            selectedLocation = user.location
+            //selectedLocation = user.location
         }
     }
     

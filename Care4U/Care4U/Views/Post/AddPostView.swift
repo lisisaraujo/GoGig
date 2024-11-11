@@ -25,9 +25,6 @@ struct AddPostView: View {
     @State private var showExchangeCoins: Bool = false
     @State private var showCategories: Bool = false
     
-    @State private var selectedLocation = ""
-    @State private var selectedCoordinates: CLLocationCoordinate2D?
-    
     @State private var isAutocompletePresented = false
     
     var body: some View {
@@ -131,21 +128,13 @@ struct AddPostView: View {
             selectedCategories: selectedCategories,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
             isActive: isActive,
-            latitude: selectedCoordinates?.latitude,
-            longitude: selectedCoordinates?.longitude,
-            postLocation: selectedLocation
+            latitude: postsViewModel.selectedCoordinates?.latitude,
+            longitude: postsViewModel.selectedCoordinates?.longitude,
+            postLocation: postsViewModel.selectedLocation
         )
         
         dismiss()
     }
-    
-//    private func getUserLocation() -> CLLocationCoordinate2D? {
-//        guard let latitude = authViewModel.user?.latitude,
-//              let longitude = authViewModel.user?.longitude else {
-//            return nil
-//        }
-//        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-//    }
 }
 
 

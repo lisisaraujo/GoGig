@@ -233,7 +233,7 @@ class AuthViewModel: ObservableObject {
      
     
     // delete firestore user data
-    private func deleteFirestoreData(userId: String) async throws {
+    private func deleteUserData(userId: String) async throws {
           do {
               try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId).delete()
               print("User Firestore data deleted successfully")
@@ -242,6 +242,31 @@ class AuthViewModel: ObservableObject {
               throw error
           }
       }
+    
+    // delete firestore user data
+    private func deleteUserPosts(userId: String) async throws {
+        do {
+     
+            // get a query of all posts that matches the users id
+            let querySnapshot = try await firebaseManager.database
+                .collection(firebaseManager.postsCollectionName)
+                .whereField("userId", isEqualTo: userId)
+                .getDocuments()
+            
+            //lLoop through the results and delete each document
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+                print("Deleted post with ID: \(document.documentID)")
+            }
+            
+            print("All user posts deleted successfully")
+            
+        } catch {
+            print("Error deleting user posts: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
 
       // delete Storage Data (profilePic)
       private func deleteStorageData(userId: String) async throws {
@@ -251,7 +276,6 @@ class AuthViewModel: ObservableObject {
               print("User profile picture deleted successfully")
           } catch {
               print("Profile picture not found or already deleted: \(error.localizedDescription)")
-              // We're not throwing this error as it's not critical if the profile picture is already gone
           }
       }
 
@@ -277,7 +301,9 @@ class AuthViewModel: ObservableObject {
 
           do {
             
-              try await deleteFirestoreData(userId: userId)
+              try await deleteUserData(userId: userId)
+              
+              try await deleteUserPosts(userId: userId)
 
               try await deleteStorageData(userId: userId)
 

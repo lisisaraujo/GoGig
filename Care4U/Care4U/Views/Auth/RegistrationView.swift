@@ -11,6 +11,7 @@ import GooglePlaces
 
 struct RegistrationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var postsViewModel: PostsViewModel
     @Environment(\.dismiss) private var dismiss
     
     @State private var fullName = ""
@@ -21,8 +22,8 @@ struct RegistrationView: View {
     @State private var isImagePickerPresented = false
     @State private var description = ""
     
-    @State private var selectedLocation = ""
-    @State private var selectedCoordinates: CLLocationCoordinate2D?
+//    @State private var selectedLocation = ""
+//    @State private var selectedCoordinates: CLLocationCoordinate2D?
     
     @State private var isAutocompletePresented = false
 
@@ -77,10 +78,11 @@ struct RegistrationView: View {
                         password: password,
                         fullName: fullName,
                         birthDate: birthday,
-                        location: selectedLocation,
-                        description: description, latitude: selectedCoordinates?.latitude,
-                        longitude: selectedCoordinates?.longitude,
-                        profileImage: selectedImage 
+                        location: postsViewModel.selectedLocation,
+                        description: description,
+                        latitude: postsViewModel.selectedCoordinates?.latitude,
+                        longitude: postsViewModel.selectedCoordinates?.longitude,
+                        profileImage: selectedImage
                     ) { success in
                         DispatchQueue.main.async {
                             if success {
@@ -107,4 +109,5 @@ struct RegistrationView: View {
 #Preview {
     RegistrationView()
         .environmentObject(AuthViewModel())
+        .environmentObject(PostsViewModel())
 }

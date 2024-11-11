@@ -51,7 +51,8 @@ struct SearchTabView: View {
                 PostItemView(post: post)
             }
             
-            NavigationLink(destination: AddPostView(selectedTab: $selectedTab)) {
+            NavigationLink(destination: AddPostView(selectedTab: $selectedTab)    .environmentObject(postsViewModel)
+                .environmentObject(authViewModel)) {
                 Text("Add Post")
                     .foregroundColor(.white)
                     .padding()
