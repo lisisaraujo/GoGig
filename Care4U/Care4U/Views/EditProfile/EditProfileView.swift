@@ -20,9 +20,6 @@ struct EditProfileView: View {
     @State private var selectedImage: UIImage? = nil
     @State private var description = ""
     @State private var isImagePickerPresented = false
-    
-   // @State private var selectedLocation = ""
-    
     @State private var isAutocompletePresented = false
 
     var body: some View {
@@ -39,7 +36,7 @@ struct EditProfileView: View {
                                     .scaledToFill()
                                     .frame(width: 80, height: 80)
                                     .clipShape(Circle())
-                            } else if let profilePicURL = authViewModel.user?.profilePicURL,
+                            } else if let profilePicURL = authViewModel.currentUser?.profilePicURL,
                                       let url = URL(string: profilePicURL) {
                                 AsyncImage(url: url) { image in
                                     image.resizable()
@@ -58,12 +55,10 @@ struct EditProfileView: View {
                         }
                     }
                 }
-                .sheet(isPresented: $isImagePickerPresented) {
-                    ImagePickerView(selectedImage: $selectedImage)
-                }
                 
                 Section(header: Text("Personal Information")) {
                     TextField("Full Name", text: $fullName)
+                }
                 
                 Section(header: Text("About Me")) {
                     TextEditor(text: $description)
@@ -79,22 +74,23 @@ struct EditProfileView: View {
             .navigationBarItems(trailing: Button("Save") {
                 saveChanges()
             })
-            .onAppear(perform: loadUserData)
+            .sheet(isPresented: $isImagePickerPresented) {
+                ImagePickerView(selectedImage: $selectedImage)
+            }
         }
-    }
+        .onAppear(perform: loadUserData)
     }
     
     private func loadUserData() {
-        if let user = authViewModel.user {
+        if let user = authViewModel.currentUser {
             fullName = user.fullName
             description = user.description ?? ""
-            //selectedLocation = user.location
         }
     }
     
     private func saveChanges() {
         Task {
-             authViewModel.updateUserData(
+            authViewModel.updateUserData(
                 fullName: fullName,
                 location: postsViewModel.selectedLocation,
                 description: description,

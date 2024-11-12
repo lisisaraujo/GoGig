@@ -17,7 +17,7 @@ struct InboxChatsView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     if authViewModel.isUserLoggedIn {
-                        Text("Hello, \(authViewModel.user?.fullName ?? "User")!")
+                        Text("Hello, \(authViewModel.currentUser?.fullName ?? "User")!")
                             .font(.largeTitle)
                             .padding()
                     } else {

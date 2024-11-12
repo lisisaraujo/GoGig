@@ -15,10 +15,11 @@ struct PostDetailsView: View {
     let postId: String
     @State private var showUserDetails = false
     @State private var isLoading = true
+    @State private var creatorUser: User? 
     
     private var isCurrentUserCreator: Bool {
         guard let post = postsViewModel.selectedPost,
-              let currentUserId = authViewModel.user?.id else {
+              let currentUserId = authViewModel.currentUser?.id else {
             return false
         }
         return post.userId == currentUserId
@@ -34,7 +35,7 @@ struct PostDetailsView: View {
                         PostHeaderView(post: post)
                         PostContentView(post: post)
                         PostMetadataView(post: post)
-                        CreatorCardView(post: post, showUserDetails: $showUserDetails)
+                        CreatorCardView(post: post, creatorUser: creatorUser, showUserDetails: $showUserDetails)
                         
                         if isCurrentUserCreator {
                             Button("Delete Post") {
@@ -45,41 +46,47 @@ struct PostDetailsView: View {
                     .padding()
                 }
                 .navigationBarItems(trailing: editButton)
+                .sheet(isPresented: $showUserDetails) {
+                    if let userId = postsViewModel.selectedPost?.userId {
+                        UserDetailsView(userId: userId, selectedTab: $selectedTab)
+                            .environmentObject(authViewModel)
+                    }
+                }
             } else {
                 Text("Post not found")
+                    .font(.headline)
+                    .foregroundColor(.red)
             }
         }
         .navigationTitle("Post Details")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadData)
-        .sheet(isPresented: $showUserDetails) {
-            if let userId = postsViewModel.selectedPost?.userId {
-                UserDetailsView(userId: userId)
-            }
-        }
     }
 
     private func loadData() {
         Task {
             await postsViewModel.getSelectedPost(with: postId)
-            if authViewModel.user?.id == nil {
+            if authViewModel.currentUser == nil {
                 await authViewModel.checkAuth()
+            }
+            // fetch creator information based on post's userId
+            if let userId = postsViewModel.selectedPost?.userId {
+                await authViewModel.fetchSelectedUser(with: userId)
+                creatorUser = authViewModel.selectedUser
             }
             isLoading = false
         }
     }
-    
+
     @ViewBuilder
     private var editButton: some View {
-        if isCurrentUserCreator {
+        if isCurrentUserCreator { // show edit button only if current user is creator
             NavigationLink(destination: EditPostView(selectedTab: $selectedTab, post: postsViewModel.selectedPost!)) {
                 Text("Edit")
             }
         }
     }
 }
-
-
 struct PostHeaderView: View {
     let post: Post
 
@@ -103,7 +110,7 @@ struct PostContentView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text(post.description)
                 .font(.body)
-            
+
             TagsSectionView(title: "Exchange Coins", items: post.exchangeCoins, color: .blue)
             TagsSectionView(title: "Categories", items: post.categories, color: .green)
         }
@@ -147,44 +154,44 @@ struct PostMetadataView: View {
 }
 
 struct CreatorCardView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
     let post: Post
+    let creatorUser: User?
     @Binding var showUserDetails: Bool
-
+    
     var body: some View {
-        Button(action: { showUserDetails = true }) {
+        Button(action: {
+            showUserDetails = true
+        }) {
             HStack {
-                AsyncImage(url: URL(string: authViewModel.user?.profilePicURL ?? "")) { image in
+                AsyncImage(url: URL(string: creatorUser?.profilePicURL ?? "")) { image in
                     image.resizable()
                 } placeholder: {
-                    Image(systemName: "person.circle")
+                    Image(systemName:"person.circle")
                 }
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
                 
-                VStack(alignment: .leading) {
-                    Text(authViewModel.user?.fullName ?? "Unknown")
+                VStack(alignment:.leading) {
+                    Text(creatorUser?.fullName ?? "No name")
                         .font(.headline)
                     Text("View Profile")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }
                 Spacer()
-                Image(systemName: "chevron.right")
+                Image(systemName:"chevron.right")
                     .foregroundColor(.secondary)
             }
             .padding()
             .background(Color(.systemBackground))
             .cornerRadius(12)
-            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         }
         .buttonStyle(PlainButtonStyle())
     }
 }
 
 #Preview {
-    PostDetailsView(selectedTab: .constant(.search), postId: "sample-post-id")
+    PostDetailsView(selectedTab:.constant(.search), postId:"sample-post-id")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }
-

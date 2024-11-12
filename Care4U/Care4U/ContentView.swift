@@ -27,7 +27,7 @@ struct ContentView: View {
     }
     
     func updateLocationAndCoordinates() {
-        if let user = authViewModel.user {
+        if let user = authViewModel.currentUser {
             postsViewModel.selectedLocation = user.location
             postsViewModel.selectedCoordinates = CLLocationCoordinate2D(latitude: user.latitude ?? 0.0, longitude: user.longitude ?? 0.0)
             postsViewModel.isWorldwideMode = false

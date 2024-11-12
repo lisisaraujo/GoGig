@@ -19,6 +19,12 @@
 		A74175042CE2AA79007DA925 /* EditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175032CE2AA79007DA925 /* EditPostView.swift */; };
 		A74175062CE36C16007DA925 /* PostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175052CE36C16007DA925 /* PostFormView.swift */; };
 		A74175082CE36E37007DA925 /* MultipleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */; };
+		A741750A2CE37E53007DA925 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175092CE37E53007DA925 /* UsersViewModel.swift */; };
+		A741750C2CE384AC007DA925 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */; };
+		A741750E2CE384DE007DA925 /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750D2CE384DE007DA925 /* AboutMeView.swift */; };
+		A74175102CE384F1007DA925 /* MemberSinceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750F2CE384F1007DA925 /* MemberSinceView.swift */; };
+		A74175142CE3851A007DA925 /* ReviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175132CE3851A007DA925 /* ReviewRow.swift */; };
+		A74175162CE38534007DA925 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175152CE38534007DA925 /* PostListView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -101,6 +107,12 @@
 		A74175032CE2AA79007DA925 /* EditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostView.swift; sourceTree = "<group>"; };
 		A74175052CE36C16007DA925 /* PostFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormView.swift; sourceTree = "<group>"; };
 		A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionRow.swift; sourceTree = "<group>"; };
+		A74175092CE37E53007DA925 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
+		A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		A741750D2CE384DE007DA925 /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
+		A741750F2CE384F1007DA925 /* MemberSinceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSinceView.swift; sourceTree = "<group>"; };
+		A74175132CE3851A007DA925 /* ReviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRow.swift; sourceTree = "<group>"; };
+		A74175152CE38534007DA925 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,6 +305,7 @@
 			children = (
 				A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */,
 				A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */,
+				A74175092CE37E53007DA925 /* UsersViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -391,6 +404,11 @@
 				A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */,
 				A74175052CE36C16007DA925 /* PostFormView.swift */,
 				A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */,
+				A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */,
+				A741750D2CE384DE007DA925 /* AboutMeView.swift */,
+				A741750F2CE384F1007DA925 /* MemberSinceView.swift */,
+				A74175132CE3851A007DA925 /* ReviewRow.swift */,
+				A74175152CE38534007DA925 /* PostListView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -518,9 +536,11 @@
 			files = (
 				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
+				A74175162CE38534007DA925 /* PostListView.swift in Sources */,
 				A74175042CE2AA79007DA925 /* EditPostView.swift in Sources */,
 				A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */,
 				A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */,
+				A74175102CE384F1007DA925 /* MemberSinceView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
@@ -529,6 +549,7 @@
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
+				A741750E2CE384DE007DA925 /* AboutMeView.swift in Sources */,
 				A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
 				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
@@ -565,6 +586,9 @@
 				A799457F2CD012B600F4AF89 /* Post.swift in Sources */,
 				A74175062CE36C16007DA925 /* PostFormView.swift in Sources */,
 				A79945B52CD27A9800F4AF89 /* LoadingSpinnerView.swift in Sources */,
+				A74175142CE3851A007DA925 /* ReviewRow.swift in Sources */,
+				A741750C2CE384AC007DA925 /* ProfileHeaderView.swift in Sources */,
+				A741750A2CE37E53007DA925 /* UsersViewModel.swift in Sources */,
 				A79945672CD0119A00F4AF89 /* AddPostView.swift in Sources */,
 				A799458D2CD0D78600F4AF89 /* AuthViewModel.swift in Sources */,
 				A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */,

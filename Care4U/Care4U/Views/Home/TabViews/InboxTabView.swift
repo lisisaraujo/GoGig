@@ -16,7 +16,7 @@ struct InboxTabView: View {
 
             ScrollView {
                 VStack(spacing: 20) {
-                    if let user = authViewModel.user {
+                    if let user = authViewModel.currentUser {
                         Text("Hello, \(user.fullName)!")
                             .font(.largeTitle)
                             .padding()

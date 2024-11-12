@@ -1,22 +1,22 @@
 //
-//  ReviewsView.swift
+//  PostListView.swift
 //  Care4U
 //
-//  Created by Lisis Ruschel on 28.10.24.
+//  Created by Lisis Ruschel on 12.11.24.
 //
 
 import SwiftUI
 
-struct ReviewsView: View {
-    let reviews: [Review]
+struct PostsListView: View {
+    let posts: [Post]
+    @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Reviews")
+            Text("Posts")
                 .font(.headline)
-            
-            ForEach(reviews, id: \.id) { review in
-                ReviewRow(review: review)
+            ForEach(posts, id: \.id) { post in
+                PostItemView(selectedTab: $selectedTab, post: post)
             }
         }
         .padding()
@@ -27,5 +27,5 @@ struct ReviewsView: View {
 }
 
 //#Preview {
-//    ReviewsView(reviews: <#[Review]#>)
+//    PostsListView(selectedTab: .constant(.search))
 //}

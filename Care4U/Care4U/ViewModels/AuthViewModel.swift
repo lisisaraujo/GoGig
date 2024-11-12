@@ -12,15 +12,17 @@ import FirebaseStorage
 import PhotosUI
 import CoreLocation
 
+@MainActor
 class AuthViewModel: ObservableObject {
-    
     private let firebaseManager = FirebaseManager.shared
     
-    @Published var user: User?
+    @Published var currentUser: User?
+    @Published var selectedUser: User?
+    @Published var userReviews: [Review] = []
     @Published var loadingState: LoadingStateEnum = .idle
     
     var isUserLoggedIn: Bool {
-        return user != nil
+        return currentUser != nil
     }
     
     init() {
@@ -30,38 +32,65 @@ class AuthViewModel: ObservableObject {
     }
     
     func checkAuth() async {
-        guard let currentUser = firebaseManager.auth.currentUser else {
+        guard let currentUserId = firebaseManager.auth.currentUser?.uid else {
             print("Not logged in")
-            self.user = nil
+            self.currentUser = nil
             return
         }
-        await fetchUser(with: currentUser.uid)
+        await fetchUserAndReviews(with: currentUserId, isCurrentUser: true)
     }
     
-     func fetchUser(with id: String) async {
+    func fetchSelectedUser(with id: String) async {
+        await fetchUserAndReviews(with: id, isCurrentUser: false)
+    }
+    
+    private func fetchUserAndReviews(with id: String, isCurrentUser: Bool) async {
         do {
             let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
             
             guard document.exists else {
                 print("No such document!")
-                self.user = nil
+                if isCurrentUser {
+                    self.currentUser = nil
+                } else {
+                    self.selectedUser = nil
+                }
                 return
             }
 
             let fetchedUser = try document.data(as: User.self)
-            DispatchQueue.main.async {
-                self.user = fetchedUser
+            if isCurrentUser {
+                self.currentUser = fetchedUser
+            } else {
+                self.selectedUser = fetchedUser
+                self.userReviews = await getUserReviews(for: id)
             }
         } catch {
             print("Error fetching user:", error)
-            self.user = nil
+            if isCurrentUser {
+                self.currentUser = nil
+            } else {
+                self.selectedUser = nil
+            }
         }
     }
+    
+    private func getUserReviews(for userId: String) async -> [Review] {
+        do {
+            let reviewsQuery = firebaseManager.database.collection("reviews").whereField("userId", isEqualTo: userId)
+            let snapshot = try await reviewsQuery.getDocuments()
+            return snapshot.documents.compactMap { try? $0.data(as: Review.self) }
+        } catch {
+            print("Error fetching user reviews:", error.localizedDescription)
+            return []
+        }
+    }
+
     
     func logout() {
         do {
             try firebaseManager.auth.signOut()
-            self.user = nil
+            self.currentUser = nil
             print("User is logged out")
         } catch {
             print(error.localizedDescription)
@@ -141,31 +170,15 @@ class AuthViewModel: ObservableObject {
             
             guard let authResult else { return }
             print("User with email '\(authResult.user.email ?? "")' is logged in with id '\(authResult.user.uid)'")
+            
             Task {
-                await self.fetchUser(with: authResult.user.uid)
+                await self.fetchUserAndReviews(with: authResult.user.uid, isCurrentUser: true)
             }
         }
     }
-    
-    func anonymousLogin() {
-        if !isUserLoggedIn {
-            Auth.auth().signInAnonymously { authResult, error in
-                if let error = error {
-                    print("Anonymous login failed: ", error)
-                    return
-                }
-                
-                guard let authResult else { return }
-                print("Anonymous user logged in with id '\(authResult.user.uid)'")
-                Task {
-                    await self.fetchUser(with: authResult.user.uid)
-                }
-            }
-        }
-    }
-    
+   
     func updateUserData(fullName: String?, location: String?, description: String?, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
-        guard let userId = user?.id else {
+        guard let userId = currentUser?.id else {
             completion(false)
             return
         }
@@ -208,12 +221,12 @@ class AuthViewModel: ObservableObject {
                     try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId).updateData(updatedFields)
                     
                     // update local user properties with changes
-                    if let newFullName = updatedFields["fullName"] as? String { self.user?.fullName = newFullName }
-                    if let newLocation = updatedFields["location"] as? String { self.user?.location = newLocation }
-                    if let newLatitude = updatedFields["latitude"] as? Double { self.user?.latitude = newLatitude }
-                    if let newLongitude = updatedFields["longitude"] as? Double { self.user?.longitude = newLongitude }
-                    if let newDescription = updatedFields["description"] as? String { self.user?.description = newDescription }
-                    if let newProfilePicUrl = updatedFields["profilePicURL"] as? String { self.user?.profilePicURL = newProfilePicUrl }
+                    if let newFullName = updatedFields["fullName"] as? String { self.currentUser?.fullName = newFullName }
+                    if let newLocation = updatedFields["location"] as? String { self.currentUser?.location = newLocation }
+                    if let newLatitude = updatedFields["latitude"] as? Double { self.currentUser?.latitude = newLatitude }
+                    if let newLongitude = updatedFields["longitude"] as? Double { self.currentUser?.longitude = newLongitude }
+                    if let newDescription = updatedFields["description"] as? String { self.currentUser?.description = newDescription }
+                    if let newProfilePicUrl = updatedFields["profilePicURL"] as? String { self.currentUser?.profilePicURL = newProfilePicUrl }
 
                     loadingState = .loaded
                     completion(true)
@@ -295,7 +308,7 @@ class AuthViewModel: ObservableObject {
 
       // main function to delete all user related data
       func deleteAllUserData() async throws {
-          guard let userId = user?.id else {
+          guard let userId = currentUser?.id else {
               throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found"])
           }
 
@@ -311,7 +324,7 @@ class AuthViewModel: ObservableObject {
               
               logout()
 
-              self.user = nil
+              self.currentUser = nil
 
               print("All user data successfully deleted")
           } catch {
