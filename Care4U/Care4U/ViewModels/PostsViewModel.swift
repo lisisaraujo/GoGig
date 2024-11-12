@@ -210,4 +210,62 @@ class PostsViewModel: ObservableObject {
         }
     }
     
-}
+
+    func deleteSelectedPost(postId: String) {
+        Task {
+            do {
+                try await repo.deleteSelectedPost(postId: postId)
+            } catch {
+                handleError(error)
+            }
+        }
+    }
+    
+
+        
+        func updatePost(type: String?, title: String?, description: String?, isActive: Bool?, exchangeCoins: [String]?, categories: [String]?, latitude: Double?, longitude: Double?, postLocation: String?) async {
+            guard let postId = selectedPost?.id else {
+                print("No selected post to update")
+                return
+            }
+
+            var updatedFields: [String: Any] = [:]
+            
+            if let type = type { updatedFields["type"] = type }
+            if let title = title { updatedFields["title"] = title }
+            if let description = description { updatedFields["description"] = description }
+            if let isActive = isActive { updatedFields["isActive"] = isActive }
+            if let exchangeCoins = exchangeCoins { updatedFields["exchangeCoins"] = exchangeCoins }
+            if let categories = categories { updatedFields["categories"] = categories }
+            if let latitude = latitude { updatedFields["latitude"] = latitude }
+            if let longitude = longitude { updatedFields["longitude"] = longitude }
+            if let postLocation = postLocation { updatedFields["postLocation"] = postLocation }
+
+            do {
+                try await repo.updatePost(postId: postId, updatedFields: updatedFields)
+                
+                // update selectedPost
+                selectedPost?.type = type ?? selectedPost?.type ?? ""
+                selectedPost?.title = title ?? selectedPost?.title ?? ""
+                selectedPost?.description = description ?? selectedPost?.description ?? ""
+                selectedPost?.isActive = isActive ?? selectedPost?.isActive ?? false
+                selectedPost?.exchangeCoins = exchangeCoins ?? selectedPost?.exchangeCoins ?? []
+                selectedPost?.categories = categories ?? selectedPost?.categories ?? []
+                selectedPost?.latitude = latitude ?? selectedPost?.latitude
+                selectedPost?.longitude = longitude ?? selectedPost?.longitude
+                selectedPost?.postLocation = postLocation ?? selectedPost?.postLocation ?? ""
+                
+                // update post in allPosts
+                if let index = allPosts.firstIndex(where: { $0.id == postId }) {
+                    allPosts[index] = selectedPost!
+                }
+                
+                updateSuccess = true
+            } catch {
+                print("Error updating post: \(error.localizedDescription)")
+                updateSuccess = false
+            }
+        }
+    }
+        
+

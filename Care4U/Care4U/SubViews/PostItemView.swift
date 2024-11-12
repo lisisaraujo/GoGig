@@ -11,6 +11,8 @@ struct PostItemView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     
+    @Binding var selectedTab: HomeTabEnum
+    
     let post: Post
     
     @State private var isBookmarked = false
@@ -18,7 +20,7 @@ struct PostItemView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             
-            NavigationLink(destination: PostDetailsView(postId: post.id!)
+            NavigationLink(destination: PostDetailsView(selectedTab: $selectedTab, postId: post.id!)
                 .environmentObject(postsViewModel)
                 .environmentObject(authViewModel)) {
                     
@@ -86,7 +88,7 @@ struct PostItemView: View {
 }
 
 #Preview {
-    PostItemView(post: Post(id: "1", userId: "user123", type: "Offer", title: "Looking for a roommate", description: "I have a room available in my apartment. Looking for someone responsible and clean.", isActive: true, exchangeCoins: [], categories: [], createdOn: Date(), latitude: 22.000, longitude: 23.000, postLocation: "Berlin"))
+    PostItemView(selectedTab: .constant(.search), post: Post(id: "1", userId: "user123", type: "Offer", title: "Looking for a roommate", description: "I have a room available in my apartment. Looking for someone responsible and clean.", isActive: true, exchangeCoins: [], categories: [], createdOn: Date(), latitude: 22.000, longitude: 23.000, postLocation: "Berlin"))
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }

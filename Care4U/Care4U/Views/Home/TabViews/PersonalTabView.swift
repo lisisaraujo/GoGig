@@ -78,7 +78,7 @@ struct PersonalTabView: View {
                             Text("My Ads")
                                 .font(.headline)
                             ForEach(postsViewModel.allPosts.filter { $0.userId == user.id }, id: \.id) { post in
-                                PostItemView(post: post)
+                                PostItemView(selectedTab: $selectedTab, post: post)
                             }
                         }
                         .padding()

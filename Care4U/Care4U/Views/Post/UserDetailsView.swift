@@ -12,6 +12,8 @@ struct UserDetailsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     
+    var userId: String
+    
     var body: some View {
         VStack{
             
@@ -22,7 +24,7 @@ struct UserDetailsView: View {
 }
 
 #Preview {
-    UserDetailsView()
+    UserDetailsView(userId: "")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }

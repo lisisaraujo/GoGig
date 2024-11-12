@@ -21,7 +21,7 @@ struct BookmarksTabView: View {
                         ProgressView()
                     } else if !postsViewModel.bookmarkedPosts.isEmpty {
                         ForEach(postsViewModel.bookmarkedPosts) { post in
-                            PostItemView(post: post)
+                            PostItemView(selectedTab: $selectedTab, post: post)
                         }
                     } else {
                         Text("No bookmarked posts")

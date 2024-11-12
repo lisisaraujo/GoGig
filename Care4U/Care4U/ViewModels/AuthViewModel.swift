@@ -38,7 +38,7 @@ class AuthViewModel: ObservableObject {
         await fetchUser(with: currentUser.uid)
     }
     
-    private func fetchUser(with id: String) async {
+     func fetchUser(with id: String) async {
         do {
             let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
             

@@ -119,4 +119,22 @@ class PostsRepository {
            return snapshot.documents.compactMap { try? $0.data(as: Post.self) }
        }
     
-}
+     func deleteSelectedPost(postId: String) async throws {
+          do {
+              try await firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId).delete()
+              print("Post data deleted successfully")
+          } catch {
+              print("Error deleting Post data: \(error.localizedDescription)")
+              throw error
+          }
+      }
+
+        func updatePost(postId: String, updatedFields: [String: Any]) async throws {
+            guard !updatedFields.isEmpty else { return }
+            
+            let postRef = firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId)
+            try await postRef.updateData(updatedFields)
+        }
+    }
+
+

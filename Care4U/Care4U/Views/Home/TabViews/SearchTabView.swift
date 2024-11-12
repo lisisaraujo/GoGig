@@ -48,7 +48,7 @@ struct SearchTabView: View {
             }
             
             List(postsViewModel.filteredPosts) { post in
-                PostItemView(post: post)
+                PostItemView(selectedTab: $selectedTab, post: post)
             }
             
             NavigationLink(destination: AddPostView(selectedTab: $selectedTab)    .environmentObject(postsViewModel)

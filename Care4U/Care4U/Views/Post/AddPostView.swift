@@ -8,119 +8,36 @@
 import SwiftUI
 import CoreLocation
 
-
 struct AddPostView: View {
-    
-    @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
-    @Environment(\.dismiss) private var dismiss
     @Binding var selectedTab: HomeTabEnum
     
-    @State private var title: String = ""
-    @State private var description: String = ""
+    @State private var title = ""
+    @State private var description = ""
     @State private var selectedType: PostTypeEnum = .offer
-    @State private var isActive: Bool = true
+    @State private var isActive = true
     @State private var selectedExchangeCoins: [ExchangeCoinEnum] = []
     @State private var selectedCategories: [CategoriesEnum] = []
-    @State private var showExchangeCoins: Bool = false
-    @State private var showCategories: Bool = false
-    
-    @State private var isAutocompletePresented = false
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            if authViewModel.isUserLoggedIn {
-                Form {
-                    Section(header: Text("Post Details")) {
-                        CustomTextFieldView(placeholder: "Title", text: $title)
-                        
-                        
-                        CustomTextEditorView(placeholder: "Description", text: $description)
-                        
-                        Picker("Type", selection: $selectedType) {
-                            ForEach(PostTypeEnum.allCases, id: \.self) { type in
-                                Text(type.rawValue).tag(type)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        
-                        Toggle("Is Active", isOn: $isActive)
-                    }
-                    
-                    Section(header: HStack {
-                        Text("Exchange Coins")
-                        Spacer()
-                        Image(systemName: showExchangeCoins ? "chevron.up" : "chevron.down")
-                            .foregroundColor(.gray)
-                    }.onTapGesture {
-                        withAnimation {
-                            showExchangeCoins.toggle()
-                        }
-                    }) {
-                        if showExchangeCoins {
-                            ForEach(ExchangeCoinEnum.allCases, id: \.self) { coin in
-                                MultipleSelectionRow(title: coin.rawValue, isSelected: selectedExchangeCoins.contains(coin)) {
-                                    if selectedExchangeCoins.contains(coin) {
-                                        selectedExchangeCoins.removeAll { $0 == coin }
-                                    } else {
-                                        selectedExchangeCoins.append(coin)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    Section(header: HStack {
-                        Text("Categories")
-                        Spacer()
-                        Image(systemName: showCategories ? "chevron.up" : "chevron.down")
-                            .foregroundColor(.gray)
-                    }.onTapGesture {
-                        withAnimation {
-                            showCategories.toggle()
-                        }
-                    }) {
-                        if showCategories {
-                            ForEach(CategoriesEnum.allCases, id: \.self) { category in
-                                MultipleSelectionRow(title: category.rawValue, isSelected: selectedCategories.contains(category)) {
-                                    if selectedCategories.contains(category) {
-                                        selectedCategories.removeAll { $0 == category }
-                                    } else {
-                                        selectedCategories.append(category)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
 
-                    Button(action: createPost) {
-                        Text("Create Post")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                }
-                
-            } else {
-                GoToLoginOrRegistrationSheetView(onClose: {
-                                            selectedTab = .search
-                    dismiss()
-                                        })
-                                        .environmentObject(authViewModel)
-      
+    var body: some View {
+        PostFormView(
+            selectedTab: $selectedTab,
+            title: $title,
+            description: $description,
+            selectedType: $selectedType,
+            isActive: $isActive,
+            selectedExchangeCoins: $selectedExchangeCoins,
+            selectedCategories: $selectedCategories,
+            navigationTitle: "Add Post",
+            actionButtonText: "Create Post",
+            loadingMessage: "Adding post...",
+            onSubmit: {
+                await createPost()
             }
-        }
-        .navigationTitle("Add Post")
-        .navigationBarTitleDisplayMode(.inline)
-        .padding()
+        )
     }
     
-    private func createPost() {
-        
+    private func createPost() async -> Bool {
         postsViewModel.createPost(
             type: selectedType.rawValue,
             title: title,
@@ -133,30 +50,10 @@ struct AddPostView: View {
             postLocation: postsViewModel.selectedLocation
         )
         
-        dismiss()
-    }
-}
-
-
-struct MultipleSelectionRow: View {
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Text(title)
-                if isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark")
-                }
-            }
-            .padding()
-            .background(isSelected ? Color.blue.opacity(0.2) : Color.clear)
-            .cornerRadius(8)
-        }
-        .foregroundColor(.primary)
+        // wait for a short time to allow the operation to complete
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        
+        return postsViewModel.updateSuccess
     }
 }
 
