@@ -18,47 +18,55 @@ struct SearchTabView: View {
     @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
-        VStack {
-            Picker("Post Type", selection: $selectedPostType) {
-                Text("All").tag(nil as PostTypeEnum?)
-                ForEach(PostTypeEnum.allCases, id: \.self) { type in
-                    Text(type.rawValue.capitalized).tag(type as PostTypeEnum?)
+        NavigationView{
+            VStack {
+                Picker("Post Type", selection: $selectedPostType) {
+                    Text("All").tag(nil as PostTypeEnum?)
+                    ForEach(PostTypeEnum.allCases, id: \.self) { type in
+                        Text(type.rawValue.capitalized).tag(type as PostTypeEnum?)
+                    }
                 }
-            }
-            .pickerStyle(.segmented)
-            .onChange(of: selectedPostType) { _, _ in
-                filterPosts()
-            }
-            
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
-                TextField("Search in \(postsViewModel.selectedLocation)", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Button(action: {
-                    showLocationPicker = true
-                }) {
-                    Image(systemName: "mappin.and.ellipse")
-                        .foregroundColor(.blue)
+                .pickerStyle(.segmented)
+                .onChange(of: selectedPostType) { _, _ in
+                    filterPosts()
                 }
-            }
-            .padding()
-            .onChange(of: searchText) { _, _ in
-                filterPosts()
-            }
-            
-            List(postsViewModel.filteredPosts) { post in
-                PostItemView(selectedTab: $selectedTab, post: post)
-            }
-            
-            NavigationLink(destination: AddPostView(selectedTab: $selectedTab)    .environmentObject(postsViewModel)
-                .environmentObject(authViewModel)) {
-                Text("Add Post")
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth:.infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                    TextField("Search in \(postsViewModel.selectedLocation)", text: $searchText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Button(action: {
+                        showLocationPicker = true
+                    }) {
+                        Image(systemName: "mappin.and.ellipse")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+                .onChange(of: searchText) { _, _ in
+                    filterPosts()
+                }
+                
+                List(postsViewModel.filteredPosts) { post in
+                    PostItemView(selectedTab: $selectedTab, post: post)
+                        .frame(maxWidth: .infinity)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.vertical, 5)
+                }
+                .scrollContentBackground(.hidden)
+                .listStyle(.plain)
+                
+                
+                NavigationLink(destination: AddPostView(selectedTab: $selectedTab)    .environmentObject(postsViewModel)
+                    .environmentObject(authViewModel)) {
+                        Text("Add Post")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth:.infinity)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
             }
         }
         .onAppear {

@@ -15,34 +15,36 @@ struct UserDetailsView: View {
     @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
-        ScrollView {
-            if let user = authViewModel.selectedUser, authViewModel.selectedUser?.id == userId {
-                VStack(spacing: 20) {
-                    ProfileHeaderView(user: user, imageSize: 100)
-                    AboutMeView(description: user.description)
-                    MemberSinceView(date: user.memberSince)
-                    ReviewsView(reviews: authViewModel.userReviews)
-                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, selectedTab: $selectedTab)
-                    
-                    Button(action: {
-                        // Action to reach out
-                    }) {
-                        Text("Reach Out")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(15)
+        NavigationView {
+            ScrollView {
+                if let user = authViewModel.selectedUser, authViewModel.selectedUser?.id == userId {
+                    LazyVStack(spacing: 20) {
+                        ProfileHeaderView(user: user, imageSize: 100)
+                        AboutMeView(description: user.description)
+                        MemberSinceView(date: user.memberSince)
+                        ReviewsView(reviews: authViewModel.userReviews)
+                        PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, selectedTab: $selectedTab)
+                        
+                        Button(action: {
+                            // Action to reach out
+                        }) {
+                            Text("Reach Out")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(15)
+                        }
+                        .padding(.top)
                     }
-                    .padding(.top)
+                    .padding()
+                } else {
+                    ProgressView()
                 }
-                .padding()
-            } else {
-                ProgressView()
             }
+            .background(Color(.systemGroupedBackground))
         }
-        .background(Color(.systemGroupedBackground))
         .onAppear {
             Task {
                 await authViewModel.fetchSelectedUser(with: userId)

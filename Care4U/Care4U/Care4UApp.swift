@@ -26,8 +26,29 @@ struct Care4UApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+              // .monochromed(color: .blue)
                 .environmentObject(authViewModel)
-            
         }
     }
+    
 }
+
+struct MonochromeModifier: ViewModifier {
+    let color: Color
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            content
+            color.opacity(0.4)
+                .blendMode(.multiply)
+        }
+        .preferredColorScheme(.dark)
+    }
+}
+
+extension View {
+    func monochromed(color: Color) -> some View {
+        self.modifier(MonochromeModifier(color: color))
+    }
+}
+

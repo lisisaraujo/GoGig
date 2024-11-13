@@ -17,20 +17,20 @@ struct PersonalTabView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                if let user = authViewModel.currentUser {
-                    VStack(spacing: 20) {
+                LazyVStack(spacing: 20) { 
+                    if let user = authViewModel.currentUser {
                         ProfileHeaderView(user: user, imageSize: 150)
                         AboutMeView(description: user.description)
                         MemberSinceView(date: user.memberSince)
                         PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id }, selectedTab: $selectedTab)
+                    } else {
+                        GoToLoginOrRegistrationSheetView(onClose: {
+                            selectedTab = .search
+                        })
+                        .environmentObject(authViewModel)
                     }
-                    .padding()
-                } else {
-                    GoToLoginOrRegistrationSheetView(onClose: {
-                        selectedTab = .search
-                    })
-                    .environmentObject(authViewModel)
                 }
+                .padding()
             }
             .navigationTitle("Personal")
             .navigationBarTitleDisplayMode(.inline)
@@ -49,11 +49,12 @@ struct PersonalTabView: View {
         }
         .onAppear {
             Task {
-                await authViewModel.checkAuth() 
+                await authViewModel.checkAuth()
             }
         }
     }
 }
+
 
 #Preview {
     PersonalTabView(selectedTab: .constant(.personal))
