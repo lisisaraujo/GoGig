@@ -12,30 +12,27 @@ struct ProfileHeaderView: View {
     let imageSize: CGFloat
     
     var body: some View {
-        HStack(spacing: 20) {
+        VStack {
             AsyncImage(url: URL(string: user.profilePicURL ?? "")) { image in
                 image.resizable()
             } placeholder: {
                 Image(systemName: "person.circle.fill")
+                    .resizable()
                     .foregroundColor(.gray)
             }
             .frame(width: imageSize, height: imageSize)
             .clipShape(Circle())
-            .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+            .overlay(Circle().stroke(Color.blue, lineWidth: 2))
+            .shadow(radius: 5)
             
-            VStack(alignment: .leading) {
-                Text(user.fullName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                Text(user.location)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-            }
+            Text(user.fullName)
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text(user.location)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
         }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 

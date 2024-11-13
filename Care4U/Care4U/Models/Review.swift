@@ -8,18 +8,23 @@
 import Foundation
 import FirebaseFirestore
 
-struct Review: Codable, Identifiable, Hashable{
+struct Review: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
-    let userId: String
-    let reviewerId: String
-    let review: String
-    let rating: Double
+    var userId: String
+    var reviewerId: String
+    var serviceRequestId: String?
+    var review: String
+    var rating: Double
+    var timestamp: Date
     
-    init(id: String? = nil, userId: String, reviewerId: String, review: String, rating: Double) {
+    init(id: String? = nil, userId: String, reviewerId: String, serviceRequestId: String? = nil, review: String, rating: Double, timestamp: Date = Date()) {
         self.id = id
         self.userId = userId
         self.reviewerId = reviewerId
+        self.serviceRequestId = serviceRequestId
         self.review = review
         self.rating = rating
+        self.timestamp = timestamp
     }
 }
+

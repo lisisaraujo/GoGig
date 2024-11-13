@@ -15,36 +15,24 @@ struct UserDetailsView: View {
     @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                if let user = authViewModel.selectedUser, authViewModel.selectedUser?.id == userId {
-                    LazyVStack(spacing: 20) {
-                        ProfileHeaderView(user: user, imageSize: 100)
-                        AboutMeView(description: user.description)
-                        MemberSinceView(date: user.memberSince)
-                        ReviewsView(reviews: authViewModel.userReviews)
-                        PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, selectedTab: $selectedTab)
-                        
-                        Button(action: {
-                            // Action to reach out
-                        }) {
-                            Text("Reach Out")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(15)
-                        }
-                        .padding(.top)
-                    }
-                    .padding()
-                } else {
-                    ProgressView()
+        ScrollView {
+            if let user = authViewModel.selectedUser, authViewModel.selectedUser?.id == userId {
+                VStack(spacing: 20) {
+                    ProfileHeaderView(user: user, imageSize: 120)
+                    RatingView(rating: user.averageRating, reviewCount: user.reviewCount)
+                    AboutMeView(description: user.description)
+                    MemberSinceView(date: user.memberSince)
+                    ReviewsScrollView(reviews: authViewModel.userReviews)
+                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, selectedTab: $selectedTab)
                 }
+                .padding()
+            } else {
+                ProgressView()
             }
-            .background(Color(.systemGroupedBackground))
         }
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("User Profile")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task {
                 await authViewModel.fetchSelectedUser(with: userId)

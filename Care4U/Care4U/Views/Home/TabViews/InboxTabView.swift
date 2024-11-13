@@ -8,53 +8,66 @@
 import SwiftUI
 
 struct InboxTabView: View {
-    
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     @Binding var selectedTab: HomeTabEnum
 
     var body: some View {
-
-            ScrollView {
-                VStack(spacing: 20) {
-                    if let user = authViewModel.currentUser {
-                        Text("Hello, \(user.fullName)!")
-                            .font(.largeTitle)
+        NavigationView {
+            VStack {
+                if authViewModel.isUserLoggedIn {
+                    if let errorMessage = inboxViewModel.errorMessage {
+                        Text("Error: \(errorMessage)")
+                            .foregroundColor(.red)
                             .padding()
-                        
-                        Button(action: {
-                            authViewModel.logout()
-                        }) {
-                            Text("Sign Out")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth:.infinity)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
-                        }
-                        .padding(.horizontal)
-                    } else {
-                        GoToLoginOrRegistrationSheetView(onClose: {
-                                                    selectedTab = .search
-                                                })
-                                                .environmentObject(authViewModel)
                     }
+                    
+                    List {
+                        ForEach(inboxViewModel.receivedRequests) { request in
+                            NavigationLink(destination: RequestDetailsView(request: request)) {
+                                RequestListItemView(request: request)
+                            }
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                    .refreshable {
+                        inboxViewModel.fetchReceivedRequests()
+                    }
+                } else {
+                    GoToLoginOrRegistrationSheetView(onClose: {
+                        selectedTab = .search
+                    })
+                    .environmentObject(authViewModel)
                 }
-         
-                .navigationTitle("Inbox")
-                .navigationBarTitleDisplayMode(.inline)
             }
-//            .sheet(isPresented: $authViewModel.showLoginOrRegistrationSheet) {
-//                GoToLoginOrRegistrationSheetView() {
-//                    selectedTab = .search
-//                }
-//                .environmentObject(authViewModel)
-//            }
+            .navigationTitle("Inbox")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                if authViewModel.currentUser != nil {
+                    inboxViewModel.fetchReceivedRequests()
+                }
+            }
         }
     }
+}
 
+struct RequestListItemView: View {
+    let request: ServiceRequest
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("From: \(request.senderUserId)")
+                .font(.headline)
+            Text("Status: \(request.status.rawValue)")
+                .font(.subheadline)
+        }
+    }
+}
 
 #Preview {
     InboxTabView(selectedTab: .constant(.search))
         .environmentObject(AuthViewModel())
+        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(InboxViewModel())
 }

@@ -1,0 +1,77 @@
+//
+//  RatingView.swift
+//  Care4U
+//
+//  Created by Lisis Ruschel on 13.11.24.
+//
+
+import Foundation
+import SwiftUI
+
+struct AddRatingView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @Environment(\.presentationMode) var presentationMode
+    let serviceProvider: User
+    let serviceRequestId: String
+    
+    @State private var rating: Int = 0
+    @State private var review: String = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Rate Service Provider")) {
+                    HStack {
+                        ForEach(1...5, id: \.self) { number in
+                            Image(systemName: number <= rating ? "star.fill" : "star")
+                                .foregroundColor(.yellow)
+                                .onTapGesture {
+                                    rating = number
+                                }
+                        }
+                    }
+                }
+                
+                Section(header: Text("Write a Review")) {
+                    TextEditor(text: $review)
+                        .frame(height: 100)
+                }
+                
+                Button("Submit Review") {
+                    submitReview()
+                }
+            }
+            .navigationTitle("Rate Service")
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            }
+        }
+    }
+    
+    private func submitReview() {
+        guard let currentUserId = authViewModel.currentUser?.id else { return }
+        
+        let newReview = Review(
+            userId: serviceProvider.id!,
+            reviewerId: currentUserId,
+            serviceRequestId: serviceRequestId,
+            review: review,
+            rating: Double(rating)
+        )
+        
+        // Add the review to Firestore
+        authViewModel.addReview(newReview) { result in
+            switch result {
+            case .success:
+                alertMessage = "Your review has been submitted successfully."
+            case .failure(let error):
+                alertMessage = "Failed to submit review: \(error.localizedDescription)"
+            }
+            showAlert = true
+        }
+    }
+}

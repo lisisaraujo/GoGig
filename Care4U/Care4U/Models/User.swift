@@ -19,9 +19,16 @@ struct User: Codable, Identifiable, Hashable {
     var longitude: Double?
     var memberSince: Date
     var profilePicURL: String?
+    
+    // ratings and reviews
+    var averageRating: Double = 0.0
+    var reviewCount: Int = 0
+    
+    // bookmarked posts and requests
     var bookmarks: [String]?
-
-
+    var sentRequests: [String]?
+    var receivedRequests: [String]? 
+    
     init(id: String? = nil, email: String, fullName: String, birthDate: Date, location: String, description: String? = nil, latitude: Double? = nil, longitude: Double? = nil, memberSince: Date, profilePicURL: String? = nil, bookmarks: [String]? = nil) {
         self.id = id
         self.email = email

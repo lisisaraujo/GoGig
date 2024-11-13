@@ -11,6 +11,8 @@ struct HomeView: View {
     
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     @State var selectedTab: HomeTabEnum = .search
     
     var body: some View {
@@ -28,6 +30,8 @@ struct HomeView: View {
                     }.tag(HomeTabEnum.bookmark)
                 
                 InboxTabView(selectedTab: $selectedTab)
+                    .environmentObject(serviceRequestViewModel)
+                    .environmentObject(inboxViewModel)
                     .tabItem {
                         Label("Inbox", systemImage: "envelope.fill")
                     }.tag(HomeTabEnum.inbox)
@@ -46,4 +50,5 @@ struct HomeView: View {
     HomeView()
         .environmentObject(AuthViewModel()) 
         .environmentObject(PostsViewModel())
+        .environmentObject(ServiceRequestViewModel())
 }

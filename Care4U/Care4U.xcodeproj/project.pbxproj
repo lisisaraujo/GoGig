@@ -25,6 +25,18 @@
 		A74175102CE384F1007DA925 /* MemberSinceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750F2CE384F1007DA925 /* MemberSinceView.swift */; };
 		A74175142CE3851A007DA925 /* ReviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175132CE3851A007DA925 /* ReviewRow.swift */; };
 		A74175162CE38534007DA925 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175152CE38534007DA925 /* PostListView.swift */; };
+		A741751C2CE4DDAB007DA925 /* ServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751B2CE4DDAB007DA925 /* ServiceRequest.swift */; };
+		A741751E2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751D2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift */; };
+		A74175202CE4E19E007DA925 /* ServiceRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751F2CE4E19E007DA925 /* ServiceRequestsViewModel.swift */; };
+		A74175222CE4E3AB007DA925 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175212CE4E3AB007DA925 /* InboxViewModel.swift */; };
+		A74175242CE4E791007DA925 /* RequestFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175232CE4E791007DA925 /* RequestFormView.swift */; };
+		A74175262CE4E7E6007DA925 /* RequestNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175252CE4E7E6007DA925 /* RequestNotificationView.swift */; };
+		A74175292CE4F5C9007DA925 /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175282CE4F5C9007DA925 /* RequestDetailsView.swift */; };
+		A741752C2CE4FA42007DA925 /* AddRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752B2CE4FA42007DA925 /* AddRatingView.swift */; };
+		A741752E2CE4FEE3007DA925 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752D2CE4FEE3007DA925 /* ReviewCard.swift */; };
+		A74175302CE4FFE4007DA925 /* ReviewsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */; };
+		A74175322CE500E8007DA925 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175312CE500E8007DA925 /* RatingView.swift */; };
+		A74175342CE50447007DA925 /* ReviewerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175332CE50447007DA925 /* ReviewerCardView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -113,6 +125,18 @@
 		A741750F2CE384F1007DA925 /* MemberSinceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSinceView.swift; sourceTree = "<group>"; };
 		A74175132CE3851A007DA925 /* ReviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRow.swift; sourceTree = "<group>"; };
 		A74175152CE38534007DA925 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		A741751B2CE4DDAB007DA925 /* ServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequest.swift; sourceTree = "<group>"; };
+		A741751D2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestStatusEnum.swift; sourceTree = "<group>"; };
+		A741751F2CE4E19E007DA925 /* ServiceRequestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestsViewModel.swift; sourceTree = "<group>"; };
+		A74175212CE4E3AB007DA925 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
+		A74175232CE4E791007DA925 /* RequestFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFormView.swift; sourceTree = "<group>"; };
+		A74175252CE4E7E6007DA925 /* RequestNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestNotificationView.swift; sourceTree = "<group>"; };
+		A74175282CE4F5C9007DA925 /* RequestDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDetailsView.swift; sourceTree = "<group>"; };
+		A741752B2CE4FA42007DA925 /* AddRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRatingView.swift; sourceTree = "<group>"; };
+		A741752D2CE4FEE3007DA925 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
+		A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsScrollView.swift; sourceTree = "<group>"; };
+		A74175312CE500E8007DA925 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		A74175332CE50447007DA925 /* ReviewerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerCardView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +228,22 @@
 			path = EditProfile;
 			sourceTree = "<group>";
 		};
+		A74175272CE4F5BA007DA925 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				A74175282CE4F5C9007DA925 /* RequestDetailsView.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		A741752A2CE4FA36007DA925 /* Ratings */ = {
+			isa = PBXGroup;
+			children = (
+				A741752B2CE4FA42007DA925 /* AddRatingView.swift */,
+			);
+			path = Ratings;
+			sourceTree = "<group>";
+		};
 		A78AD7F52CD8DB830074EB6E /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +306,7 @@
 				A79945802CD012C000F4AF89 /* Review.swift */,
 				A79945822CD012CE00F4AF89 /* Chat.swift */,
 				A79945842CD012D500F4AF89 /* Message.swift */,
+				A741751B2CE4DDAB007DA925 /* ServiceRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -273,6 +314,8 @@
 		A79945532CD0102B00F4AF89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A741752A2CE4FA36007DA925 /* Ratings */,
+				A74175272CE4F5BA007DA925 /* Requests */,
 				A74174F82CE106AC007DA925 /* EditProfile */,
 				A79945932CD1014800F4AF89 /* Sheets */,
 				A79945772CD0126A00F4AF89 /* Reviews */,
@@ -306,6 +349,8 @@
 				A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */,
 				A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */,
 				A74175092CE37E53007DA925 /* UsersViewModel.swift */,
+				A741751F2CE4E19E007DA925 /* ServiceRequestsViewModel.swift */,
+				A74175212CE4E3AB007DA925 /* InboxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -320,6 +365,7 @@
 				A79945A72CD11FA900F4AF89 /* HomeTabsEnum.swift */,
 				A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */,
 				A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */,
+				A741751D2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -409,6 +455,12 @@
 				A741750F2CE384F1007DA925 /* MemberSinceView.swift */,
 				A74175132CE3851A007DA925 /* ReviewRow.swift */,
 				A74175152CE38534007DA925 /* PostListView.swift */,
+				A74175232CE4E791007DA925 /* RequestFormView.swift */,
+				A74175252CE4E7E6007DA925 /* RequestNotificationView.swift */,
+				A741752D2CE4FEE3007DA925 /* ReviewCard.swift */,
+				A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */,
+				A74175312CE500E8007DA925 /* RatingView.swift */,
+				A74175332CE50447007DA925 /* ReviewerCardView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -534,21 +586,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A74175242CE4E791007DA925 /* RequestFormView.swift in Sources */,
 				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A74175162CE38534007DA925 /* PostListView.swift in Sources */,
 				A74175042CE2AA79007DA925 /* EditPostView.swift in Sources */,
+				A741751E2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift in Sources */,
 				A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */,
 				A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */,
+				A74175202CE4E19E007DA925 /* ServiceRequestsViewModel.swift in Sources */,
 				A74175102CE384F1007DA925 /* MemberSinceView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
+				A74175302CE4FFE4007DA925 /* ReviewsScrollView.swift in Sources */,
+				A74175292CE4F5C9007DA925 /* RequestDetailsView.swift in Sources */,
 				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
 				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
+				A741751C2CE4DDAB007DA925 /* ServiceRequest.swift in Sources */,
 				A741750E2CE384DE007DA925 /* AboutMeView.swift in Sources */,
 				A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */,
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
@@ -558,19 +616,24 @@
 				A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */,
 				A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */,
 				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
+				A74175322CE500E8007DA925 /* RatingView.swift in Sources */,
+				A74175342CE50447007DA925 /* ReviewerCardView.swift in Sources */,
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
 				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
+				A741752C2CE4FA42007DA925 /* AddRatingView.swift in Sources */,
 				A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */,
 				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
+				A74175262CE4E7E6007DA925 /* RequestNotificationView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */,
 				A74175022CE23EA3007DA925 /* SideMenu.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
+				A741752E2CE4FEE3007DA925 /* ReviewCard.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A74175082CE36E37007DA925 /* MultipleSelectionRow.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
@@ -580,6 +643,7 @@
 				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
 				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,
 				A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */,
+				A74175222CE4E3AB007DA925 /* InboxViewModel.swift in Sources */,
 				A79945852CD012D500F4AF89 /* Message.swift in Sources */,
 				A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */,
 				A74175002CE10B4F007DA925 /* SampleData.swift in Sources */,

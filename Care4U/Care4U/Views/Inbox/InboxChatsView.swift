@@ -1,42 +1,28 @@
+////
+////  InboxChatsView.swift
+////  Care4U
+////
+////  Created by Lisis Ruschel on 28.10.24.
+////
 //
-//  InboxChatsView.swift
-//  Care4U
+//import SwiftUI
 //
-//  Created by Lisis Ruschel on 28.10.24.
+//struct InboxView: View {
+//    @ObservedObject var inboxViewModel = InboxViewModel()
+//    @StateObject var serviceRequestViewModel = ServiceRequestViewModel()
+//    
+//    var body: some View {
+//        List(inboxViewModel.receivedRequests) { request in
+//            RequestNotificationView(serviceRequestViewModel: serviceRequestViewModel, request: request)
+//        }
+//        .onAppear {
+//            inboxViewModel.fetchReceivedRequests()
+//        }
+//    }
+//}
 //
-
-import SwiftUI
-
-struct InboxChatsView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
-    @Binding var showLoginOrRegistrationSheet: Bool
-    @Binding var selectedTab: HomeTabEnum
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    if authViewModel.isUserLoggedIn {
-                        Text("Hello, \(authViewModel.currentUser?.fullName ?? "User")!")
-                            .font(.largeTitle)
-                            .padding()
-                    } else {
-                        GoToLoginOrRegistrationSheetView(onClose: {
-                                                    selectedTab = .search
-                                                })
-                                                .environmentObject(authViewModel)
-                    }
-                }
-                .navigationTitle("Bookmarks")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-   
- 
-        }
-    }
-}
-
-#Preview {
-    InboxChatsView(showLoginOrRegistrationSheet: .constant(true), selectedTab: .constant(.search))
-        .environmentObject(AuthViewModel())
-}
+//
+//#Preview {
+//    InboxView()
+//        .environmentObject(AuthViewModel())
+//}

@@ -266,6 +266,7 @@ class PostsViewModel: ObservableObject {
                 updateSuccess = false
             }
         }
+    
     }
         
 

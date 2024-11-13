@@ -10,12 +10,17 @@ import SwiftUI
 struct PostDetailsView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
     @Binding var selectedTab: HomeTabEnum
     
     let postId: String
     @State private var showUserDetails = false
     @State private var isLoading = true
-    @State private var creatorUser: User? 
+    @State private var creatorUser: User?
+    @State private var showRequestForm = false
+    @State private var showRequestConfirmation = false
+    @State private var requestMessage = ""
+    @State private var contactInfo = ""
     
     private var isCurrentUserCreator: Bool {
         guard let post = postsViewModel.selectedPost,
@@ -37,10 +42,20 @@ struct PostDetailsView: View {
                         PostMetadataView(post: post)
                         CreatorCardView(post: post, creatorUser: creatorUser, showUserDetails: $showUserDetails)
                         
-                        if isCurrentUserCreator {
+                        if isCurrentUserCreator, authViewModel.isUserLoggedIn {
                             Button("Delete Post") {
                                 postsViewModel.deleteSelectedPost(postId: postId)
                             }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.red)
+                        } else {
+                            Button("Send Request") {
+                               
+                                    showRequestForm = true
+                                
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .frame(maxWidth: .infinity)
                         }
                     }
                     .padding()
@@ -52,6 +67,16 @@ struct PostDetailsView: View {
                             .environmentObject(authViewModel)
                     }
                 }
+                .sheet(isPresented: $showRequestForm) {
+
+                        RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
+
+                }
+                .alert("Request Sent", isPresented: $showRequestConfirmation) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("Your request has been sent to the post creator.")
+                }
             } else {
                 Text("Post not found")
                     .font(.headline)
@@ -62,6 +87,19 @@ struct PostDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadData)
     }
+    
+    private func sendRequest() {
+        Task {
+            guard let post = postsViewModel.selectedPost else { return }
+            
+             serviceRequestViewModel.sendRequest(recipientUserId: post.userId, postId: post.id!, message: requestMessage, contactInfo: contactInfo)
+            
+            await MainActor.run {
+                showRequestForm = false
+                showRequestConfirmation = true
+            }
+        }
+    }
 
     private func loadData() {
         Task {
@@ -69,7 +107,6 @@ struct PostDetailsView: View {
             if authViewModel.currentUser == nil {
                 await authViewModel.checkAuth()
             }
-            // fetch creator information based on post's userId
             if let userId = postsViewModel.selectedPost?.userId {
                 await authViewModel.fetchSelectedUser(with: userId)
                 creatorUser = authViewModel.selectedUser
@@ -80,13 +117,14 @@ struct PostDetailsView: View {
 
     @ViewBuilder
     private var editButton: some View {
-        if isCurrentUserCreator { // show edit button only if current user is creator
+        if isCurrentUserCreator {
             NavigationLink(destination: EditPostView(selectedTab: $selectedTab, post: postsViewModel.selectedPost!)) {
                 Text("Edit")
             }
         }
     }
 }
+
 struct PostHeaderView: View {
     let post: Post
 
@@ -194,4 +232,5 @@ struct CreatorCardView: View {
     PostDetailsView(selectedTab:.constant(.search), postId:"sample-post-id")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
+        .environmentObject(ServiceRequestViewModel())
 }

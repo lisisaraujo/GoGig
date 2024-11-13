@@ -11,19 +11,17 @@ struct AboutMeView: View {
     let description: String?
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("About Me")
                 .font(.headline)
-            Text(description ?? "Tell us about yourself...")
+            Text(description ?? "No description provided")
                 .font(.body)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(10)
+                .foregroundColor(.secondary)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(Color(.systemBackground))
-        .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        .cornerRadius(10)
     }
 }
 

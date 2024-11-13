@@ -12,6 +12,9 @@ struct ContentView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var postsViewModel = PostsViewModel()
+    @StateObject var serviceRequestViewModel = ServiceRequestViewModel()
+    @StateObject var inboxViewModel = InboxViewModel()
+
     
     
     var body: some View {
@@ -24,6 +27,8 @@ struct ContentView: View {
             }
             .environmentObject(postsViewModel)
             .environmentObject(authViewModel)
+            .environmentObject(serviceRequestViewModel)
+            .environmentObject(inboxViewModel)
     }
     
     func updateLocationAndCoordinates() {
@@ -45,4 +50,6 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
+        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(InboxViewModel())
 }

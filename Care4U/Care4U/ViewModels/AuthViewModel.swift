@@ -14,6 +14,7 @@ import CoreLocation
 
 @MainActor
 class AuthViewModel: ObservableObject {
+    
     private let firebaseManager = FirebaseManager.shared
     
     @Published var currentUser: User?
@@ -37,55 +38,66 @@ class AuthViewModel: ObservableObject {
             self.currentUser = nil
             return
         }
-        await fetchUserAndReviews(with: currentUserId, isCurrentUser: true)
+        await fetchUserAndReviews(with: currentUserId)
     }
     
     func fetchSelectedUser(with id: String) async {
-        await fetchUserAndReviews(with: id, isCurrentUser: false)
-    }
-    
-    private func fetchUserAndReviews(with id: String, isCurrentUser: Bool) async {
-        do {
-            let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
-            
-            guard document.exists else {
-                print("No such document!")
-                if isCurrentUser {
-                    self.currentUser = nil
-                } else {
-                    self.selectedUser = nil
-                }
-                return
-            }
+           await fetchUserAndReviews(with: id)
+       }
+       
+       private func fetchUserAndReviews(with id: String) async {
+           do {
+               let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
+               
+               guard document.exists else {
+                   print("No such document!")
+                   resetUserData(for: id)
+                   return
+               }
 
-            let fetchedUser = try document.data(as: User.self)
-            if isCurrentUser {
-                self.currentUser = fetchedUser
-            } else {
-                self.selectedUser = fetchedUser
-                self.userReviews = await getUserReviews(for: id)
-            }
+               let fetchedUser = try document.data(as: User.self)
+               if id == currentUser?.id {
+                   self.currentUser = fetchedUser
+               } else {
+                   self.selectedUser = fetchedUser
+                   self.userReviews = await getUserReviews(for: id)
+               }
+           } catch {
+               print("Error fetching user:", error)
+               resetUserData(for: id)
+           }
+       }
+
+       private func resetUserData(for id: String) {
+           if id == currentUser?.id {
+               self.currentUser = nil
+           } else {
+               self.selectedUser = nil
+           }
+       }
+
+       private func getUserReviews(for userId: String) async -> [Review] {
+           do {
+               let reviewsQuery = firebaseManager.database.collection("reviews").whereField("userId", isEqualTo: userId)
+               let snapshot = try await reviewsQuery.getDocuments()
+               return snapshot.documents.compactMap { try? $0.data(as: Review.self) }
+           } catch {
+               print("Error fetching user reviews:", error.localizedDescription)
+               return []
+           }
+       }
+
+    
+    func fetchUser(with userId: String) async -> User? {
+        do {
+            let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId).getDocument()
+            return try document.data(as: User.self)
         } catch {
-            print("Error fetching user:", error)
-            if isCurrentUser {
-                self.currentUser = nil
-            } else {
-                self.selectedUser = nil
-            }
+            print("Error fetching user:", error.localizedDescription)
+            return nil
         }
     }
     
-    private func getUserReviews(for userId: String) async -> [Review] {
-        do {
-            let reviewsQuery = firebaseManager.database.collection("reviews").whereField("userId", isEqualTo: userId)
-            let snapshot = try await reviewsQuery.getDocuments()
-            return snapshot.documents.compactMap { try? $0.data(as: Review.self) }
-        } catch {
-            print("Error fetching user reviews:", error.localizedDescription)
-            return []
-        }
-    }
-
     
     func logout() {
         do {
@@ -172,7 +184,7 @@ class AuthViewModel: ObservableObject {
             print("User with email '\(authResult.user.email ?? "")' is logged in with id '\(authResult.user.uid)'")
             
             Task {
-                await self.fetchUserAndReviews(with: authResult.user.uid, isCurrentUser: true)
+                await self.fetchUserAndReviews(with: authResult.user.uid)
             }
         }
     }
@@ -334,5 +346,39 @@ class AuthViewModel: ObservableObject {
       }
     
     
-    
+    func addReview(_ review: Review, completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            try firebaseManager.database.collection(firebaseManager.reviewsCollectionName).addDocument(from: review) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    // Update the user's average rating and review count
+                    self.updateUserRating(userId: review.userId, newRating: review.rating)
+                    completion(.success(()))
+                }
+            }
+        } catch {
+            completion(.failure(error))
+        }
+    }
+
+    private func updateUserRating(userId: String, newRating: Double) {
+        let userRef = firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId)
+        
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let currentAverage = document.data()?["averageRating"] as? Double ?? 0.0
+                let currentCount = document.data()?["reviewCount"] as? Int ?? 0
+                
+                let newCount = currentCount + 1
+                let newAverage = ((currentAverage * Double(currentCount)) + newRating) / Double(newCount)
+                
+                userRef.updateData([
+                    "averageRating": newAverage,
+                    "reviewCount": newCount
+                ])
+            }
+        }
+    }
+
 }
