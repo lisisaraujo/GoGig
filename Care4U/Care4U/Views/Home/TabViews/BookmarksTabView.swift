@@ -14,18 +14,27 @@ struct BookmarksTabView: View {
     @State private var isLoading = false
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
+        NavigationView {
+            Group {
                 if authViewModel.isUserLoggedIn {
-                    if isLoading {
-                        ProgressView()
-                    } else if !postsViewModel.bookmarkedPosts.isEmpty {
-                        ForEach(postsViewModel.bookmarkedPosts) { post in
-                            PostItemView(selectedTab: $selectedTab, post: post)
+                    ScrollView {
+                        if isLoading {
+                            ProgressView()
+                        } else if !postsViewModel.bookmarkedPosts.isEmpty {
+                            LazyVStack(spacing: 20) {
+                                ForEach(postsViewModel.bookmarkedPosts) { post in
+                                    PostItemView(selectedTab: $selectedTab, post: post)
+                                }
+                            }
+                        } else {
+                            Text("No bookmarked posts")
+                                .font(.headline)
+                                .foregroundColor(.gray)
                         }
-                    } else {
-                        Text("No bookmarked posts")
                     }
+                    .onAppear(perform: loadBookmarkedPosts)
+                    .navigationTitle("Bookmarks")
+                    .navigationBarTitleDisplayMode(.inline)
                 } else {
                     GoToLoginOrRegistrationSheetView(onClose: {
                         selectedTab = .search
@@ -33,21 +42,17 @@ struct BookmarksTabView: View {
                     .environmentObject(authViewModel)
                 }
             }
-            .onAppear {
-                if authViewModel.isUserLoggedIn {
-                    isLoading = true
-                    Task {
-                        await postsViewModel.fetchBookmarkedPosts()
-                        isLoading = false
-                    }
-                }
-            }
-            .navigationTitle("Bookmarks")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private func loadBookmarkedPosts() {
+        isLoading = true
+        Task {
+            await postsViewModel.fetchBookmarkedPosts()
+            isLoading = false
         }
     }
 }
-
 
 #Preview {
     BookmarksTabView(selectedTab: Binding.constant(.bookmark))

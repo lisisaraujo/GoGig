@@ -37,6 +37,7 @@ struct LoginView: View {
                 
                 
                 Button(action: {
+                    print("logged in")
                     authViewModel.login(email: email, password: password)
                     dismiss()
                 }) {

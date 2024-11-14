@@ -22,9 +22,6 @@ struct RegistrationView: View {
     @State private var isImagePickerPresented = false
     @State private var description = ""
     
-//    @State private var selectedLocation = ""
-//    @State private var selectedCoordinates: CLLocationCoordinate2D?
-    
     @State private var isAutocompletePresented = false
 
 

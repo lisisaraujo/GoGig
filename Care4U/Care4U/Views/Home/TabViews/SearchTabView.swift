@@ -57,16 +57,6 @@ struct SearchTabView: View {
                 .scrollContentBackground(.hidden)
                 .listStyle(.plain)
                 
-                
-                NavigationLink(destination: AddPostView(selectedTab: $selectedTab)    .environmentObject(postsViewModel)
-                    .environmentObject(authViewModel)) {
-                        Text("Add Post")
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth:.infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
             }
         }
         .onAppear {

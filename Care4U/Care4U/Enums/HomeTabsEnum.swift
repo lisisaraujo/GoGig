@@ -9,5 +9,5 @@ import Foundation
 
 
 enum HomeTabEnum {
-    case search, bookmark, inbox, personal
+    case search, bookmark, add, inbox, personal
 }

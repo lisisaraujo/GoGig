@@ -18,17 +18,15 @@ struct PostItemView: View {
     @State private var isBookmarked = false
     
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            NavigationLink(destination: PostDetailsView(selectedTab: $selectedTab, postId: post.id!)
-                           .environmentObject(postsViewModel)
-                           .environmentObject(authViewModel)) {
-
-            VStack(alignment: .leading, spacing: 6) {
+        NavigationLink(destination: PostDetailsView(selectedTab: $selectedTab, postId: post.id!)
+                       .environmentObject(postsViewModel)
+                       .environmentObject(authViewModel)) {
+            VStack(alignment: .leading, spacing: 12) {
                 HStack {
                     Text(post.title)
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundColor(Color.white.opacity(0.9))
+                        .foregroundColor(Color("primaryText"))
                     
                     Spacer()
                     
@@ -42,7 +40,7 @@ struct PostItemView: View {
                             isBookmarked.toggle()
                         }) {
                             Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                                .foregroundColor(.white.opacity(0.9))
+                                .foregroundColor(Color("accent"))
                                 .padding(8)
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -51,34 +49,40 @@ struct PostItemView: View {
                 
                 Text(post.description)
                     .font(.subheadline)
-                    .foregroundColor(Color.white.opacity(0.7))
+                    .foregroundColor(Color("secondaryText"))
                     .lineLimit(2)
                 
                 HStack {
                     Text(post.type)
                         .font(.caption)
-                        .foregroundColor(Color.white.opacity(0.6))
+                        .foregroundColor(Color("accent"))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color("accent").opacity(0.1))
+                        .cornerRadius(8)
                     
                     Spacer()
                     
                     Text("Posted on \(formattedDate(post.createdOn))")
                         .font(.caption)
-                        .foregroundColor(Color.white.opacity(0.6))
+                        .foregroundColor(Color("secondaryText"))
                 }
             }
             .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color("Blue600").opacity(0.4))
-            .cornerRadius(5)
-         
-        }
-        .background(Color.clear)
-}
-        .onAppear(perform: updateBookmarkStatus)
-        .onChange(of: postsViewModel.bookmarkedPostsIds) { _,_ in
-            updateBookmarkStatus()
-        }
-    }
+                   .frame(maxWidth: .infinity, alignment: .leading)
+                   .glassyBackground(opacity: 0.15, blurRadius: 15)
+                   .overlay(
+                       RoundedRectangle(cornerRadius: 16)
+                           .stroke(Color("accent").opacity(0.3), lineWidth: 1)
+                   )
+                   .shadow(color: Color("accent").opacity(0.1), radius: 10, x: 0, y: 5)
+               }
+               .buttonStyle(PlainButtonStyle())
+               .onAppear(perform: updateBookmarkStatus)
+               .onChange(of: postsViewModel.bookmarkedPostsIds) { _,_ in
+                   updateBookmarkStatus()
+               }
+           }
     
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -91,7 +95,6 @@ struct PostItemView: View {
         isBookmarked = postsViewModel.isPostBookmarked(post.id ?? "")
     }
 }
-
 
 #Preview {
     PostItemView(selectedTab: .constant(.search), post: Post(id: "1", userId: "user123", type: "Offer", title: "Looking for a roommate", description: "I have a room available in my apartment. Looking for someone responsible and clean.", isActive: true, exchangeCoins: [], categories: [], createdOn: Date(), latitude: 22.000, longitude: 23.000, postLocation: "Berlin"))

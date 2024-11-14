@@ -15,37 +15,37 @@ struct InboxTabView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
+            Group {
                 if authViewModel.isUserLoggedIn {
-                    if let errorMessage = inboxViewModel.errorMessage {
-                        Text("Error: \(errorMessage)")
-                            .foregroundColor(.red)
-                            .padding()
-                    }
-                    
-                    List {
-                        ForEach(inboxViewModel.receivedRequests) { request in
-                            NavigationLink(destination: RequestDetailsView(request: request)) {
-                                RequestListItemView(request: request)
+                    VStack {
+                        if let errorMessage = inboxViewModel.errorMessage {
+                            Text("Error: \(errorMessage)")
+                                .foregroundColor(.red)
+                                .padding()
+                        }
+                        
+                        List {
+                            ForEach(inboxViewModel.receivedRequests) { request in
+                                NavigationLink(destination: RequestDetailsView(request: request)) {
+                                    RequestListItemView(request: request)
+                                }
                             }
                         }
+                        .listStyle(PlainListStyle())
+                        .refreshable {
+                            inboxViewModel.fetchReceivedRequests()
+                        }
                     }
-                    .listStyle(PlainListStyle())
-                    .refreshable {
+                    .navigationTitle("Inbox")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .onAppear {
                         inboxViewModel.fetchReceivedRequests()
                     }
                 } else {
                     GoToLoginOrRegistrationSheetView(onClose: {
-                        selectedTab = .search
+                        selectedTab = .search 
                     })
                     .environmentObject(authViewModel)
-                }
-            }
-            .navigationTitle("Inbox")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                if authViewModel.currentUser != nil {
-                    inboxViewModel.fetchReceivedRequests()
                 }
             }
         }

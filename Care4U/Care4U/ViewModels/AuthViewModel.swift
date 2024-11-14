@@ -32,6 +32,22 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func login(email: String, password: String) {
+        firebaseManager.auth.signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print("Login failed: ", error)
+                return
+            }
+            
+            guard let authResult else { return }
+            print("User with email '\(authResult.user.email ?? "")' is logged in with id '\(authResult.user.uid)'")
+            
+            Task {
+                await self.fetchUserAndReviews(with: authResult.user.uid)
+            }
+        }
+    }
+    
     func checkAuth() async {
         guard let currentUserId = firebaseManager.auth.currentUser?.uid else {
             print("Not logged in")
@@ -56,7 +72,7 @@ class AuthViewModel: ObservableObject {
                }
 
                let fetchedUser = try document.data(as: User.self)
-               if id == currentUser?.id {
+               if id == firebaseManager.userId {
                    self.currentUser = fetchedUser
                } else {
                    self.selectedUser = fetchedUser
@@ -173,21 +189,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func login(email: String, password: String) {
-        firebaseManager.auth.signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Login failed: ", error)
-                return
-            }
-            
-            guard let authResult else { return }
-            print("User with email '\(authResult.user.email ?? "")' is logged in with id '\(authResult.user.uid)'")
-            
-            Task {
-                await self.fetchUserAndReviews(with: authResult.user.uid)
-            }
-        }
-    }
+
    
     func updateUserData(fullName: String?, location: String?, description: String?, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
         guard let userId = currentUser?.id else {

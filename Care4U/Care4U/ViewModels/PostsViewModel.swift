@@ -210,19 +210,18 @@ class PostsViewModel: ObservableObject {
         }
     }
     
+    func deleteSelectedPost(postId: String) async -> Bool {
+          do {
+              try await firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId).delete()
+              print("Post data deleted successfully")
+              return true
+          } catch {
+              print("Error deleting Post data: \(error.localizedDescription)")
+              return false
+          }
+      }
 
-    func deleteSelectedPost(postId: String) {
-        Task {
-            do {
-                try await repo.deleteSelectedPost(postId: postId)
-            } catch {
-                handleError(error)
-            }
-        }
-    }
     
-
-        
         func updatePost(type: String?, title: String?, description: String?, isActive: Bool?, exchangeCoins: [String]?, categories: [String]?, latitude: Double?, longitude: Double?, postLocation: String?) async {
             guard let postId = selectedPost?.id else {
                 print("No selected post to update")

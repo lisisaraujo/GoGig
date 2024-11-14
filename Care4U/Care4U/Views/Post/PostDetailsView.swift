@@ -11,6 +11,8 @@ struct PostDetailsView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @Environment(\.dismiss) private var dismiss
+
     @Binding var selectedTab: HomeTabEnum
     
     let postId: String
@@ -19,6 +21,8 @@ struct PostDetailsView: View {
     @State private var creatorUser: User?
     @State private var showRequestForm = false
     @State private var showRequestConfirmation = false
+    @State private var showDeletionConfirmation = false
+    @State private var isDeleting = false
     @State private var requestMessage = ""
     @State private var contactInfo = ""
     
@@ -32,9 +36,7 @@ struct PostDetailsView: View {
     
     var body: some View {
         Group {
-            if isLoading {
-                ProgressView()
-            } else if let post = postsViewModel.selectedPost {
+       if let post = postsViewModel.selectedPost {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         PostHeaderView(post: post)
@@ -44,10 +46,12 @@ struct PostDetailsView: View {
                         
                         if isCurrentUserCreator, authViewModel.isUserLoggedIn {
                             Button("Delete Post") {
-                                postsViewModel.deleteSelectedPost(postId: postId)
+                                showDeletionConfirmation = true
                             }
                             .buttonStyle(.borderedProminent)
-                            .tint(.red)
+                                                       .tint(.red)
+                                                       .disabled(isDeleting)
+                            
                         } else {
                             Button("Send Request") {
                                
@@ -77,6 +81,14 @@ struct PostDetailsView: View {
                 } message: {
                     Text("Your request has been sent to the post creator.")
                 }
+                .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {
+                                    Button("Delete", role: .destructive) {
+                                        deletePost(postId: postId)
+                                    }
+                                    Button("Cancel", role: .cancel) {}
+                                } message: {
+                                    Text("Are you sure you want to delete this post? This action cannot be undone.")
+                                }
             } else {
                 Text("Post not found")
                     .font(.headline)
@@ -86,6 +98,22 @@ struct PostDetailsView: View {
         .navigationTitle("Post Details")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadData)
+        
+    }
+    
+    private func deletePost(postId: String) {
+        isDeleting = true
+        Task {
+            let success = await postsViewModel.deleteSelectedPost(postId: postId) // Call your delete function here
+            
+            isDeleting = false
+            
+            if success {
+                showDeletionConfirmation = false
+                dismiss()
+            } else {
+            }
+        }
     }
     
     private func sendRequest() {

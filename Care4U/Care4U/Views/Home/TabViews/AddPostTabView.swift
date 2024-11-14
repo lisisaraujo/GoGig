@@ -8,9 +8,12 @@
 import SwiftUI
 import CoreLocation
 
-struct AddPostView: View {
+struct AddPostTabView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var selectedTab: HomeTabEnum
+    @Environment(\.dismiss) private var dismiss
+
     
     @State private var title = ""
     @State private var description = ""
@@ -20,21 +23,30 @@ struct AddPostView: View {
     @State private var selectedCategories: [CategoriesEnum] = []
 
     var body: some View {
-        PostFormView(
-            selectedTab: $selectedTab,
-            title: $title,
-            description: $description,
-            selectedType: $selectedType,
-            isActive: $isActive,
-            selectedExchangeCoins: $selectedExchangeCoins,
-            selectedCategories: $selectedCategories,
-            navigationTitle: "Add Post",
-            actionButtonText: "Create Post",
-            loadingMessage: "Adding post...",
-            onSubmit: {
-                await createPost()
-            }
-        )
+        if authViewModel.isUserLoggedIn{
+            PostFormView(
+                selectedTab: $selectedTab,
+                title: $title,
+                description: $description,
+                selectedType: $selectedType,
+                isActive: $isActive,
+                selectedExchangeCoins: $selectedExchangeCoins,
+                selectedCategories: $selectedCategories,
+                navigationTitle: "Add Post",
+                actionButtonText: "Create Post",
+                loadingMessage: "Adding post...",
+                onSubmit: {
+                    await createPost()
+                }
+            )
+        } else {
+            
+            GoToLoginOrRegistrationSheetView(onClose: {
+                selectedTab = .search
+            })
+            .environmentObject(authViewModel)
+            
+        }
     }
     
     private func createPost() async -> Bool {
@@ -52,13 +64,16 @@ struct AddPostView: View {
         
         // wait for a short time to allow the operation to complete
         try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        selectedTab = .search
         
         return postsViewModel.updateSuccess
+        
+ 
     }
 }
 
 #Preview {
-    AddPostView(selectedTab: .constant(.search))
+    AddPostTabView(selectedTab: .constant(.search))
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
 }

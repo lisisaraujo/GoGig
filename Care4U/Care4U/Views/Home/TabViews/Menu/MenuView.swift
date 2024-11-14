@@ -17,45 +17,39 @@ struct MenuView: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Button(action: {
+        NavigationView {
+            List {
+                Section {
+                    Button(action: {
+                        isPresented = false
+                        shouldNavigateToEditProfile = true
+                    }) {
+                        Label("Edit Profile", systemImage: "person.crop.circle")
+                    }
+                    
+                    Button(action: {
+                        authViewModel.logout()
+                        isPresented = false
+                    }) {
+                        Label("Logout", systemImage: "arrow.right.square")
+                    }
+                }
+                
+                Section {
+                    Button(action: {
+                        showingAlert = true
+                    }) {
+                        Label("Delete My Account", systemImage: "trash")
+                            .foregroundColor(.red)
+                    }
+                }
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Menu")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button("Close") {
                 isPresented = false
-                shouldNavigateToEditProfile = true
-            }) {
-                Text("Edit Profile")
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
-            }
-            
-            Button(action: {
-                authViewModel.logout()
-                isPresented = false
-            }) {
-                Text("Logout")
-                    .font(.headline)
-                    .foregroundColor(.blue)
-                    .padding()
-            }
-
-            Button("Delete My Account") {
-                showingAlert = true
-            }
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.red)
-            .cornerRadius(10)
-
-            Spacer()
-        }
-        .frame(width: UIScreen.main.bounds.width * 0.6)
-        .background(Color.white)
-        .edgesIgnoringSafeArea(.top)
-        .onTapGesture {
-            isPresented = false
+            })
         }
         .alert(isPresented: $showingAlert) {
             Alert(

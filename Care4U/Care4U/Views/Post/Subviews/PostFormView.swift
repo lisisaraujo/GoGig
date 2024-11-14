@@ -9,7 +9,7 @@ import SwiftUI
 import CoreLocation
 
 struct PostFormView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var selectedTab: HomeTabEnum
@@ -34,7 +34,6 @@ struct PostFormView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
-                if authViewModel.isUserLoggedIn {
                     Form {
                         Section(header: Text("Post Details")) {
                             CustomTextFieldView(placeholder: "Title", text: $title)
@@ -108,13 +107,7 @@ struct PostFormView: View {
                         }
                         .disabled(isLoading)
                     }
-                } else {
-                    GoToLoginOrRegistrationSheetView(onClose: {
-                        selectedTab = .search
-                        dismiss()
-                    })
-                    .environmentObject(authViewModel)
-                }
+                
             }
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
