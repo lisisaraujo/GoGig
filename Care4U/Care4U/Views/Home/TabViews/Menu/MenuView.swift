@@ -17,7 +17,7 @@ struct MenuView: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        NavigationView {
+        VStack{
             List {
                 Section {
                     Button(action: {

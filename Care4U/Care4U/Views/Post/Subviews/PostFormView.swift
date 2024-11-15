@@ -12,7 +12,6 @@ struct PostFormView: View {
 
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Environment(\.dismiss) private var dismiss
-    @Binding var selectedTab: HomeTabEnum
     
     @Binding var title: String
     @Binding var description: String
@@ -26,6 +25,7 @@ struct PostFormView: View {
     @State private var isAutocompletePresented = false
     @State private var isLoading = false
     
+    let isEditMode: Bool
     let navigationTitle: String
     let actionButtonText: String
     let loadingMessage: String
@@ -130,6 +130,10 @@ struct PostFormView: View {
                 .background(Color.gray.opacity(0.7))
                 .cornerRadius(20)
             }
+        }   .onAppear {
+            if !isEditMode {
+                clearFields()
+            }
         }
     }
     
@@ -143,18 +147,29 @@ struct PostFormView: View {
             }
         }
     }
+    
+    private func clearFields() {
+        title = ""
+        description = ""
+        selectedType = .offer
+        isActive = true
+        selectedExchangeCoins = []
+        selectedCategories = []
+        postsViewModel.selectedLocation = ""
+        postsViewModel.selectedCoordinates = nil
+    }
 }
 
 
 #Preview {
     PostFormView(
-        selectedTab: .constant(.search),
         title: .constant(""),
         description: .constant(""),
         selectedType: .constant(.offer),
         isActive: .constant(true),
         selectedExchangeCoins: .constant([]),
         selectedCategories: .constant([]),
+        isEditMode: true,
         navigationTitle: "Add Post",
         actionButtonText: "Create Post",
         loadingMessage: "Adding post...",

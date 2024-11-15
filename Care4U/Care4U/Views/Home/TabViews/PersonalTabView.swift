@@ -15,7 +15,7 @@ struct PersonalTabView: View {
     @State private var shouldNavigateToEditProfile = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Group {
                 if authViewModel.isUserLoggedIn {
                     ScrollView {
@@ -24,7 +24,7 @@ struct PersonalTabView: View {
                                 ProfileHeaderView(user: user, imageSize: 150)
                                 AboutMeView(description: user.description)
                                 MemberSinceView(date: user.memberSince)
-                                PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id }, selectedTab: $selectedTab)
+                                PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id })
                             }
                         }
                     }

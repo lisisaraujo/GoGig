@@ -23,29 +23,31 @@ struct AddPostTabView: View {
     @State private var selectedCategories: [CategoriesEnum] = []
 
     var body: some View {
-        if authViewModel.isUserLoggedIn{
-            PostFormView(
-                selectedTab: $selectedTab,
-                title: $title,
-                description: $description,
-                selectedType: $selectedType,
-                isActive: $isActive,
-                selectedExchangeCoins: $selectedExchangeCoins,
-                selectedCategories: $selectedCategories,
-                navigationTitle: "Add Post",
-                actionButtonText: "Create Post",
-                loadingMessage: "Adding post...",
-                onSubmit: {
-                    await createPost()
-                }
-            )
-        } else {
-            
-            GoToLoginOrRegistrationSheetView(onClose: {
-                selectedTab = .search
-            })
-            .environmentObject(authViewModel)
-            
+        NavigationStack {
+            if authViewModel.isUserLoggedIn{
+                PostFormView(
+                    title: $title,
+                    description: $description,
+                    selectedType: $selectedType,
+                    isActive: $isActive,
+                    selectedExchangeCoins: $selectedExchangeCoins,
+                    selectedCategories: $selectedCategories,
+                    isEditMode: false,
+                    navigationTitle: "Add Post",
+                    actionButtonText: "Create Post",
+                    loadingMessage: "Adding post...",
+                    onSubmit: {
+                        await createPost()
+                    }
+                )
+            } else {
+                
+                GoToLoginOrRegistrationSheetView(onClose: {
+                    selectedTab = .search
+                })
+                .environmentObject(authViewModel)
+                
+            }
         }
     }
     
@@ -73,7 +75,7 @@ struct AddPostTabView: View {
 }
 
 #Preview {
-    AddPostTabView(selectedTab: .constant(.search))
+    AddPostTabView(selectedTab: .constant(.add))
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
 }

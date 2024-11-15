@@ -12,30 +12,52 @@ struct UserDetailsView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     
     var userId: String
-    @Binding var selectedTab: HomeTabEnum
+    @State private var isLoading = true
     
     var body: some View {
         ScrollView {
-            if let user = authViewModel.selectedUser, authViewModel.selectedUser?.id == userId {
+            if isLoading {
+                ProgressView()
+                    .padding()
+            } else if let user = authViewModel.selectedUser, user.id == userId {
                 VStack(spacing: 20) {
                     ProfileHeaderView(user: user, imageSize: 120)
                     RatingView(rating: user.averageRating, reviewCount: user.reviewCount)
                     AboutMeView(description: user.description)
                     MemberSinceView(date: user.memberSince)
                     ReviewsScrollView(reviews: authViewModel.userReviews)
-                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, selectedTab: $selectedTab)
+                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId })
                 }
                 .padding()
             } else {
-                ProgressView()
+                VStack {
+                    Text("User not found")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                    Text("User ID: \(userId)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Text("Selected User ID: \(authViewModel.selectedUser?.id ?? "nil")")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .padding()
             }
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle("User Profile")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            Task {
-                await authViewModel.fetchSelectedUser(with: userId)
+            loadUserData()
+        }
+    }
+    
+    private func loadUserData() {
+        isLoading = true
+        Task {
+            await authViewModel.fetchSelectedUser(with: userId)
+            await MainActor.run {
+                isLoading = false
             }
         }
     }
@@ -43,7 +65,7 @@ struct UserDetailsView: View {
 
 
 #Preview {
-    UserDetailsView(userId: "", selectedTab: .constant(.search))
+    UserDetailsView(userId: "")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }

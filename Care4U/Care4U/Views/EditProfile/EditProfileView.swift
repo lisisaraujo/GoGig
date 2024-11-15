@@ -23,7 +23,7 @@ struct EditProfileView: View {
     @State private var isAutocompletePresented = false
 
     var body: some View {
-        NavigationView {
+        VStack{
             Form {
                 Section(header: Text("Profile Picture")) {
                     Button(action: {

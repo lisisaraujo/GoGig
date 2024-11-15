@@ -14,7 +14,7 @@ struct BookmarksTabView: View {
     @State private var isLoading = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Group {
                 if authViewModel.isUserLoggedIn {
                     ScrollView {
@@ -23,7 +23,7 @@ struct BookmarksTabView: View {
                         } else if !postsViewModel.bookmarkedPosts.isEmpty {
                             LazyVStack(spacing: 20) {
                                 ForEach(postsViewModel.bookmarkedPosts) { post in
-                                    PostItemView(selectedTab: $selectedTab, post: post)
+                                    PostItemView(post: post)
                                 }
                             }
                         } else {

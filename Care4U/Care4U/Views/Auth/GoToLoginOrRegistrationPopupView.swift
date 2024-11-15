@@ -5,7 +5,6 @@ struct GoToLoginOrRegistrationSheetView: View {
     var onClose: () -> Void = {}
 
     var body: some View {
-        NavigationView {
             VStack(spacing: 24) {
                 Text("Welcome to Care4U")
                     .font(.title)
@@ -46,8 +45,6 @@ struct GoToLoginOrRegistrationSheetView: View {
                 Image(systemName: "xmark")
                     .foregroundColor(.primary)
             })
-        }
-        .interactiveDismissDisabled()
     }
 }
 

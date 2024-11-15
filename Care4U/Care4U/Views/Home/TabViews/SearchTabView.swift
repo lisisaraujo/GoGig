@@ -18,7 +18,7 @@ struct SearchTabView: View {
     @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
-        NavigationView{
+        NavigationStack {
             VStack {
                 Picker("Post Type", selection: $selectedPostType) {
                     Text("All").tag(nil as PostTypeEnum?)
@@ -49,7 +49,7 @@ struct SearchTabView: View {
                 }
                 
                 List(postsViewModel.filteredPosts) { post in
-                    PostItemView(selectedTab: $selectedTab, post: post)
+                    PostItemView(post: post)
                         .frame(maxWidth: .infinity)
                         .listRowInsets(EdgeInsets())
                         .padding(.vertical, 5)
@@ -67,6 +67,7 @@ struct SearchTabView: View {
         }
     }
     
+    
     private func filterPosts() {
         postsViewModel.filterPosts(
             selectedPostType: selectedPostType,
@@ -74,6 +75,7 @@ struct SearchTabView: View {
             maxDistance: postsViewModel.selectedDistance
         )
     }
+    
 }
 
 #Preview {

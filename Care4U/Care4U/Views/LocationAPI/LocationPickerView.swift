@@ -15,7 +15,6 @@ struct LocationPickerView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     LocationSelectionView(showAutocomplete: $showAutocomplete)
@@ -42,7 +41,7 @@ struct LocationPickerView: View {
             }
         }
     }
-}
+
 
 struct LocationSelectionView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel

@@ -16,7 +16,7 @@ struct HomeView: View {
     @State var selectedTab: HomeTabEnum = .search
     
     var body: some View {
-        NavigationStack {
+  
             TabView(selection: $selectedTab) {
                 SearchTabView(selectedTab: $selectedTab)
                     .environmentObject(postsViewModel)
@@ -55,8 +55,6 @@ struct HomeView: View {
                     }.tag(HomeTabEnum.personal)
             }
         }
-        
-    }
 }
 
 #Preview {

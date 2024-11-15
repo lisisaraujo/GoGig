@@ -20,7 +20,6 @@ struct AddRatingView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        NavigationView {
             Form {
                 Section(header: Text("Rate Service Provider")) {
                     HStack {
@@ -50,7 +49,6 @@ struct AddRatingView: View {
                 })
             }
         }
-    }
     
     private func submitReview() {
         guard let currentUserId = authViewModel.currentUser?.id else { return }
@@ -63,7 +61,7 @@ struct AddRatingView: View {
             rating: Double(rating)
         )
         
-        // Add the review to Firestore
+        //add review to firestore
         authViewModel.addReview(newReview) { result in
             switch result {
             case .success:

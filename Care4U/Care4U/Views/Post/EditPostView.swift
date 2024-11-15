@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditPostView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
-    @Binding var selectedTab: HomeTabEnum
     let post: Post
 
     @State private var title: String = ""
@@ -21,13 +20,13 @@ struct EditPostView: View {
 
     var body: some View {
         PostFormView(
-            selectedTab: $selectedTab,
             title: $title,
             description: $description,
             selectedType: $selectedType,
             isActive: $isActive,
             selectedExchangeCoins: $selectedExchangeCoins,
             selectedCategories: $selectedCategories,
+            isEditMode: true,
             navigationTitle: "Edit Post",
             actionButtonText: "Save Changes",
             loadingMessage: "Updating post...",
@@ -71,7 +70,6 @@ struct EditPostView: View {
 
 #Preview {
     EditPostView(
-        selectedTab: .constant(.search),
         post: Post(
             id: "1",
             userId: "user1",

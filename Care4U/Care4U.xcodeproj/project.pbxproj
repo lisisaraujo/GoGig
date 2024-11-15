@@ -36,12 +36,16 @@
 		A741752E2CE4FEE3007DA925 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752D2CE4FEE3007DA925 /* ReviewCard.swift */; };
 		A74175302CE4FFE4007DA925 /* ReviewsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */; };
 		A74175322CE500E8007DA925 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175312CE500E8007DA925 /* RatingView.swift */; };
-		A74175342CE50447007DA925 /* ReviewerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175332CE50447007DA925 /* ReviewerCardView.swift */; };
 		A741753C2CE5E92E007DA925 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753B2CE5E92E007DA925 /* UserRepository.swift */; };
 		A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753D2CE5E947007DA925 /* RequestsRepository.swift */; };
 		A74175402CE5E954007DA925 /* InboxRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753F2CE5E954007DA925 /* InboxRepository.swift */; };
 		A74175432CE61886007DA925 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175422CE61886007DA925 /* Buttons.swift */; };
 		A74175452CE621F2007DA925 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175442CE621F2007DA925 /* Background.swift */; };
+		A74175472CE75439007DA925 /* InboxEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175462CE75439007DA925 /* InboxEnum.swift */; };
+		A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175482CE77AB0007DA925 /* ReviewerCardView.swift */; };
+		A741754B2CE78095007DA925 /* RequestListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754A2CE78095007DA925 /* RequestListItemView.swift */; };
+		A741754D2CE79147007DA925 /* SenderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754C2CE79147007DA925 /* SenderCardView.swift */; };
+		A741754F2CE7AFC3007DA925 /* CreatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754E2CE7AFC3007DA925 /* CreatorCardView.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -141,12 +145,16 @@
 		A741752D2CE4FEE3007DA925 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsScrollView.swift; sourceTree = "<group>"; };
 		A74175312CE500E8007DA925 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
-		A74175332CE50447007DA925 /* ReviewerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerCardView.swift; sourceTree = "<group>"; };
 		A741753B2CE5E92E007DA925 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		A741753D2CE5E947007DA925 /* RequestsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsRepository.swift; sourceTree = "<group>"; };
 		A741753F2CE5E954007DA925 /* InboxRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxRepository.swift; sourceTree = "<group>"; };
 		A74175422CE61886007DA925 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		A74175442CE621F2007DA925 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		A74175462CE75439007DA925 /* InboxEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEnum.swift; sourceTree = "<group>"; };
+		A74175482CE77AB0007DA925 /* ReviewerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerCardView.swift; sourceTree = "<group>"; };
+		A741754A2CE78095007DA925 /* RequestListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestListItemView.swift; sourceTree = "<group>"; };
+		A741754C2CE79147007DA925 /* SenderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCardView.swift; sourceTree = "<group>"; };
+		A741754E2CE7AFC3007DA925 /* CreatorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorCardView.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,11 +286,11 @@
 		A74175372CE5E677007DA925 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				A74175332CE50447007DA925 /* ReviewerCardView.swift */,
 				A741752F2CE4FFE4007DA925 /* ReviewsScrollView.swift */,
 				A74175312CE500E8007DA925 /* RatingView.swift */,
 				A741752D2CE4FEE3007DA925 /* ReviewCard.swift */,
 				A74175132CE3851A007DA925 /* ReviewRow.swift */,
+				A74175482CE77AB0007DA925 /* ReviewerCardView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -294,6 +302,7 @@
 				A741750F2CE384F1007DA925 /* MemberSinceView.swift */,
 				A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */,
 				A741750D2CE384DE007DA925 /* AboutMeView.swift */,
+				A741754E2CE7AFC3007DA925 /* CreatorCardView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -303,6 +312,8 @@
 			children = (
 				A74175232CE4E791007DA925 /* RequestFormView.swift */,
 				A74175252CE4E7E6007DA925 /* RequestNotificationView.swift */,
+				A741754A2CE78095007DA925 /* RequestListItemView.swift */,
+				A741754C2CE79147007DA925 /* SenderCardView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -440,6 +451,7 @@
 				A79945B02CD124A100F4AF89 /* DataErrorEnum.swift */,
 				A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */,
 				A741751D2CE4DF98007DA925 /* ServiceRequestStatusEnum.swift */,
+				A74175462CE75439007DA925 /* InboxEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -642,6 +654,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A74175242CE4E791007DA925 /* RequestFormView.swift in Sources */,
+				A741754D2CE79147007DA925 /* SenderCardView.swift in Sources */,
 				A79945B32CD264F300F4AF89 /* PopupView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
 				A74175162CE38534007DA925 /* PostListView.swift in Sources */,
@@ -660,6 +673,7 @@
 				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
 				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
+				A74175472CE75439007DA925 /* InboxEnum.swift in Sources */,
 				A79945872CD0145100F4AF89 /* PostTypeEnum.swift in Sources */,
 				A799457B2CD0129100F4AF89 /* AddReviewView.swift in Sources */,
 				A741751C2CE4DDAB007DA925 /* ServiceRequest.swift in Sources */,
@@ -668,6 +682,7 @@
 				A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */,
 				A79945A82CD11FA900F4AF89 /* HomeTabsEnum.swift in Sources */,
 				A79945AC2CD1225200F4AF89 /* PostsViewModel.swift in Sources */,
+				A741754F2CE7AFC3007DA925 /* CreatorCardView.swift in Sources */,
 				A79945732CD0123A00F4AF89 /* ChatDetailsView.swift in Sources */,
 				A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */,
 				A74175432CE61886007DA925 /* Buttons.swift in Sources */,
@@ -675,7 +690,7 @@
 				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
 				A74175322CE500E8007DA925 /* RatingView.swift in Sources */,
 				A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */,
-				A74175342CE50447007DA925 /* ReviewerCardView.swift in Sources */,
+				A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */,
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
 				A741753C2CE5E92E007DA925 /* UserRepository.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
@@ -685,6 +700,7 @@
 				A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */,
 				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
+				A741754B2CE78095007DA925 /* RequestListItemView.swift in Sources */,
 				A74175262CE4E7E6007DA925 /* RequestNotificationView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,

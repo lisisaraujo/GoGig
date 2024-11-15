@@ -12,8 +12,6 @@ struct PostDetailsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
     @Environment(\.dismiss) private var dismiss
-
-    @Binding var selectedTab: HomeTabEnum
     
     let postId: String
     @State private var showUserDetails = false
@@ -25,6 +23,7 @@ struct PostDetailsView: View {
     @State private var isDeleting = false
     @State private var requestMessage = ""
     @State private var contactInfo = ""
+
     
     private var isCurrentUserCreator: Bool {
         guard let post = postsViewModel.selectedPost,
@@ -42,7 +41,9 @@ struct PostDetailsView: View {
                         PostHeaderView(post: post)
                         PostContentView(post: post)
                         PostMetadataView(post: post)
-                        CreatorCardView(post: post, creatorUser: creatorUser, showUserDetails: $showUserDetails)
+                        NavigationLink(destination: UserDetailsView(userId: creatorUser?.id ?? "")) {
+                            CreatorCardView(user: creatorUser, title: "View Profile")
+                        }
                         
                         if isCurrentUserCreator, authViewModel.isUserLoggedIn {
                             Button("Delete Post") {
@@ -67,7 +68,7 @@ struct PostDetailsView: View {
                 .navigationBarItems(trailing: editButton)
                 .sheet(isPresented: $showUserDetails) {
                     if let userId = postsViewModel.selectedPost?.userId {
-                        UserDetailsView(userId: userId, selectedTab: $selectedTab)
+                        UserDetailsView(userId: userId)
                             .environmentObject(authViewModel)
                     }
                 }
@@ -136,8 +137,8 @@ struct PostDetailsView: View {
                 await authViewModel.checkAuth()
             }
             if let userId = postsViewModel.selectedPost?.userId {
-                await authViewModel.fetchSelectedUser(with: userId)
-                creatorUser = authViewModel.selectedUser
+                await creatorUser = authViewModel.fetchUser(with: userId)
+              
             }
             isLoading = false
         }
@@ -146,7 +147,7 @@ struct PostDetailsView: View {
     @ViewBuilder
     private var editButton: some View {
         if isCurrentUserCreator {
-            NavigationLink(destination: EditPostView(selectedTab: $selectedTab, post: postsViewModel.selectedPost!)) {
+            NavigationLink(destination: EditPostView(post: postsViewModel.selectedPost!)) {
                 Text("Edit")
             }
         }
@@ -219,45 +220,10 @@ struct PostMetadataView: View {
     }
 }
 
-struct CreatorCardView: View {
-    let post: Post
-    let creatorUser: User?
-    @Binding var showUserDetails: Bool
-    
-    var body: some View {
-        Button(action: {
-            showUserDetails = true
-        }) {
-            HStack {
-                AsyncImage(url: URL(string: creatorUser?.profilePicURL ?? "")) { image in
-                    image.resizable()
-                } placeholder: {
-                    Image(systemName:"person.circle")
-                }
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                
-                VStack(alignment:.leading) {
-                    Text(creatorUser?.fullName ?? "No name")
-                        .font(.headline)
-                    Text("View Profile")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                }
-                Spacer()
-                Image(systemName:"chevron.right")
-                    .foregroundColor(.secondary)
-            }
-            .padding()
-            .background(Color(.systemBackground))
-            .cornerRadius(12)
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
+
 
 #Preview {
-    PostDetailsView(selectedTab:.constant(.search), postId:"sample-post-id")
+    PostDetailsView(postId:"sample-post-id")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
         .environmentObject(ServiceRequestViewModel())

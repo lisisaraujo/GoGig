@@ -11,7 +11,7 @@ import SwiftUI
 struct RequestDetailsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
-    @State private var showSenderProfile = false
+    @State private var showUserDetails = false
     @State private var showDeclineConfirmation = false
     @State private var showRatingView = false
     @State private var senderUser: User?
@@ -20,33 +20,24 @@ struct RequestDetailsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Request Details")
-                    .font(.title)
-                    .fontWeight(.bold)
 
                 Text("Message:")
                     .font(.headline)
                 Text(request.message ?? "No message provided")
                     .padding(.bottom)
-
-                Button(action: { showSenderProfile = true }) {
-                    SenderCardView(senderUser: senderUser)
+                
+                NavigationLink(destination: UserDetailsView(userId: senderUser?.id ?? "")) {
+                    CreatorCardView(user: senderUser, title: "View Sender Profile")
                 }
-                .sheet(isPresented: $showSenderProfile) {
+
+                .sheet(isPresented: $showUserDetails) {
                     if let senderId = senderUser?.id {
-                        UserDetailsView(userId: senderId, selectedTab: .constant(.inbox))
+                        UserDetailsView(userId: senderId)
                     }
                 }
 
-                if request.status == .accepted {
-                    Text("Contact Information:")
-                        .font(.headline)
-                    Text(request.contactInfo ?? "No contact information provided")
-                        .padding(.bottom)
-                }
-
                 HStack {
-                    if request.status == .pending {
+                    if request.status == .pending && request.senderUserId != authViewModel.currentUser?.id {
                         Button("Accept") {
                             acceptRequest()
                         }
@@ -96,8 +87,7 @@ struct RequestDetailsView: View {
 
     private func loadSenderDetails() {
         Task {
-            await authViewModel.fetchSelectedUser(with: request.senderUserId)
-            senderUser = authViewModel.selectedUser
+            await senderUser = authViewModel.fetchUser(with: request.senderUserId)
         }
     }
 
@@ -107,39 +97,7 @@ struct RequestDetailsView: View {
 
     private func declineRequest() {
         serviceRequestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .declined)
-        // Optionally, remove the request from the database
-        // serviceRequestViewModel.removeRequest(requestId: request.id!)
     }
 }
 
-struct SenderCardView: View {
-    let senderUser: User?
 
-    var body: some View {
-        HStack {
-            AsyncImage(url: URL(string: senderUser?.profilePicURL ?? "")) { image in
-                image.resizable()
-            } placeholder: {
-                Image(systemName: "person.circle")
-            }
-            .frame(width: 50, height: 50)
-            .clipShape(Circle())
-
-            VStack(alignment: .leading) {
-                Text(senderUser?.fullName ?? "Unknown Sender")
-                    .font(.headline)
-                Text("View Profile")
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
-            }
-
-            Spacer()
-
-            Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-    }
-}

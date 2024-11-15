@@ -9,14 +9,13 @@ import SwiftUI
 
 struct PostsListView: View {
     let posts: [Post]
-    @Binding var selectedTab: HomeTabEnum
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("Posts")
                 .font(.headline)
             ForEach(posts, id: \.id) { post in
-                PostItemView(selectedTab: $selectedTab, post: post)
+                PostItemView(post: post)
             }
         }
         .padding()

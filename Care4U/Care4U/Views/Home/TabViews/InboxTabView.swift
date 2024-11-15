@@ -12,22 +12,40 @@ struct InboxTabView: View {
     @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @Binding var selectedTab: HomeTabEnum
+    @State var selectedInbox: InboxEnum = .received
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Group {
                 if authViewModel.isUserLoggedIn {
                     VStack {
+                        Picker("Inbox Type", selection: $selectedInbox) {
+                            ForEach(InboxEnum.allCases, id: \.self) { type in
+                                Text(type.rawValue.capitalized).tag(type as InboxEnum?)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .onChange(of: selectedInbox) { _, _ in
+                            if selectedInbox == .received {
+                                inboxViewModel.fetchReceivedRequests()
+                            } else {
+                                serviceRequestViewModel.fetchSentRequests()
+                            }
+                        }
+                        
                         if let errorMessage = inboxViewModel.errorMessage {
                             Text("Error: \(errorMessage)")
                                 .foregroundColor(.red)
                                 .padding()
                         }
-                        
+                   
                         List {
-                            ForEach(inboxViewModel.receivedRequests) { request in
+                            ForEach(selectedInbox == .received ?  inboxViewModel.receivedRequests : serviceRequestViewModel.sentRequests) { request in
                                 NavigationLink(destination: RequestDetailsView(request: request)) {
                                     RequestListItemView(request: request)
+                                        .environmentObject(authViewModel)
+                                        .environmentObject(serviceRequestViewModel)
+                              
                                 }
                             }
                         }
@@ -52,18 +70,7 @@ struct InboxTabView: View {
     }
 }
 
-struct RequestListItemView: View {
-    let request: ServiceRequest
 
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("From: \(request.senderUserId)")
-                .font(.headline)
-            Text("Status: \(request.status.rawValue)")
-                .font(.subheadline)
-        }
-    }
-}
 
 #Preview {
     InboxTabView(selectedTab: .constant(.search))

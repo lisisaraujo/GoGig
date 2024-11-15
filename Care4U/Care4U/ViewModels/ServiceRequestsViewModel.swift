@@ -11,7 +11,6 @@ import Combine
 
 class ServiceRequestViewModel: ObservableObject {
     private var firebaseManager = FirebaseManager.shared
-    private var cancellables = Set<AnyCancellable>()
     
     @Published var currentRequest: ServiceRequest?
     @Published var sentRequests: [ServiceRequest] = []

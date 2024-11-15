@@ -58,31 +58,33 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchSelectedUser(with id: String) async {
-           await fetchUserAndReviews(with: id)
-       }
-       
-       private func fetchUserAndReviews(with id: String) async {
-           do {
-               let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
-               
-               guard document.exists else {
-                   print("No such document!")
-                   resetUserData(for: id)
-                   return
-               }
+        print("Fetching selected user with ID: \(id)")
+        await fetchUserAndReviews(with: id)
+    }
 
-               let fetchedUser = try document.data(as: User.self)
-               if id == firebaseManager.userId {
-                   self.currentUser = fetchedUser
-               } else {
-                   self.selectedUser = fetchedUser
-                   self.userReviews = await getUserReviews(for: id)
-               }
-           } catch {
-               print("Error fetching user:", error)
-               resetUserData(for: id)
-           }
-       }
+    private func fetchUserAndReviews(with id: String) async {
+        print("Fetching user and reviews for ID: \(id)")
+        do {
+            let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
+            
+            guard document.exists else {
+                print("No such document!")
+                resetUserData(for: id)
+                return
+            }
+
+            let fetchedUser = try document.data(as: User.self)
+            if id == firebaseManager.userId {
+                self.currentUser = fetchedUser
+            } else {
+                self.selectedUser = fetchedUser
+                self.userReviews = await getUserReviews(for: id)
+            }
+        } catch {
+            print("Error fetching user:", error)
+            resetUserData(for: id)
+        }
+    }
 
        private func resetUserData(for id: String) {
            if id == currentUser?.id {
@@ -354,7 +356,7 @@ class AuthViewModel: ObservableObject {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    // Update the user's average rating and review count
+                    //update the user's average rating and review count
                     self.updateUserRating(userId: review.userId, newRating: review.rating)
                     completion(.success(()))
                 }
