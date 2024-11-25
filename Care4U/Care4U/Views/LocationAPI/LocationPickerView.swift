@@ -10,38 +10,36 @@ import CoreLocation
 
 struct LocationPickerView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
-    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var showAutocomplete = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    LocationSelectionView(showAutocomplete: $showAutocomplete)
-                    
-                    SearchRadiusView(selectedDistance: $postsViewModel.selectedDistance)
-                    
-                    ActionButtonsView(dismiss: dismiss)
-                }
-                .padding()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                LocationSelectionView(showAutocomplete: $showAutocomplete)
+                
+                SearchRadiusView(selectedDistance: $postsViewModel.selectedDistance)
+                
+                ActionButtonsView(dismiss: dismiss)
             }
-            .navigationTitle("Select Location")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Cancel") {
-                dismiss()
-            })
-            .sheet(isPresented: $showAutocomplete) {
-                AutocompleteControllerView(
-                    location: $postsViewModel.selectedLocation,
-                    selectedCoordinates: Binding(
-                        get: { postsViewModel.selectedCoordinates ?? CLLocationCoordinate2D() },
-                        set: { postsViewModel.selectedCoordinates = $0 }
-                    )
+            .padding()
+        }
+        .navigationTitle("Select Location")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(trailing: Button("Cancel") {
+            dismiss()
+        })
+        .sheet(isPresented: $showAutocomplete) {
+            AutocompleteControllerView(
+                location: $postsViewModel.selectedLocation,
+                selectedCoordinates: Binding(
+                    get: { postsViewModel.selectedCoordinates ?? CLLocationCoordinate2D() },
+                    set: { postsViewModel.selectedCoordinates = $0 }
                 )
-            }
+            )
         }
     }
-
+}
 
 struct LocationSelectionView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
@@ -65,7 +63,6 @@ struct LocationSelectionView: View {
                         .foregroundColor(.secondary)
                 }
                 .padding()
-                .background(Color(.systemBackground))
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -113,9 +110,7 @@ struct ActionButtonsView: View {
     }
 }
 
-
 #Preview {
     LocationPickerView()
         .environmentObject(PostsViewModel())
-        .environmentObject(AuthViewModel())
 }

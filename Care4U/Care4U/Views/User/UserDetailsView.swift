@@ -44,7 +44,6 @@ struct UserDetailsView: View {
                 .padding()
             }
         }
-        .background(Color(.systemGroupedBackground))
         .navigationTitle("User Profile")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {

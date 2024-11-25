@@ -11,6 +11,7 @@ import CoreLocation
 struct PostFormView: View {
 
     @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.dismiss) private var dismiss
     
     @Binding var title: String
@@ -19,11 +20,16 @@ struct PostFormView: View {
     @Binding var isActive: Bool
     @Binding var selectedExchangeCoins: [ExchangeCoinEnum]
     @Binding var selectedCategories: [CategoriesEnum]
+    @Binding var localSelectedLocation: String
+    @Binding var localSelectedCoordinates: CLLocationCoordinate2D?
     
     @State private var showExchangeCoins: Bool = true
     @State private var showCategories: Bool = true
     @State private var isAutocompletePresented = false
     @State private var isLoading = false
+    
+
+
     
     let isEditMode: Bool
     let navigationTitle: String
@@ -93,7 +99,11 @@ struct PostFormView: View {
                             }
                         }
                         
-                        SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
+                        SelectLocationView(
+                            selectedLocation: $localSelectedLocation,
+                            selectedCoordinates: $localSelectedCoordinates,
+                            isAutocompletePresented: $isAutocompletePresented
+                        )
                         
                         Button(action: {
                             submitForm()
@@ -130,11 +140,12 @@ struct PostFormView: View {
                 .background(Color.gray.opacity(0.7))
                 .cornerRadius(20)
             }
-        }   .onAppear {
+        }  .onAppear {
             if !isEditMode {
                 clearFields()
             }
         }
+
     }
     
     private func submitForm() {
@@ -155,8 +166,11 @@ struct PostFormView: View {
         isActive = true
         selectedExchangeCoins = []
         selectedCategories = []
-        postsViewModel.selectedLocation = ""
-        postsViewModel.selectedCoordinates = nil
+        if let user = authViewModel.currentUser {
+        localSelectedLocation = user.location
+            localSelectedCoordinates = CLLocationCoordinate2D(latitude: user.latitude!, longitude: user.longitude!)
+        }
+        
     }
 }
 
@@ -169,6 +183,8 @@ struct PostFormView: View {
         isActive: .constant(true),
         selectedExchangeCoins: .constant([]),
         selectedCategories: .constant([]),
+        localSelectedLocation:.constant("Berlin"),
+        localSelectedCoordinates: .constant(CLLocationCoordinate2D(latitude: 9.0, longitude: 0.0)),
         isEditMode: true,
         navigationTitle: "Add Post",
         actionButtonText: "Create Post",

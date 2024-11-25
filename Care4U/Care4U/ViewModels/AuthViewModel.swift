@@ -21,6 +21,8 @@ class AuthViewModel: ObservableObject {
     @Published var selectedUser: User?
     @Published var userReviews: [Review] = []
     @Published var loadingState: LoadingStateEnum = .idle
+    @Published var userLocation: String = ""
+    @Published var userLocationCoordinates: CLLocationCoordinate2D?
     
     var isUserLoggedIn: Bool {
         return currentUser != nil
@@ -29,7 +31,8 @@ class AuthViewModel: ObservableObject {
     init() {
         Task {
             await checkAuth()
-        }
+            
+     }
     }
     
     func login(email: String, password: String) {

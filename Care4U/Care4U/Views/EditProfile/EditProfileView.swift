@@ -21,6 +21,9 @@ struct EditProfileView: View {
     @State private var description = ""
     @State private var isImagePickerPresented = false
     @State private var isAutocompletePresented = false
+    
+    @State private var localSelectedLocation: String = ""
+    @State private var localSelectedCoordinates: CLLocationCoordinate2D?
 
     var body: some View {
         VStack{
@@ -66,7 +69,11 @@ struct EditProfileView: View {
                 }
                 
                 Section(header: Text("Location")) {
-                    SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
+                    SelectLocationView(
+                        selectedLocation: $localSelectedLocation,
+                        selectedCoordinates: $localSelectedCoordinates,
+                        isAutocompletePresented: $isAutocompletePresented
+                    )
                         .environmentObject(authViewModel)
                 }
             }
@@ -78,13 +85,17 @@ struct EditProfileView: View {
                 ImagePickerView(selectedImage: $selectedImage)
             }
         }
-        .onAppear(perform: loadUserData)
+        .onAppear{
+            loadUserData()
+        }
     }
     
     private func loadUserData() {
         if let user = authViewModel.currentUser {
             fullName = user.fullName
             description = user.description ?? ""
+            localSelectedLocation = user.location
+            localSelectedCoordinates = CLLocationCoordinate2D(latitude: user.latitude!, longitude: user.longitude!)
         }
     }
     
@@ -92,10 +103,10 @@ struct EditProfileView: View {
         Task {
             authViewModel.updateUserData(
                 fullName: fullName,
-                location: postsViewModel.selectedLocation,
+                location: localSelectedLocation,
                 description: description,
-                latitude: postsViewModel.selectedCoordinates?.latitude,
-                longitude: postsViewModel.selectedCoordinates?.longitude,
+                latitude: localSelectedCoordinates?.latitude,
+                longitude: localSelectedCoordinates?.longitude,
                 profileImage: selectedImage
             ) { success in
                 DispatchQueue.main.async {
@@ -107,6 +118,8 @@ struct EditProfileView: View {
                 }
             }
         }
+        authViewModel.userLocation = localSelectedLocation
+        authViewModel.userLocationCoordinates = localSelectedCoordinates
     }
 }
 

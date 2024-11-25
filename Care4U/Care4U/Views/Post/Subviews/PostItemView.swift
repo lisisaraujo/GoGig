@@ -69,7 +69,6 @@ struct PostItemView: View {
             }
             .padding()
                    .frame(maxWidth: .infinity, alignment: .leading)
-                   .glassyBackground(opacity: 0.15, blurRadius: 15)
                    .overlay(
                        RoundedRectangle(cornerRadius: 16)
                            .stroke(Color("accent").opacity(0.3), lineWidth: 1)

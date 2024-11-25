@@ -40,7 +40,6 @@ struct ReviewCard: View {
         })
         .frame(width: 200, height: 120)
         .padding()
-        .background(Color(.systemBackground))
         .cornerRadius(10)
         .shadow(radius: 2)
     }

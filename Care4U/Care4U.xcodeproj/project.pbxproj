@@ -40,12 +40,13 @@
 		A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753D2CE5E947007DA925 /* RequestsRepository.swift */; };
 		A74175402CE5E954007DA925 /* InboxRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753F2CE5E954007DA925 /* InboxRepository.swift */; };
 		A74175432CE61886007DA925 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175422CE61886007DA925 /* Buttons.swift */; };
-		A74175452CE621F2007DA925 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175442CE621F2007DA925 /* Background.swift */; };
 		A74175472CE75439007DA925 /* InboxEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175462CE75439007DA925 /* InboxEnum.swift */; };
 		A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175482CE77AB0007DA925 /* ReviewerCardView.swift */; };
 		A741754B2CE78095007DA925 /* RequestListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754A2CE78095007DA925 /* RequestListItemView.swift */; };
 		A741754D2CE79147007DA925 /* SenderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754C2CE79147007DA925 /* SenderCardView.swift */; };
 		A741754F2CE7AFC3007DA925 /* CreatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741754E2CE7AFC3007DA925 /* CreatorCardView.swift */; };
+		A74FE3262CF3B86200517D3C /* AboutMeView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74FE3252CF3B86200517D3C /* AboutMeView2.swift */; };
+		A74FE3282CF3B9A100517D3C /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74FE3272CF3B9A100517D3C /* RoundedCorner.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
 		A79945102CCFB02600F4AF89 /* Care4UApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* Care4UApp.swift */; };
@@ -149,12 +150,13 @@
 		A741753D2CE5E947007DA925 /* RequestsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsRepository.swift; sourceTree = "<group>"; };
 		A741753F2CE5E954007DA925 /* InboxRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxRepository.swift; sourceTree = "<group>"; };
 		A74175422CE61886007DA925 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
-		A74175442CE621F2007DA925 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		A74175462CE75439007DA925 /* InboxEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEnum.swift; sourceTree = "<group>"; };
 		A74175482CE77AB0007DA925 /* ReviewerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerCardView.swift; sourceTree = "<group>"; };
 		A741754A2CE78095007DA925 /* RequestListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestListItemView.swift; sourceTree = "<group>"; };
 		A741754C2CE79147007DA925 /* SenderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCardView.swift; sourceTree = "<group>"; };
 		A741754E2CE7AFC3007DA925 /* CreatorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorCardView.swift; sourceTree = "<group>"; };
+		A74FE3252CF3B86200517D3C /* AboutMeView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView2.swift; sourceTree = "<group>"; };
+		A74FE3272CF3B9A100517D3C /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* Care4U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Care4U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -461,6 +463,7 @@
 			children = (
 				A79945642CD0116800F4AF89 /* HomeView.swift */,
 				A79945A02CD11ECA00F4AF89 /* TabViews */,
+				A74FE3272CF3B9A100517D3C /* RoundedCorner.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -511,7 +514,6 @@
 				A79945B22CD264F300F4AF89 /* PopupView.swift */,
 				A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */,
 				A74174FF2CE10B4F007DA925 /* SampleData.swift */,
-				A74175442CE621F2007DA925 /* Background.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -536,6 +538,7 @@
 				A79945A32CD11EF000F4AF89 /* InboxTabView.swift */,
 				A79945A52CD11F0700F4AF89 /* PersonalTabView.swift */,
 				A74175412CE61761007DA925 /* Menu */,
+				A74FE3252CF3B86200517D3C /* AboutMeView2.swift */,
 			);
 			path = TabViews;
 			sourceTree = "<group>";
@@ -668,9 +671,9 @@
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
 				A79945712CD0122B00F4AF89 /* InboxChatsView.swift in Sources */,
 				A74175302CE4FFE4007DA925 /* ReviewsScrollView.swift in Sources */,
-				A74175452CE621F2007DA925 /* Background.swift in Sources */,
 				A74175292CE4F5C9007DA925 /* RequestDetailsView.swift in Sources */,
 				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
+				A74FE3262CF3B86200517D3C /* AboutMeView2.swift in Sources */,
 				A79945952CD1017300F4AF89 /* GoToLoginOrRegistrationPopupView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A74175472CE75439007DA925 /* InboxEnum.swift in Sources */,
@@ -713,6 +716,7 @@
 				A74175082CE36E37007DA925 /* MultipleSelectionRow.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
 				A74175402CE5E954007DA925 /* InboxRepository.swift in Sources */,
+				A74FE3282CF3B9A100517D3C /* RoundedCorner.swift in Sources */,
 				A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */,
 				A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */,
 				A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */,

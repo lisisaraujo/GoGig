@@ -67,7 +67,11 @@ struct RegistrationView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
 
-                SelectLocationView(isAutocompletePresented: $isAutocompletePresented)
+                SelectLocationView(
+                    selectedLocation: $authViewModel.userLocation,
+                    selectedCoordinates: $authViewModel.userLocationCoordinates,
+                    isAutocompletePresented: $isAutocompletePresented
+                )
 
                 Button("Register") {
                     authViewModel.register(
@@ -75,10 +79,10 @@ struct RegistrationView: View {
                         password: password,
                         fullName: fullName,
                         birthDate: birthday,
-                        location: postsViewModel.selectedLocation,
+                        location: authViewModel.userLocation,
                         description: description,
-                        latitude: postsViewModel.selectedCoordinates?.latitude,
-                        longitude: postsViewModel.selectedCoordinates?.longitude,
+                        latitude: authViewModel.userLocationCoordinates?.latitude,
+                        longitude: authViewModel.userLocationCoordinates?.longitude,
                         profileImage: selectedImage
                     ) { success in
                         DispatchQueue.main.async {

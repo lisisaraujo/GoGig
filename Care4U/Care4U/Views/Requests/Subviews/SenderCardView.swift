@@ -34,7 +34,6 @@
 //                .foregroundColor(.secondary)
 //        }
 //        .padding()
-//        .background(Color(.systemBackground))
 //        .cornerRadius(12)
 //    }
 //}

@@ -16,7 +16,6 @@
 //            GoToLoginOrRegistrationPopupView(isPresented: $showLoginOrRegistrationPopup)
 //                .environmentObject(authViewModel)
 //                .frame(width: 300)
-//                .background(Color(UIColor.secondarySystemBackground))
 //                .cornerRadius(16)
 //                .shadow(radius: 10)
 //                .overlay(

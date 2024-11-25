@@ -20,7 +20,6 @@ struct AboutMeView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(Color(.systemBackground))
         .cornerRadius(10)
     }
 }

@@ -21,8 +21,10 @@ struct PersonalTabView: View {
                     ScrollView {
                         if let user = authViewModel.currentUser {
                             LazyVStack(spacing: 20) {
-                                ProfileHeaderView(user: user, imageSize: 150)
-                                AboutMeView(description: user.description)
+//                                ProfileHeaderView(user: user, imageSize: 150)
+//                                AboutMeView(description: user.description)
+                                
+                                AboutMeView2(user: user, imageSize: 150)
                                 MemberSinceView(date: user.memberSince)
                                 PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id })
                             }

@@ -39,7 +39,6 @@ struct GoToLoginOrRegistrationSheetView: View {
                 }
             }
             .padding()
-            .background(Color(UIColor.systemGroupedBackground))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: onClose) {
                 Image(systemName: "xmark")

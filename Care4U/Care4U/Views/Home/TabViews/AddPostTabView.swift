@@ -21,6 +21,9 @@ struct AddPostTabView: View {
     @State private var isActive = true
     @State private var selectedExchangeCoins: [ExchangeCoinEnum] = []
     @State private var selectedCategories: [CategoriesEnum] = []
+    
+    @State private var localSelectedLocation: String = ""
+    @State private var localSelectedCoordinates: CLLocationCoordinate2D?
 
     var body: some View {
         NavigationStack {
@@ -32,6 +35,8 @@ struct AddPostTabView: View {
                     isActive: $isActive,
                     selectedExchangeCoins: $selectedExchangeCoins,
                     selectedCategories: $selectedCategories,
+                    localSelectedLocation: $localSelectedLocation,
+                    localSelectedCoordinates: $localSelectedCoordinates,
                     isEditMode: false,
                     navigationTitle: "Add Post",
                     actionButtonText: "Create Post",
@@ -59,9 +64,9 @@ struct AddPostTabView: View {
             selectedCategories: selectedCategories,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
             isActive: isActive,
-            latitude: postsViewModel.selectedCoordinates?.latitude,
-            longitude: postsViewModel.selectedCoordinates?.longitude,
-            postLocation: postsViewModel.selectedLocation
+            latitude: localSelectedCoordinates?.latitude,
+            longitude: localSelectedCoordinates?.longitude,
+            postLocation: localSelectedLocation
         )
         
         // wait for a short time to allow the operation to complete

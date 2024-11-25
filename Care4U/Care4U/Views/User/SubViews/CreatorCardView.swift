@@ -33,7 +33,6 @@ struct CreatorCardView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .background(Color(.systemBackground))
         .cornerRadius(12)
     }
 }

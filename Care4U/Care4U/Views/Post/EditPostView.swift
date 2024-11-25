@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct EditPostView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
@@ -17,6 +18,8 @@ struct EditPostView: View {
     @State private var isActive: Bool = true
     @State private var selectedExchangeCoins: [ExchangeCoinEnum] = []
     @State private var selectedCategories: [CategoriesEnum] = []
+    @State private var localSelectedLocation: String = ""
+    @State private var localSelectedCoordinates: CLLocationCoordinate2D?
 
     var body: some View {
         PostFormView(
@@ -26,6 +29,8 @@ struct EditPostView: View {
             isActive: $isActive,
             selectedExchangeCoins: $selectedExchangeCoins,
             selectedCategories: $selectedCategories,
+            localSelectedLocation: $localSelectedLocation,
+            localSelectedCoordinates: $localSelectedCoordinates,
             isEditMode: true,
             navigationTitle: "Edit Post",
             actionButtonText: "Save Changes",

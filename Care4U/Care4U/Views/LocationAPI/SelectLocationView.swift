@@ -14,8 +14,8 @@ import CoreLocation
 import GooglePlaces
 
 struct SelectLocationView: View {
-    @EnvironmentObject var postsViewModel: PostsViewModel
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @Binding var selectedLocation: String
+    @Binding var selectedCoordinates: CLLocationCoordinate2D?
     @Binding var isAutocompletePresented: Bool
     @State private var showLocationDetails = false
 
@@ -31,14 +31,13 @@ struct SelectLocationView: View {
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
                         .foregroundColor(.blue)
-                    Text(postsViewModel.selectedLocation.isEmpty ? "Select Location" : postsViewModel.selectedLocation)
-                        .foregroundColor(postsViewModel.selectedLocation.isEmpty ? .secondary : .primary)
+                    Text(selectedLocation.isEmpty ? "Select Location" : selectedLocation)
+                        .foregroundColor(selectedLocation.isEmpty ? .secondary : .primary)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
                 }
                 .padding()
-                .background(Color(.systemBackground))
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -46,12 +45,12 @@ struct SelectLocationView: View {
                 )
             }
             .sheet(isPresented: $isAutocompletePresented) {
-                AutocompleteControllerView(location: $postsViewModel.selectedLocation, selectedCoordinates: $postsViewModel.selectedCoordinates)
+                            AutocompleteControllerView(location: $selectedLocation, selectedCoordinates: $selectedCoordinates)
             }
         }
         .padding()
         .sheet(isPresented: $showLocationDetails) {
-            LocationDetailsView(location: postsViewModel.selectedLocation, coordinates: postsViewModel.selectedCoordinates)
+            LocationDetailsView(location: selectedLocation, coordinates: selectedCoordinates)
         }
     }
 }
@@ -92,7 +91,7 @@ struct LocationDetailsView: View {
 }
 
 #Preview {
-    SelectLocationView(isAutocompletePresented: .constant(false))
+    SelectLocationView(selectedLocation: .constant("Berlin"), selectedCoordinates: .constant(CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)), isAutocompletePresented: .constant(false))
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
 }
