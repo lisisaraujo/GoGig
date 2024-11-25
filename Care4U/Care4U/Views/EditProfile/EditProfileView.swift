@@ -84,7 +84,7 @@ struct EditProfileView: View {
             .sheet(isPresented: $isImagePickerPresented) {
                 ImagePickerView(selectedImage: $selectedImage)
             }
-        }
+        }.applyBackground()
         .onAppear{
             loadUserData()
         }

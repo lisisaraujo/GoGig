@@ -15,7 +15,9 @@ struct PostsListView: View {
             Text("Posts")
                 .font(.headline)
             ForEach(posts, id: \.id) { post in
-                PostItemView(post: post)
+                NavigationLink(destination: PostDetailsView(postId: post.id!)){
+                    PostItemView(post: post)
+                }
             }
         }
         .padding()

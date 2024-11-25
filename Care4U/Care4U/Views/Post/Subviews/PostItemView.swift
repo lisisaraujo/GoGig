@@ -17,80 +17,73 @@ struct PostItemView: View {
     @State private var isBookmarked = false
     
     var body: some View {
-        NavigationLink(destination: PostDetailsView(postId: post.id!)
-                       .environmentObject(postsViewModel)
-                       .environmentObject(authViewModel)) {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Text(post.title)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color("primaryText"))
-                    
-                    Spacer()
-                    
-                    if authViewModel.isUserLoggedIn {
-                        Button(action: {
-                            if isBookmarked {
-                                postsViewModel.removeBookmark(postId: post.id!)
-                            } else {
-                                postsViewModel.addBookmark(postId: post.id!)
-                            }
-                            isBookmarked.toggle()
-                        }) {
-                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                                .foregroundColor(Color("accent"))
-                                .padding(8)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(post.title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color("primaryText"))
+                
+                Spacer()
+                
+                if authViewModel.isUserLoggedIn {
+                    Button(action: {
+                        toggleBookmark()
+                    }) {
+                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                            .foregroundColor(isBookmarked ? Color.blue : Color.gray)
                     }
-                }
-                
-                Text(post.description)
-                    .font(.subheadline)
-                    .foregroundColor(Color("secondaryText"))
-                    .lineLimit(2)
-                
-                HStack {
-                    Text(post.type)
-                        .font(.caption)
-                        .foregroundColor(Color("accent"))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color("accent").opacity(0.1))
-                        .cornerRadius(8)
-                    
-                    Spacer()
-                    
-                    Text("Posted on \(formattedDate(post.createdOn))")
-                        .font(.caption)
-                        .foregroundColor(Color("secondaryText"))
+                    .buttonStyle(PlainButtonStyle()) 
                 }
             }
-            .padding()
-                   .frame(maxWidth: .infinity, alignment: .leading)
-                   .overlay(
-                       RoundedRectangle(cornerRadius: 16)
-                           .stroke(Color("accent").opacity(0.3), lineWidth: 1)
-                   )
-                   .shadow(color: Color("accent").opacity(0.1), radius: 10, x: 0, y: 5)
-               }
-               .buttonStyle(PlainButtonStyle())
-               .onAppear(perform: updateBookmarkStatus)
-               .onChange(of: postsViewModel.bookmarkedPostsIds) { _,_ in
-                   updateBookmarkStatus()
-               }
-           }
-    
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
+            
+            Text(post.description)
+                .font(.subheadline)
+                .foregroundColor(Color("secondaryText"))
+                .lineLimit(2)
+            
+            HStack {
+                Image(systemName: "mappin.and.ellipse")
+                    .foregroundColor(Color.gray)
+                Text(post.postLocation)
+                    .font(.footnote)
+                    .foregroundColor(Color.gray)
+            }
+            
+            HStack {
+                Text("Posted on \(post.createdOn, formatter: dateFormatter)")
+                    .font(.footnote)
+                    .foregroundColor(Color.gray)
+                
+                Spacer()
+                
+                Text(post.exchangeCoins.joined(separator: ", "))
+                    .font(.footnote)
+                    .foregroundColor(Color.blue)
+            }
+        }
+        .padding()
+        .background(Color("surfaceBackground"))
+        .cornerRadius(10)
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        .onAppear {
+            isBookmarked = postsViewModel.isPostBookmarked(post.id!)
+        }
     }
     
-    private func updateBookmarkStatus() {
-        isBookmarked = postsViewModel.isPostBookmarked(post.id ?? "")
+    private func toggleBookmark() {
+        if isBookmarked {
+            postsViewModel.removeBookmark(postId: post.id!)
+        } else {
+            postsViewModel.addBookmark(postId: post.id!)
+        }
+        isBookmarked.toggle()
+    }
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
     }
 }
 

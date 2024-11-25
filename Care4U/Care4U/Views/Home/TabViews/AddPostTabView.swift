@@ -44,12 +44,12 @@ struct AddPostTabView: View {
                     onSubmit: {
                         await createPost()
                     }
-                )
+                ).applyBackground()
             } else {
                 
                 GoToLoginOrRegistrationSheetView(onClose: {
                     selectedTab = .search
-                })
+                }).applyBackground()
                 .environmentObject(authViewModel)
                 
             }

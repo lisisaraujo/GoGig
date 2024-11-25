@@ -9,16 +9,16 @@ import SwiftUI
 import CoreLocation
 
 struct SearchTabView: View {
-
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var searchText = ""
     @State private var selectedPostType: PostTypeEnum?
     @State private var showLocationPicker = false
     @Binding var selectedTab: HomeTabEnum
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack {
                 Picker("Post Type", selection: $selectedPostType) {
                     Text("All").tag(nil as PostTypeEnum?)
@@ -49,14 +49,21 @@ struct SearchTabView: View {
                 }
                 
                 List(postsViewModel.filteredPosts) { post in
-                    PostItemView(post: post)
-                        .frame(maxWidth: .infinity)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.vertical, 5)
+                    Button(action: {
+                        navigationPath.append(post.id!) // Use post ID to navigate
+                    }) {
+                        PostItemView(post: post)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .listRowBackground(Color.clear)
                 }
                 .scrollContentBackground(.hidden)
+                .background(Color.clear)
                 .listStyle(.plain)
-                
+            }
+            .applyBackground()
+            .navigationDestination(for: String.self) { postId in
+                PostDetailsView(postId: postId)
             }
         }
         .onAppear {
@@ -66,8 +73,7 @@ struct SearchTabView: View {
             LocationPickerView()
         }
     }
-    
-    
+
     private func filterPosts() {
         postsViewModel.filterPosts(
             selectedPostType: selectedPostType,
@@ -75,7 +81,6 @@ struct SearchTabView: View {
             maxDistance: postsViewModel.selectedDistance
         )
     }
-    
 }
 
 #Preview {

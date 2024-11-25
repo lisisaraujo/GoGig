@@ -64,7 +64,7 @@ struct PostDetailsView: View {
                         }
                     }
                     .padding()
-                }
+                }.applyBackground()
                 .navigationBarItems(trailing: editButton)
                 .sheet(isPresented: $showUserDetails) {
                     if let userId = postsViewModel.selectedPost?.userId {
@@ -95,7 +95,7 @@ struct PostDetailsView: View {
                     .font(.headline)
                     .foregroundColor(.red)
             }
-        }
+        }.applyBackground()
         .navigationTitle("Post Details")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadData)

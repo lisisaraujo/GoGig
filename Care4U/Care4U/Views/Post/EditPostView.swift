@@ -22,26 +22,28 @@ struct EditPostView: View {
     @State private var localSelectedCoordinates: CLLocationCoordinate2D?
 
     var body: some View {
-        PostFormView(
-            title: $title,
-            description: $description,
-            selectedType: $selectedType,
-            isActive: $isActive,
-            selectedExchangeCoins: $selectedExchangeCoins,
-            selectedCategories: $selectedCategories,
-            localSelectedLocation: $localSelectedLocation,
-            localSelectedCoordinates: $localSelectedCoordinates,
-            isEditMode: true,
-            navigationTitle: "Edit Post",
-            actionButtonText: "Save Changes",
-            loadingMessage: "Updating post...",
-            onSubmit: {
-                await updatePost()
-            }
-        )
-        .onAppear {
-            loadPostData()
-        }
+        VStack{
+            PostFormView(
+                title: $title,
+                description: $description,
+                selectedType: $selectedType,
+                isActive: $isActive,
+                selectedExchangeCoins: $selectedExchangeCoins,
+                selectedCategories: $selectedCategories,
+                localSelectedLocation: $localSelectedLocation,
+                localSelectedCoordinates: $localSelectedCoordinates,
+                isEditMode: true,
+                navigationTitle: "Edit Post",
+                actionButtonText: "Save Changes",
+                loadingMessage: "Updating post...",
+                onSubmit: {
+                    await updatePost()
+                }
+            )
+                .onAppear {
+                    loadPostData()
+                }
+        }.applyBackground()
     }
 
     private func loadPostData() {

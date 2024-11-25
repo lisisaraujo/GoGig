@@ -15,47 +15,53 @@ struct LoginView: View {
     @State var password = ""
     
     @Environment(\.dismiss) private var dismiss
-
+    
     var body: some View {
-        VStack {
-            Text("Care4U")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.top, 40)
-            
-            VStack(spacing: 16) {
-                TextField("Email", text: $email)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
+        ZStack {
+            Color.clear
+                .applyBackground()
+                .ignoresSafeArea()
+            VStack {
+                Text("Care4U")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
+                    .foregroundColor(.accent)
                 
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
-                
-                
-                
-                Button(action: {
-                    print("logged in")
-                    authViewModel.login(email: email, password: password)
-                    dismiss()
-                }) {
-                    Text("Login")
-                        .foregroundColor(.white)
+                VStack(spacing: 16) {
+                    TextField("Email", text: $email)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.surfaceBackground)
                         .cornerRadius(10)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                    
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .background(Color.surfaceBackground)
+                        .cornerRadius(10)
+                    
+                    
+                    
+                    Button(action: {
+                        print("logged in")
+                        authViewModel.login(email: email, password: password)
+                        dismiss()
+                    }) {
+                        Text("Login")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.buttonPrimary)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
+                
             }
             
         }
-    
-        }
     }
+}
 
 
 #Preview {

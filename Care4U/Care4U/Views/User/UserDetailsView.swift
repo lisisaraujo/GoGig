@@ -22,28 +22,36 @@ struct UserDetailsView: View {
             } else if let user = authViewModel.selectedUser, user.id == userId {
                 VStack(spacing: 20) {
                     ProfileHeaderView(user: user, imageSize: 120)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                     RatingView(rating: user.averageRating, reviewCount: user.reviewCount)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                     AboutMeView(description: user.description)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                     MemberSinceView(date: user.memberSince)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                     ReviewsScrollView(reviews: authViewModel.userReviews)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                     PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId })
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                 }
                 .padding()
             } else {
                 VStack {
+                    Spacer()
                     Text("User not found")
                         .font(.headline)
-                        .foregroundColor(.red)
-                    Text("User ID: \(userId)")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("Selected User ID: \(authViewModel.selectedUser?.id ?? "nil")")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.pink)
+                    Spacer()
                 }
                 .padding()
             }
-        }
+        }.applyBackground()
         .navigationTitle("User Profile")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -62,9 +70,43 @@ struct UserDetailsView: View {
     }
 }
 
-
 #Preview {
-    UserDetailsView(userId: "")
-        .environmentObject(PostsViewModel())
-        .environmentObject(AuthViewModel())
+    let authViewModel = AuthViewModel()
+    let postsViewModel = PostsViewModel()
+    
+    // Mock data for preview
+    let mockUser = User(
+        id: "1",
+        email: "test@example.com",
+        fullName: "Test User",
+        birthDate: Date(),
+        location: "Test Location",
+        description: "This is a test user.",
+        latitude: 52.5200,
+        longitude: 13.4050,
+        memberSince: Date(),
+        profilePicURL: nil
+    )
+    
+    authViewModel.selectedUser = mockUser
+    postsViewModel.allPosts = [
+        Post(
+            id: "1",
+            userId: "1",
+            type: "Type",
+            title: "Sample Post",
+            description: "This is a sample post description.",
+            isActive: true,
+            exchangeCoins: ["Coin1", "Coin2"],
+            categories: ["Category1", "Category2"],
+            createdOn: Date(),
+            latitude: 52.5200,
+            longitude: 13.4050,
+            postLocation: "Berlin"
+        )
+    ]
+    
+    return UserDetailsView(userId: "1")
+        .environmentObject(postsViewModel)
+        .environmentObject(authViewModel)
 }

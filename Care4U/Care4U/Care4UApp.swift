@@ -25,12 +25,14 @@ struct Care4UApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authViewModel)
+                
+                ContentView()
+                    .environmentObject(authViewModel)
+                    .applyBackground()
+            }
         }
     }
     
-}
 
 
 

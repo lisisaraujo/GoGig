@@ -41,7 +41,7 @@ struct AddRatingView: View {
                 Button("Submit Review") {
                     submitReview()
                 }
-            }
+            }.applyBackground()
             .navigationTitle("Rate Service")
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {

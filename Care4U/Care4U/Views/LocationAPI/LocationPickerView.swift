@@ -23,7 +23,7 @@ struct LocationPickerView: View {
                 ActionButtonsView(dismiss: dismiss)
             }
             .padding()
-        }
+        }.applyBackground()
         .navigationTitle("Select Location")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button("Cancel") {

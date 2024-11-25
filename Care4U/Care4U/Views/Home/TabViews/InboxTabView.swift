@@ -65,7 +65,7 @@ struct InboxTabView: View {
                     })
                     .environmentObject(authViewModel)
                 }
-            }
+            }.applyBackground()
         }
     }
 }

@@ -29,6 +29,7 @@ struct ContentView: View {
                 .environmentObject(authViewModel)
                 .environmentObject(serviceRequestViewModel)
                 .environmentObject(inboxViewModel)
+                .applyBackground()
     }
         
         func updateLocationAndCoordinates() {

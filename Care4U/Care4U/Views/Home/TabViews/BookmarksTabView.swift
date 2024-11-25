@@ -17,19 +17,23 @@ struct BookmarksTabView: View {
         NavigationStack {
             Group {
                 if authViewModel.isUserLoggedIn {
-                    ScrollView {
+                    ZStack {
+                        ScrollView {
+                            if !postsViewModel.bookmarkedPosts.isEmpty {
+                                LazyVStack(spacing: 20) {
+                                    PostsListView(posts: postsViewModel.bookmarkedPosts)
+                                }
+                            } else if !isLoading {
+                                Text("No bookmarked posts")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        
                         if isLoading {
                             ProgressView()
-                        } else if !postsViewModel.bookmarkedPosts.isEmpty {
-                            LazyVStack(spacing: 20) {
-                                ForEach(postsViewModel.bookmarkedPosts) { post in
-                                    PostItemView(post: post)
-                                }
-                            }
-                        } else {
-                            Text("No bookmarked posts")
-                                .font(.headline)
-                                .foregroundColor(.gray)
+                                .scaleEffect(1.5)
+                                .progressViewStyle(CircularProgressViewStyle(tint: .accent))
                         }
                     }
                     .onAppear(perform: loadBookmarkedPosts)
@@ -41,7 +45,7 @@ struct BookmarksTabView: View {
                     })
                     .environmentObject(authViewModel)
                 }
-            }
+            }.applyBackground()
         }
     }
 

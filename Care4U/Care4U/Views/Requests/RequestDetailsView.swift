@@ -72,7 +72,7 @@ struct RequestDetailsView: View {
                       }
             }
             .padding()
-        }
+        }.applyBackground()
         .navigationTitle("Request Details")
             .onAppear(perform: loadSenderDetails)
         .alert("Decline Request", isPresented: $showDeclineConfirmation) {

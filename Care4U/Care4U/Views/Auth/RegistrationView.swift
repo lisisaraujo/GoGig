@@ -101,7 +101,7 @@ struct RegistrationView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
             }
-        }
+        }.applyBackground()
         .navigationTitle("Register")
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -22,7 +22,7 @@ struct ProfileHeaderView: View {
             }
             .frame(width: imageSize, height: imageSize)
             .clipShape(Circle())
-            .overlay(Circle().stroke(Color.blue, lineWidth: 2))
+            .overlay(Circle().stroke(Color.accent, lineWidth: 2))
             .shadow(radius: 5)
             
             Text(user.fullName)
