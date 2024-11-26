@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 enum ServiceRequestStatusEnum: String, Codable {
@@ -14,4 +15,19 @@ enum ServiceRequestStatusEnum: String, Codable {
     case completed = "Completed"
     case declined = "Declined"
     case canceled = "Canceled"
+}
+
+ func statusColor(for status: ServiceRequestStatusEnum) -> Color {
+    switch status {
+    case .accepted:
+        return .green
+    case .pending:
+        return .yellow
+    case .declined:
+        return .red
+    case .completed:
+          return .accent
+    case .canceled:
+          return .red
+    }
 }

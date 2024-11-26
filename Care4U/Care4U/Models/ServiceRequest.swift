@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct ServiceRequest: Codable, Identifiable {
+struct ServiceRequest: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var senderUserId: String
     var recipientUserId: String

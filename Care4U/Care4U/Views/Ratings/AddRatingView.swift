@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddRatingView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     let serviceProvider: User
     let serviceRequestId: String
     
@@ -45,7 +45,7 @@ struct AddRatingView: View {
             .navigationTitle("Rate Service")
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
-                    presentationMode.wrappedValue.dismiss()
+                   dismiss()
                 })
             }
         }

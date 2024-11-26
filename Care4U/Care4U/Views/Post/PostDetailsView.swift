@@ -105,8 +105,7 @@ struct PostDetailsView: View {
     private func deletePost(postId: String) {
         isDeleting = true
         Task {
-            let success = await postsViewModel.deleteSelectedPost(postId: postId) // Call your delete function here
-            
+            let success = await postsViewModel.deleteSelectedPost(postId: postId) 
             isDeleting = false
             
             if success {

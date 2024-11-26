@@ -50,7 +50,7 @@ struct SearchTabView: View {
                 
                 List(postsViewModel.filteredPosts) { post in
                     Button(action: {
-                        navigationPath.append(post.id!) // Use post ID to navigate
+                        navigationPath.append(post.id!) 
                     }) {
                         PostItemView(post: post)
                             .frame(maxWidth: .infinity)
