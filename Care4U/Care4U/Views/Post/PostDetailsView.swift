@@ -54,10 +54,9 @@ struct PostDetailsView: View {
                                                        .disabled(isDeleting)
                             
                         } else {
+                            
                             Button("Send Request") {
-                               
-                                    showRequestForm = true
-                                
+                            showRequestForm = true
                             }
                             .buttonStyle(.borderedProminent)
                             .frame(maxWidth: .infinity)
@@ -80,7 +79,7 @@ struct PostDetailsView: View {
                 .alert("Request Sent", isPresented: $showRequestConfirmation) {
                     Button("OK", role: .cancel) {}
                 } message: {
-                    Text("Your request has been sent to the post creator.")
+                    Text("Your request has been sent.")
                 }
                 .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {
                                     Button("Delete", role: .destructive) {
@@ -120,7 +119,7 @@ struct PostDetailsView: View {
         Task {
             guard let post = postsViewModel.selectedPost else { return }
             
-             serviceRequestViewModel.sendRequest(recipientUserId: post.userId, postId: post.id!, message: requestMessage, contactInfo: contactInfo)
+            serviceRequestViewModel.sendRequest(recipientUserId: post.userId, postId: post.id!, postTitle: post.title, message: requestMessage, contactInfo: contactInfo)
             
             await MainActor.run {
                 showRequestForm = false

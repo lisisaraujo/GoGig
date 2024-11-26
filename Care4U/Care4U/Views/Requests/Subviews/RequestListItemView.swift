@@ -77,17 +77,7 @@ struct RequestListItemView: View {
 }
 
 #Preview {
-    RequestListItemView(request: ServiceRequest(
-        id: "12345",
-        senderUserId: "user123",
-        recipientUserId: "user456",
-        postId: "post789",
-        status: .accepted,
-        timestamp: Date(),
-        completionDate: nil,
-        message: "I would like to request your service for cleaning my garden.",
-        contactInfo: "contact@example.com"
-    ))
+    RequestListItemView(request: sampleRequest)
         .environmentObject(AuthViewModel())
         .environmentObject(ServiceRequestViewModel())
 }

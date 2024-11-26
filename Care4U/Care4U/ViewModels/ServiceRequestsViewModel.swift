@@ -20,14 +20,14 @@ class ServiceRequestViewModel: ObservableObject {
         fetchSentRequests()
     }
     
-    func sendRequest(recipientUserId: String, postId: String, message: String?, contactInfo: String?) {
+    func sendRequest(recipientUserId: String, postId: String, postTitle: String, message: String?, contactInfo: String?) {
         guard let senderUserId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
             print("Error: User not logged in")
             return
         }
         
-        let request = ServiceRequest(senderUserId: senderUserId, recipientUserId: recipientUserId, postId: postId, message: message, contactInfo: contactInfo)
+        let request = ServiceRequest(senderUserId: senderUserId, recipientUserId: recipientUserId, postId: postId, postTitle: postTitle, message: message, contactInfo: contactInfo)
         
         do {
             try firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName).addDocument(from: request) { error in
@@ -45,9 +45,10 @@ class ServiceRequestViewModel: ObservableObject {
         }
     }
     
-    func updateRequestStatus(requestId: String, newStatus: ServiceRequestStatusEnum) {
+    func updateRequestStatus(requestId: String, newStatus: ServiceRequestStatusEnum, isRated: Bool = false) {
         firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName).document(requestId).updateData([
-            "status": newStatus.rawValue
+            "status": newStatus.rawValue,
+            "isRated": isRated
         ]) { error in
             if let error = error {
                 self.errorMessage = "Error updating request status: \(error.localizedDescription)"

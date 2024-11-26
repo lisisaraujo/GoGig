@@ -47,11 +47,11 @@ struct LoginView: View {
                         dismiss()
                     }) {
                         Text("Login")
-                            .foregroundColor(.white)
+                            .foregroundColor(.primaryText)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.buttonPrimary)
-                            .cornerRadius(10)
+                            .cornerRadius(15)
                             .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
                     }
                     .padding(.horizontal)

@@ -13,13 +13,14 @@ struct UserDetailsView: View {
     
     var userId: String
     @State private var isLoading = true
+    @State private var user: User?
     
     var body: some View {
         ScrollView {
             if isLoading {
                 ProgressView()
                     .padding()
-            } else if let user = authViewModel.selectedUser, user.id == userId {
+            } else if let user = user {
                 VStack(spacing: 20) {
                     ProfileHeaderView(user: user, imageSize: 120)
                         .environmentObject(postsViewModel)
@@ -62,7 +63,12 @@ struct UserDetailsView: View {
     private func loadUserData() {
         isLoading = true
         Task {
-            await authViewModel.fetchSelectedUser(with: userId)
+            if userId == authViewModel.currentUser?.id {
+                user = authViewModel.currentUser
+            } else {
+                await authViewModel.fetchSelectedUser(with: userId)
+                user = authViewModel.selectedUser
+            }
             await MainActor.run {
                 isLoading = false
             }
@@ -71,42 +77,7 @@ struct UserDetailsView: View {
 }
 
 #Preview {
-    let authViewModel = AuthViewModel()
-    let postsViewModel = PostsViewModel()
-    
-    // Mock data for preview
-    let mockUser = User(
-        id: "1",
-        email: "test@example.com",
-        fullName: "Test User",
-        birthDate: Date(),
-        location: "Test Location",
-        description: "This is a test user.",
-        latitude: 52.5200,
-        longitude: 13.4050,
-        memberSince: Date(),
-        profilePicURL: nil
-    )
-    
-    authViewModel.selectedUser = mockUser
-    postsViewModel.allPosts = [
-        Post(
-            id: "1",
-            userId: "1",
-            type: "Type",
-            title: "Sample Post",
-            description: "This is a sample post description.",
-            isActive: true,
-            exchangeCoins: ["Coin1", "Coin2"],
-            categories: ["Category1", "Category2"],
-            createdOn: Date(),
-            latitude: 52.5200,
-            longitude: 13.4050,
-            postLocation: "Berlin"
-        )
-    ]
-    
-    return UserDetailsView(userId: "1")
-        .environmentObject(postsViewModel)
-        .environmentObject(authViewModel)
+    UserDetailsView(userId: "String")
+        .environmentObject(PostsViewModel())
+        .environmentObject(AuthViewModel())
 }

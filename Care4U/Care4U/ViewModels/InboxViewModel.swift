@@ -24,24 +24,21 @@ class InboxViewModel: ObservableObject {
     func fetchReceivedRequests() {
         guard let userId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
-            print("Error: User not logged in")
             return
         }
         
-        print("Fetching requests for user: \(userId)")
         
         firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName)
             .whereField("recipientUserId", isEqualTo: userId)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     self.errorMessage = "Error fetching requests: \(error.localizedDescription)"
-                    print("Error fetching requests: \(error.localizedDescription)")
                     return
                 }
                 self.receivedRequests = querySnapshot?.documents.compactMap { document in
                     try? document.data(as: ServiceRequest.self)
                 } ?? []
-                print("Received requests: \(self.receivedRequests.count)")
+                self.errorMessage = nil
             }
     }
     

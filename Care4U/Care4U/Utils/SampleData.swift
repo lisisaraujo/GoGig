@@ -20,3 +20,32 @@ let sampleUser = User(
     profilePicURL: "https://example.com/path/to/profile/pic.jpg",
     bookmarks: ["post1", "post2", "post3"]
 )
+
+
+let sampleRequest = ServiceRequest(
+    id: "12345",
+    senderUserId: "user123",
+    recipientUserId: "user456",
+    postId: "post789",
+    postTitle: "Cat sitting",
+    status: .accepted,
+    timestamp: Date(),
+    completionDate: nil,
+    message: "I would like to request your service for cleaning my garden.",
+    contactInfo: "contact@example.com"
+)
+
+let samplePost =  Post(
+    id: "1",
+    userId: "1",
+    type: "Type",
+    title: "Sample Post",
+    description: "This is a sample post description.",
+    isActive: true,
+    exchangeCoins: ["Coin1", "Coin2"],
+    categories: ["Category1", "Category2"],
+    createdOn: Date(),
+    latitude: 52.5200,
+    longitude: 13.4050,
+    postLocation: "Berlin"
+)

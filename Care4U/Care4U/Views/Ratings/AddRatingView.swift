@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddRatingView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var requestViewModel: ServiceRequestViewModel
     @Environment(\.dismiss) private var dismiss
     let serviceProvider: User
     let serviceRequestId: String
@@ -65,7 +66,9 @@ struct AddRatingView: View {
         authViewModel.addReview(newReview) { result in
             switch result {
             case .success:
+                requestViewModel.updateRequestStatus(requestId: serviceRequestId, newStatus: .completed, isRated: true)
                 alertMessage = "Your review has been submitted successfully."
+                
             case .failure(let error):
                 alertMessage = "Failed to submit review: \(error.localizedDescription)"
             }

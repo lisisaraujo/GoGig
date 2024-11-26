@@ -22,8 +22,8 @@ struct RequestFormView: View {
         if authViewModel.isUserLoggedIn{
             Form {
                 Section(header: Text("Request Details")) {
-                    TextField("Message (Optional)", text: $requestMessage)
-                    TextField("Contact Info (Phone or Email)", text: $contactInfo)
+                    CustomTextEditorView(placeholder: "Message (Optional)", text: $requestMessage)
+                    CustomTextFieldView(placeholder: "Contact Info (Phone or Email)", text: $contactInfo)
                 }
                 
                 Section {

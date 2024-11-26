@@ -13,21 +13,25 @@ struct ServiceRequest: Codable, Identifiable, Hashable {
     var senderUserId: String
     var recipientUserId: String
     var postId: String
+    var postTitle: String
     var status: ServiceRequestStatusEnum = .pending
     var timestamp: Date = Date()
     var completionDate: Date?
     var message: String?
     var contactInfo: String?
+    var isRated: Bool
     
-    init(id: String? = nil, senderUserId: String, recipientUserId: String, postId: String, status: ServiceRequestStatusEnum = .pending, timestamp: Date = Date(), completionDate: Date? = nil, message: String? = nil, contactInfo: String? = nil) {
+    init(id: String? = nil, senderUserId: String, recipientUserId: String, postId: String, postTitle: String, status: ServiceRequestStatusEnum = .pending, timestamp: Date = Date(), completionDate: Date? = nil, message: String? = nil, contactInfo: String? = nil, isRated: Bool = false) {
         self.id = id
         self.senderUserId = senderUserId
         self.recipientUserId = recipientUserId
         self.postId = postId
+        self.postTitle = postTitle
         self.status = status
         self.timestamp = timestamp
         self.completionDate = completionDate
         self.message = message
         self.contactInfo = contactInfo
+        self.isRated = isRated
     }
 }
