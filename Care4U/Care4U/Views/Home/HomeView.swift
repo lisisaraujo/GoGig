@@ -8,60 +8,109 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @State var selectedTab: HomeTabEnum = .search
     
     var body: some View {
+        ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
                 SearchTabView(selectedTab: $selectedTab)
-                 
                     .environmentObject(postsViewModel)
                     .environmentObject(authViewModel)
-                    .tabItem {
-                        Label("Search", systemImage: "magnifyingglass")
-                    }.tag(HomeTabEnum.search)
+                    .tag(HomeTabEnum.search)
                 
                 BookmarksTabView(selectedTab: $selectedTab)
                     .environmentObject(authViewModel)
                     .environmentObject(postsViewModel)
-                    .tabItem {
-                        Label("Bookmark", systemImage: "bookmark.fill")
-                    }.tag(HomeTabEnum.bookmark)
+                    .tag(HomeTabEnum.bookmark)
                 
                 AddPostTabView(selectedTab: $selectedTab)
                     .environmentObject(postsViewModel)
                     .environmentObject(authViewModel)
-                    .tabItem {
-                        Label("Add", systemImage: "plus")
-                    }.tag(HomeTabEnum.add)
+                    .tag(HomeTabEnum.add)
                 
                 InboxTabView(selectedTab: $selectedTab)
-                    .environmentObject(serviceRequestViewModel)
+                    .environmentObject(requestViewModel)
                     .environmentObject(inboxViewModel)
                     .environmentObject(authViewModel)
-                    .tabItem {
-                        Label("Inbox", systemImage: "envelope.fill")
-                    }.tag(HomeTabEnum.inbox)
+                    .tag(HomeTabEnum.inbox)
                 
                 PersonalTabView(selectedTab: $selectedTab)
                     .environmentObject(authViewModel)
                     .environmentObject(postsViewModel)
-                    .tabItem {
-                        Label("Personal", systemImage: "person.crop.circle")
-                    }.tag(HomeTabEnum.personal)
+                    .tag(HomeTabEnum.personal)
+            }
+            .overlay(
+                CustomTabBar(selectedTab: $selectedTab, inboxCount: inboxViewModel.pendingRequests.count)
+                    .padding(.horizontal)
+                    .padding(.bottom, 15),
+                alignment: .bottom
+            )
+        }
+        .edgesIgnoringSafeArea(.bottom)
+    }
+}
+
+struct CustomTabBar: View {
+    @Binding var selectedTab: HomeTabEnum
+    let inboxCount: Int
+    
+    var body: some View {
+        HStack {
+            ForEach(HomeTabEnum.allCases, id: \.self) { tab in
+                Spacer()
+                TabBarItem(tab: tab, selectedTab: $selectedTab, inboxCount: inboxCount)
+                Spacer()
             }
         }
+        .padding(.vertical, 15)
+        .background(Color.accent.opacity(0.7))
+        .cornerRadius(50)
+        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
     }
+}
 
+struct TabBarItem: View {
+    let tab: HomeTabEnum
+    @Binding var selectedTab: HomeTabEnum
+    let inboxCount: Int
+    
+    var body: some View {
+        VStack {
+            Image(systemName: tab.iconName)
+                .foregroundColor(selectedTab == tab ? .primaryText : .primaryText.opacity(0.5))
+                .font(.title2)
+            
+            Text(tab.title)
+                .font(.caption2)
+                .foregroundColor(selectedTab == tab ? .primaryText : .primaryText.opacity(0.5))
+        }
+        .overlay(
+            Group {
+                if tab == .inbox && inboxCount > 0 {
+                    Text("\(inboxCount)")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Color.pink)
+                        .clipShape(Circle())
+                        .offset(x: 10, y: -10)
+                }
+            }
+        )
+        .onTapGesture {
+            selectedTab = tab
+        }
+    }
+}
 
 #Preview {
     HomeView()
-        .environmentObject(AuthViewModel()) 
+        .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
         .environmentObject(InboxViewModel())
 }

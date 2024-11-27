@@ -11,12 +11,11 @@ struct BackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color("background"), Color("background").opacity(0.1)]),
-                    startPoint: .bottomLeading,
-                    endPoint: .topTrailing
-                )
-                .ignoresSafeArea()
+                Image("codioful-formerly-gradienta-OzfD79w8ptA-unsplash")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                    .opacity(0.5)
             )
     }
 }

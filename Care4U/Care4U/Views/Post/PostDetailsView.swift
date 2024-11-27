@@ -10,7 +10,7 @@ import SwiftUI
 struct PostDetailsView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @Environment(\.dismiss) private var dismiss
     
     let postId: String
@@ -119,7 +119,7 @@ struct PostDetailsView: View {
         Task {
             guard let post = postsViewModel.selectedPost else { return }
             
-            serviceRequestViewModel.sendRequest(recipientUserId: post.userId, postId: post.id!, postTitle: post.title, message: requestMessage, contactInfo: contactInfo)
+            requestViewModel.sendRequest(recipientUserId: post.userId, postId: post.id!, postTitle: post.title, message: requestMessage, contactInfo: contactInfo)
             
             await MainActor.run {
                 showRequestForm = false
@@ -224,5 +224,5 @@ struct PostMetadataView: View {
     PostDetailsView(postId:"sample-post-id")
         .environmentObject(PostsViewModel())
         .environmentObject(AuthViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
 }

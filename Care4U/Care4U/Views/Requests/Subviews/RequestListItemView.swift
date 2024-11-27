@@ -2,8 +2,8 @@ import SwiftUI
 
 struct RequestListItemView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
-    let request: ServiceRequest
+    @EnvironmentObject var requestViewModel: RequestViewModel
+    let request: Request
     @State var userData: User?
 
     var body: some View {
@@ -79,5 +79,5 @@ struct RequestListItemView: View {
 #Preview {
     RequestListItemView(request: sampleRequest)
         .environmentObject(AuthViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
 }

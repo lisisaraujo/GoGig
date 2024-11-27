@@ -11,68 +11,56 @@ struct MenuView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Binding var isPresented: Bool
-    @Binding var shouldNavigateToEditProfile: Bool
+    @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
     @State private var showingAlert = false
     @State private var errorMessage: String?
 
     var body: some View {
-            VStack{
-                ZStack {
-                    Color.clear
-                        .applyBackground()
-                        .ignoresSafeArea()
-                List {
-                    Section {
-                        Button(action: {
-                            isPresented = false
-                            shouldNavigateToEditProfile = true
-                        }) {
-                            Label("Edit Profile", systemImage: "person.crop.circle")
-                        }
-                        
-                        Button(action: {
-                            authViewModel.logout()
-                            isPresented = false
-                        }) {
-                            Label("Logout", systemImage: "arrow.right.square")
-                        }
-                    }
-                    
-                    Section {
-                        Button(action: {
-                            showingAlert = true
-                        }) {
-                            Label("Delete My Account", systemImage: "trash")
-                                .foregroundColor(.red)
-                        }
-                    }
-                }
-                .listStyle(InsetGroupedListStyle())
-                .navigationTitle("Menu")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing: Button("Close") {
+        List {
+            Section {
+                Button(action: {
                     isPresented = false
-                })
+                    navigationPath.append("EditProfile")
+                }) {
+                    Label("Edit Profile", systemImage: "person.crop.circle")
+                }
+                
+                Button(action: {
+                    authViewModel.logout()
+                    isPresented = false
+                }) {
+                    Label("Logout", systemImage: "arrow.right.square")
+                }
             }
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text("Confirm Deletion"),
-                    message: Text("Are you sure you want to delete your account? This action cannot be undone."),
-                    primaryButton: .destructive(Text("Delete")) {
-                        deleteAccount()
-                    },
-                    secondaryButton: .cancel()
-                )
+            
+            Section {
+                Button(action: {
+                    showingAlert = true
+                }) {
+                    Label("Delete My Account", systemImage: "trash")
+                        .foregroundColor(.red)
+                }
             }
-            .alert("Error", isPresented: Binding<Bool>(
-                get: { errorMessage != nil },
-                set: { if !$0 { errorMessage = nil } }
-            ), presenting: errorMessage) { error in
-                Button("OK") { errorMessage = nil }
-            } message: { error in
-                Text(error)
-            }
+        }
+        .listStyle(InsetGroupedListStyle())
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Confirm Deletion"),
+                message: Text("Are you sure you want to delete your account? This action cannot be undone."),
+                primaryButton: .destructive(Text("Delete")) {
+                    deleteAccount()
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        .alert("Error", isPresented: Binding<Bool>(
+            get: { errorMessage != nil },
+            set: { if !$0 { errorMessage = nil } }
+        ), presenting: errorMessage) { error in
+            Button("OK") { errorMessage = nil }
+        } message: { error in
+            Text(error)
         }
     }
     
@@ -89,7 +77,7 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView(isPresented: .constant(true), shouldNavigateToEditProfile: .constant(false))
+    MenuView(isPresented: .constant(true), navigationPath: .constant(NavigationPath()))
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
 }

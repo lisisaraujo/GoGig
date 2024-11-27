@@ -8,19 +8,16 @@
 import Foundation
 import SwiftUI
 
-import Foundation
-import SwiftUI
-
 struct RequestDetailsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @Environment(\.presentationMode) var presentationMode
     @State private var showUserDetails = false
     @State private var showDeleteConfirmation = false
     @State private var showDeclineConfirmation = false
     @State private var showRatingView = false
     @State var senderUser: User?
-    @State var request: ServiceRequest
+    @State var request: Request
     
     var body: some View {
         ScrollView {
@@ -41,7 +38,7 @@ struct RequestDetailsView: View {
                 
                 Text(request.message ?? "No message provided")
                     .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, minHeight: 150)
                     .background(Color("surfaceBackground"))
                     .cornerRadius(15)
                     .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
@@ -86,7 +83,7 @@ struct RequestDetailsView: View {
                     .cornerRadius(15)
                     .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                     .sheet(isPresented: $showRatingView) {
-                                         AddRatingView(serviceProvider: senderUser!, serviceRequestId: request.id!)
+                                         AddRatingView(serviceProvider: senderUser!, requestId: request.id!)
                                      }
                 } else if request.status == .pending && request.senderUserId != authViewModel.currentUser?.id {
                     HStack(spacing: 20) {
@@ -158,17 +155,17 @@ struct RequestDetailsView: View {
     }
     
     private func acceptRequest() {
-        serviceRequestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .accepted)
+        requestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .accepted)
         request.status = .accepted
     }
     
     private func deleteRequest() {
-        serviceRequestViewModel.removeRequest(requestId: request.id!)
+        requestViewModel.removeRequest(requestId: request.id!)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func declineRequest() {
-        serviceRequestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .declined)
+        requestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .declined)
         request.status = .declined
     }
     
@@ -182,5 +179,5 @@ struct RequestDetailsView: View {
 #Preview {
     RequestDetailsView(senderUser: sampleUser, request: sampleRequest)
         .environmentObject(AuthViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
 }

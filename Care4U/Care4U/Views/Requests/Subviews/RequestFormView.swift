@@ -33,6 +33,8 @@ struct RequestFormView: View {
                         }
                     }
                 }
+            }.onAppear{
+                clearFields()
             }
             .navigationTitle("Send Request")
         }  else {
@@ -40,6 +42,11 @@ struct RequestFormView: View {
                    dismiss() 
                })
     }
+    }
+    
+    private func clearFields() {
+        requestMessage = ""
+        contactInfo = ""
     }
 }
 

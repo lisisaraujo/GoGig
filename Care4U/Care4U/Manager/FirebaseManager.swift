@@ -21,7 +21,7 @@ class FirebaseManager {
     let usersCollectionName = "users"
     let postsCollectionName = "posts"
     let reviewsCollectionName = "reviews"
-    let serviceRequestsCollectionName = "serviceRequests"
+    let requestsCollectionName = "requests"
     let profilePicStorageRef = "profile_pictures"
     
     var userId: String? {
