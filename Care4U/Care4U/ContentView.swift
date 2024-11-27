@@ -12,7 +12,7 @@ struct ContentView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var postsViewModel = PostsViewModel()
-    @StateObject var serviceRequestViewModel = ServiceRequestViewModel()
+    @StateObject var requestViewModel = RequestViewModel()
     @StateObject var inboxViewModel = InboxViewModel()
     
     
@@ -27,7 +27,7 @@ struct ContentView: View {
                 }
                 .environmentObject(postsViewModel)
                 .environmentObject(authViewModel)
-                .environmentObject(serviceRequestViewModel)
+                .environmentObject(requestViewModel)
                 .environmentObject(inboxViewModel)
                 .applyBackground()
     }
@@ -51,6 +51,6 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
         .environmentObject(InboxViewModel())
 }

@@ -11,7 +11,7 @@ let sampleUser = User(
     id: "12345",
     email: "sampleuser@example.com",
     fullName: "John Doe",
-    birthDate: Calendar.current.date(byAdding: .year, value: -30, to: Date())!, // 30 years ago
+    birthDate: Calendar.current.date(byAdding: .year, value: -30, to: Date())!,
     location: "New York, USA",
     description: "A software developer who loves coding and coffee.",
     latitude: 40.7128,
@@ -22,7 +22,7 @@ let sampleUser = User(
 )
 
 
-let sampleRequest = ServiceRequest(
+let sampleRequest = Request(
     id: "12345",
     senderUserId: "user123",
     recipientUserId: "user456",

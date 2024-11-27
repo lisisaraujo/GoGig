@@ -12,9 +12,10 @@ struct BookmarksTabView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Binding var selectedTab: HomeTabEnum
     @State private var isLoading = false
+    @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             Group {
                 if authViewModel.isUserLoggedIn {
                     ZStack {
@@ -36,7 +37,10 @@ struct BookmarksTabView: View {
                                 .progressViewStyle(CircularProgressViewStyle(tint: .accent))
                         }
                     }
-                    .onAppear(perform: loadBookmarkedPosts)
+                    .onAppear{
+                        navigationPath = NavigationPath()
+                        loadBookmarkedPosts()
+                    }
                     .navigationTitle("Bookmarks")
                     .navigationBarTitleDisplayMode(.inline)
                 } else {

@@ -1,5 +1,5 @@
 //
-//  ServiceRequestStatusEnum.swift
+//  RequestStatus.swift
 //  Care4U
 //
 //  Created by Lisis Ruschel on 13.11.24.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-enum ServiceRequestStatusEnum: String, Codable {
+enum RequestStatus: String, Codable {
     case pending = "Pending"
     case accepted = "Accepted"
     case completed = "Completed"
@@ -17,7 +17,7 @@ enum ServiceRequestStatusEnum: String, Codable {
     case canceled = "Canceled"
 }
 
- func statusColor(for status: ServiceRequestStatusEnum) -> Color {
+ func statusColor(for status: RequestStatus) -> Color {
     switch status {
     case .accepted:
         return .green

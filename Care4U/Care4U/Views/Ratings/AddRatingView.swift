@@ -10,10 +10,10 @@ import SwiftUI
 
 struct AddRatingView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var requestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @Environment(\.dismiss) private var dismiss
     let serviceProvider: User
-    let serviceRequestId: String
+    let requestId: String
     
     @State private var rating: Int = 0
     @State private var review: String = ""
@@ -57,7 +57,7 @@ struct AddRatingView: View {
         let newReview = Review(
             userId: serviceProvider.id!,
             reviewerId: currentUserId,
-            serviceRequestId: serviceRequestId,
+            requestId: requestId,
             review: review,
             rating: Double(rating)
         )
@@ -66,7 +66,7 @@ struct AddRatingView: View {
         authViewModel.addReview(newReview) { result in
             switch result {
             case .success:
-                requestViewModel.updateRequestStatus(requestId: serviceRequestId, newStatus: .completed, isRated: true)
+                requestViewModel.updateRequestStatus(requestId: requestId, newStatus: .completed, isRated: true)
                 alertMessage = "Your review has been submitted successfully."
                 
             case .failure(let error):

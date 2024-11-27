@@ -24,9 +24,10 @@ struct AddPostTabView: View {
     
     @State private var localSelectedLocation: String = ""
     @State private var localSelectedCoordinates: CLLocationCoordinate2D?
+    @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             if authViewModel.isUserLoggedIn{
                 PostFormView(
                     title: $title,
@@ -50,9 +51,11 @@ struct AddPostTabView: View {
                 GoToLoginOrRegistrationSheetView(onClose: {
                     selectedTab = .search
                 }).applyBackground()
-                .environmentObject(authViewModel)
+                    .environmentObject(authViewModel)
                 
             }
+        }.onAppear{
+            navigationPath = NavigationPath()
         }
     }
     

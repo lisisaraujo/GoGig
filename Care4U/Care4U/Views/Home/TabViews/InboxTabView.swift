@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InboxTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var serviceRequestViewModel: ServiceRequestViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @Binding var selectedTab: HomeTabEnum
     @State var selectedInbox: InboxEnum = .received
@@ -25,11 +25,15 @@ struct InboxTabView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .pickerStyle(.segmented)
+                    .accentColor(.primaryText)
+                    .background(Color.accent.opacity(0.5))
+                    .cornerRadius(50)
                     .onChange(of: selectedInbox) { _, _ in
                         if selectedInbox == .received {
                             inboxViewModel.fetchReceivedRequests()
                         } else {
-                            serviceRequestViewModel.fetchSentRequests()
+                            requestViewModel.fetchSentRequests()
                         }
                     }
                     
@@ -39,13 +43,13 @@ struct InboxTabView: View {
                             .padding()
                     }
                     
-                    List(selectedInbox == .received ? inboxViewModel.receivedRequests : serviceRequestViewModel.sentRequests) { request in
+                    List(selectedInbox == .received ? inboxViewModel.receivedRequests : requestViewModel.sentRequests) { request in
                         Button(action: {
                             navigationPath.append(request)
                         }) {
                             RequestListItemView(request: request)
                                 .environmentObject(authViewModel)
-                                .environmentObject(serviceRequestViewModel)
+                                .environmentObject(requestViewModel)
                                 .frame(maxWidth: .infinity)
                         }
                         .listRowBackground(Color.clear)
@@ -59,16 +63,17 @@ struct InboxTabView: View {
                 }
                 .navigationTitle("Inbox")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    inboxViewModel.fetchReceivedRequests()
-                }
+              
             }
-            .navigationDestination(for: ServiceRequest.self) { request in
+            .navigationDestination(for: Request.self) { request in
                 RequestDetailsView(request: request)
                     .environmentObject(authViewModel)
-                    .environmentObject(serviceRequestViewModel)
+                    .environmentObject(requestViewModel)
             }
             .applyBackground()
+        }  .onAppear {
+            navigationPath = NavigationPath()
+            inboxViewModel.fetchReceivedRequests()
         }
     }
 }
@@ -76,6 +81,6 @@ struct InboxTabView: View {
 #Preview {
     InboxTabView(selectedTab: .constant(.search))
         .environmentObject(AuthViewModel())
-        .environmentObject(ServiceRequestViewModel())
+        .environmentObject(RequestViewModel())
         .environmentObject(InboxViewModel())
 }

@@ -14,11 +14,13 @@ class InboxViewModel: ObservableObject {
     private var firebaseManager = FirebaseManager.shared
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var receivedRequests: [ServiceRequest] = []
+    @Published var receivedRequests: [Request] = []
+    @Published var pendingRequests: [Request] = []
     @Published var errorMessage: String?
     
     init() {
         fetchReceivedRequests()
+        getPendingRequests()
     }
     
     func fetchReceivedRequests() {
@@ -28,7 +30,7 @@ class InboxViewModel: ObservableObject {
         }
         
         
-        firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName)
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
             .whereField("recipientUserId", isEqualTo: userId)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
@@ -36,14 +38,33 @@ class InboxViewModel: ObservableObject {
                     return
                 }
                 self.receivedRequests = querySnapshot?.documents.compactMap { document in
-                    try? document.data(as: ServiceRequest.self)
+                    try? document.data(as: Request.self)
                 } ?? []
                 self.errorMessage = nil
             }
     }
     
-    func updateRequestStatus(requestId: String, newStatus: ServiceRequestStatusEnum) {
-        firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName)
+    func getPendingRequests() {
+            guard let userId = firebaseManager.userId else {
+                self.errorMessage = "User not logged in"
+                return
+            }
+            firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+                .whereField("recipientUserId", isEqualTo: userId).whereField("status", isEqualTo: "Pending")
+                .addSnapshotListener { querySnapshot, error in
+                    if let error = error {
+                        self.errorMessage = "Error fetching requests: \(error.localizedDescription)"
+                        return
+                    }
+                    self.pendingRequests = querySnapshot?.documents.compactMap { document in
+                        try? document.data(as: Request.self)
+                    } ?? []
+                    self.errorMessage = nil
+                }
+        }
+    
+    func updateRequestStatus(requestId: String, newStatus: RequestStatus) {
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
             .document(requestId).updateData(["status": newStatus.rawValue]) { error in
                 if let error = error {
                     self.errorMessage = "Failed to update status: \(error.localizedDescription)"
@@ -60,9 +81,9 @@ class InboxViewModel: ObservableObject {
     }
     
     func markRequestAsCompleted(requestId: String) {
-        firebaseManager.database.collection(firebaseManager.serviceRequestsCollectionName)
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
             .document(requestId).updateData([
-                "status": ServiceRequestStatusEnum.completed.rawValue,
+                "status": RequestStatus.completed.rawValue,
                 "completionDate": Timestamp(date: Date())
             ]) { error in
                 if let error = error {
@@ -70,4 +91,6 @@ class InboxViewModel: ObservableObject {
                 }
             }
     }
+    
+    
 }
