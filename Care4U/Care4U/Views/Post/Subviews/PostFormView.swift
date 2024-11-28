@@ -49,7 +49,7 @@ struct PostFormView: View {
                         .pickerStyle(MenuPickerStyle())
                         Toggle("Is Active", isOn: $isActive)
                     }
-                    .listRowBackground(Color("surfaceBackground"))
+                    .listRowBackground(Color.buttonPrimary.opacity(0.2))
                     
                     Section(header: HStack {
                         Text("Exchange Coins")
@@ -73,7 +73,7 @@ struct PostFormView: View {
                             }
                         }
                     }
-                    .listRowBackground(Color("surfaceBackground"))
+                    .listRowBackground(Color.buttonPrimary.opacity(0.2))
                     
                     Section(header: HStack {
                         Text("Categories")
@@ -97,32 +97,27 @@ struct PostFormView: View {
                             }
                         }
                     }
-                    .listRowBackground(Color("surfaceBackground"))
+                    .listRowBackground(Color.buttonPrimary.opacity(0.2))
                     
-                    SelectLocationView(
-                        selectedLocation: $localSelectedLocation,
-                        selectedCoordinates: $localSelectedCoordinates,
-                        isAutocompletePresented: $isAutocompletePresented
-                    )
-                    .listRowBackground(Color("surfaceBackground"))
-                    
-                    Button(action: {
-                        submitForm()
-                    }) {
-                        Text(actionButtonText)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.buttonPrimary)
-                            .foregroundColor(Color.textPrimary)
-                            .cornerRadius(10)
+                    Section(header: Text("Location")) {
+                        SelectLocationView(
+                            selectedLocation: $localSelectedLocation,
+                            selectedCoordinates: $localSelectedCoordinates,
+                            isAutocompletePresented: $isAutocompletePresented
+                        )
+                        .listRowBackground(Color.buttonPrimary.opacity(0.2))
                     }
-                    .disabled(isLoading)
-                    .listRowBackground(Color("surfaceBackground"))
+                    
+                        ButtonPrimary(title: actionButtonText, action: submitForm)
+                        .padding(.top, 10)
+                            .disabled(isLoading)
+                            .listRowBackground(Color.clear)
+                    
                 }
                 .background(Color.clear)
                 .scrollContentBackground(.hidden)
                 .listStyle(.plain)
-                .applyBackground()
+              
             }
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
@@ -138,7 +133,7 @@ struct PostFormView: View {
                         .scaleEffect(1.5)
                     
                     Text(loadingMessage)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("textPrimary"))
                         .padding(.top)
                 }
                 .frame(width: 200, height: 200)

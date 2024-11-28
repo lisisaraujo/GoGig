@@ -71,12 +71,12 @@ struct ActionButtonsView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            PrimaryButton(title: "Apply Filters") {
+            ButtonPrimary(title: "Apply Filters") {
                 postsViewModel.filterPosts(selectedPostType: nil, searchText: nil, maxDistance: postsViewModel.selectedDistance)
                 dismiss()
             }
             
-            SecondaryButton(title: "Show Posts Worldwide") {
+            ButtonSecondary(title: "Show Posts Worldwide") {
                 postsViewModel.resetFilters()
                 dismiss()
             }

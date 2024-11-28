@@ -13,6 +13,7 @@ struct PersonalTabView: View {
     @Binding var selectedTab: HomeTabEnum
     @State private var showMenu = false
     @State private var navigationPath = NavigationPath()
+    @State private var text: String? = "Posts"
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -23,7 +24,7 @@ struct PersonalTabView: View {
                             ProfileHeaderView(user: user, imageSize: 150)
                             AboutMeView(description: user.description)
                             MemberSinceView(date: user.memberSince)
-                            PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id })
+                            PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id }, text: $text)
                         }
                     }
                 }.applyBackground()

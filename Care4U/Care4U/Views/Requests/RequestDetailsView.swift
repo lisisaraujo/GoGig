@@ -102,9 +102,9 @@ struct RequestDetailsView: View {
                             showDeclineConfirmation = true
                         }) {
                             Image(systemName: "xmark")
-                                .foregroundColor(Color("background"))
+                                .foregroundColor(.background)
                                 .frame(width: 60, height: 60)
-                                .background(Color.pink)
+                                .background(.accent)
                                 .clipShape(Circle())
                                 .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
                         }

@@ -19,7 +19,7 @@ struct SearchTabView: View {
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
-            VStack {
+            VStack(spacing: 10) {
                 Picker("Post Type", selection: $selectedPostType) {
                     Text("All").tag(nil as PostTypeEnum?)
                     ForEach(PostTypeEnum.allCases, id: \.self) { type in
@@ -30,30 +30,28 @@ struct SearchTabView: View {
                 .accentColor(.textPrimary)
                 .background(Color.buttonPrimary.opacity(0.5))
                 .cornerRadius(50)
-                .onChange(of: selectedPostType) { _, _ in
-                    filterPosts()
-                }
+                .padding(.horizontal)
                 
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color.gray)
                     TextField("Search in \(postsViewModel.selectedLocation)", text: $searchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .cornerRadius(50)
                     Button(action: {
                         showLocationPicker = true
                     }) {
                         Image(systemName: "mappin.and.ellipse")
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.accent)
                     }
                 }
                 .padding()
-                .onChange(of: searchText) { _, _ in
-                    filterPosts()
-                }
+                .background(Color.secondary.opacity(0.1))
+                .cornerRadius(10)
+                .padding(.horizontal)
                 
                 List(postsViewModel.filteredPosts) { post in
                     Button(action: {
-                        navigationPath.append(post.id!) 
+                        navigationPath.append(post.id!)
                     }) {
                         PostItemView(post: post)
                             .frame(maxWidth: .infinity)
@@ -68,6 +66,12 @@ struct SearchTabView: View {
             .navigationDestination(for: String.self) { postId in
                 PostDetailsView(postId: postId)
             }
+        }
+        .onChange(of: searchText) { _, _ in
+            filterPosts()
+        }
+        .onChange(of: selectedPostType) { _, _ in
+            filterPosts()
         }
         .onAppear {
             navigationPath = NavigationPath()

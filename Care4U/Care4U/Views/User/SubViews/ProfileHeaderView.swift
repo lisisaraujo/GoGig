@@ -37,6 +37,6 @@ struct ProfileHeaderView: View {
 }
 
 
-//#Preview {
-//    ProfileHeaderView(user: sampleUser, imageSize: <#CGFloat#>)
-//}
+#Preview {
+    ProfileHeaderView(user: sampleUser, imageSize: 150)
+}

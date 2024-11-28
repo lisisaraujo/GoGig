@@ -15,16 +15,16 @@ struct CustomTextEditorView: View {
         VStack(alignment: .leading) {
             if text.isEmpty {
                 Text(placeholder)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.textSecondary)
                     .padding(.top, 8)
             }
             TextEditor(text: $text)
                 .padding(10)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(10)
+                .background(Color.textSecondary.opacity(0.1))
+                .cornerRadius(20)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.accent.opacity(0.3), lineWidth: 2)
                 )
                 .frame(height: 150) 
         }

@@ -5,7 +5,7 @@ struct GoToLoginOrRegistrationSheetView: View {
     var onClose: () -> Void = {}
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.clear
                     .applyBackground()

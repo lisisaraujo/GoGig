@@ -22,13 +22,13 @@ struct MultipleSelectionRow: View {
                 }
             }
             .padding()
-            .background(isSelected ? Color.blue.opacity(0.2) : Color.clear)
-            .cornerRadius(8)
+            .background(isSelected ? Color.accent.opacity(0.2) : Color.clear)
+            .cornerRadius(15)
         }
-        .foregroundColor(.primary)
+        .foregroundColor(.textPrimary)
     }
 }
 
 #Preview {
-    MultipleSelectionRow(title: "", isSelected: false, action: { print("Form submitted") })
+    MultipleSelectionRow(title: "Hello", isSelected: false, action: { print("Form submitted") })
 }

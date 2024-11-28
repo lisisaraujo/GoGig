@@ -13,6 +13,7 @@ struct BookmarksTabView: View {
     @Binding var selectedTab: HomeTabEnum
     @State private var isLoading = false
     @State private var navigationPath = NavigationPath()
+    @State private var text: String? = nil
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -22,7 +23,7 @@ struct BookmarksTabView: View {
                         ScrollView {
                             if !postsViewModel.bookmarkedPosts.isEmpty {
                                 LazyVStack(spacing: 20) {
-                                    PostsListView(posts: postsViewModel.bookmarkedPosts)
+                                    PostsListView(posts: postsViewModel.bookmarkedPosts, text: $text)
                                 }
                             } else if !isLoading {
                                 Text("No bookmarked posts")

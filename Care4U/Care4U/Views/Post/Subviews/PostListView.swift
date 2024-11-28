@@ -9,11 +9,15 @@ import SwiftUI
 
 struct PostsListView: View {
     let posts: [Post]
+    @Binding var text: String?
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Posts")
-                .font(.headline)
+            if let text = text {
+                Text(text)
+                    .font(.headline)
+            }
+            
             ForEach(posts, id: \.id) { post in
                 NavigationLink(destination: PostDetailsView(postId: post.id!)){
                     PostItemView(post: post)

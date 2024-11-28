@@ -14,6 +14,7 @@ struct UserDetailsView: View {
     var userId: String
     @State private var isLoading = true
     @State private var user: User?
+    @State private var text: String? = "Posts"
     
     var body: some View {
         ScrollView {
@@ -37,7 +38,7 @@ struct UserDetailsView: View {
                     ReviewsScrollView(reviews: authViewModel.userReviews)
                         .environmentObject(postsViewModel)
                         .environmentObject(authViewModel)
-                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId })
+                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, text: $text)
                         .environmentObject(postsViewModel)
                         .environmentObject(authViewModel)
                 }

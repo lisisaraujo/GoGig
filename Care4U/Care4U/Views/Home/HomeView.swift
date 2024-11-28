@@ -67,7 +67,7 @@ struct CustomTabBar: View {
             }
         }
         .padding(.vertical, 15)
-        .background(Color.buttonPrimary.opacity(0.7))
+        .background(Color.buttonPrimary.opacity(0.5))
         .cornerRadius(50)
         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
     }
