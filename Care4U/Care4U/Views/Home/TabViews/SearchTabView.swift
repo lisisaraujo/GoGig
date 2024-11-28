@@ -27,8 +27,8 @@ struct SearchTabView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .accentColor(.primaryText)
-                .background(Color.accent.opacity(0.5))
+                .accentColor(.textPrimary)
+                .background(Color.buttonPrimary.opacity(0.5))
                 .cornerRadius(50)
                 .onChange(of: selectedPostType) { _, _ in
                     filterPosts()

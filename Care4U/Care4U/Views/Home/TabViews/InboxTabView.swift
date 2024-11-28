@@ -26,8 +26,8 @@ struct InboxTabView: View {
                     }
                     .pickerStyle(.segmented)
                     .pickerStyle(.segmented)
-                    .accentColor(.primaryText)
-                    .background(Color.accent.opacity(0.5))
+                    .accentColor(Color.textPrimary)
+                    .background(Color.buttonPrimary.opacity(0.5))
                     .cornerRadius(50)
                     .onChange(of: selectedInbox) { _, _ in
                         if selectedInbox == .received {
@@ -63,7 +63,9 @@ struct InboxTabView: View {
                 }
                 .navigationTitle("Inbox")
                 .navigationBarTitleDisplayMode(.inline)
-              
+                .onAppear {
+                    inboxViewModel.fetchReceivedRequests()
+                }
             }
             .navigationDestination(for: Request.self) { request in
                 RequestDetailsView(request: request)
@@ -71,9 +73,6 @@ struct InboxTabView: View {
                     .environmentObject(requestViewModel)
             }
             .applyBackground()
-        }  .onAppear {
-            navigationPath = NavigationPath()
-            inboxViewModel.fetchReceivedRequests()
         }
     }
 }

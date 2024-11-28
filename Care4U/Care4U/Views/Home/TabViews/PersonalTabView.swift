@@ -34,7 +34,7 @@ struct PersonalTabView: View {
                         }
                     }) {
                         Image(systemName: "ellipsis")
-                            .foregroundColor(.accent)
+                            .foregroundColor(.buttonPrimary)
                     }
                 )
                 .sheet(isPresented: $showMenu) {

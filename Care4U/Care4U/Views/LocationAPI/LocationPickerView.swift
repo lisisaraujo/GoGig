@@ -16,7 +16,7 @@ struct LocationPickerView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                LocationSelectionView(showAutocomplete: $showAutocomplete)
+                SelectLocationView(selectedLocation:  $postsViewModel.selectedLocation, selectedCoordinates: $postsViewModel.selectedCoordinates, isAutocompletePresented: $showAutocomplete)
                 
                 SearchRadiusView(selectedDistance: $postsViewModel.selectedDistance)
                 
@@ -41,52 +41,26 @@ struct LocationPickerView: View {
     }
 }
 
-struct LocationSelectionView: View {
-    @EnvironmentObject var postsViewModel: PostsViewModel
-    @Binding var showAutocomplete: Bool
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Location")
-                .font(.headline)
-            
-            Button(action: {
-                showAutocomplete = true
-            }) {
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                        .foregroundColor(.blue)
-                    Text(postsViewModel.selectedLocation.isEmpty ? "Enter location" : postsViewModel.selectedLocation)
-                        .foregroundColor(postsViewModel.selectedLocation.isEmpty ? .secondary : .primary)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
-                }
-                .padding()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
-                )
-            }
-        }
-    }
-}
-
 struct SearchRadiusView: View {
     @Binding var selectedDistance: Double
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Search Radius")
-                .font(.headline)
-            
-            Text("\(Int(selectedDistance)) km")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+            HStack{
+                Text("Search Radius")
+                    .font(.headline)
+                    .foregroundColor(.textSecondary)
+                
+                Spacer()
+                
+                Text("\(Int(selectedDistance)) km")
+                    .font(.subheadline)
+                    .foregroundColor(.textPrimary)
+            }
+   
             
             Slider(value: $selectedDistance, in: 0...1000, step: 1)
-                .accentColor(.blue)
+                .accentColor(.accent)
         }
     }
 }

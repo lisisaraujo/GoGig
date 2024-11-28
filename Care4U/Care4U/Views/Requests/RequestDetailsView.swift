@@ -65,7 +65,7 @@ struct RequestDetailsView: View {
                     Text(request.contactInfo ?? "No contact information provided")
                         .padding()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(.accent.opacity(0.6))
+                        .background(.buttonPrimary.opacity(0.6))
                         .cornerRadius(15)
                         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                 }
@@ -93,7 +93,7 @@ struct RequestDetailsView: View {
                             Image(systemName: "checkmark")
                                 .foregroundColor(Color("background"))
                                 .frame(width: 60, height: 60)
-                                .background(Color.accentColor)
+                                .background(Color.buttonPrimary)
                                 .clipShape(Circle())
                                 .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
                         }
@@ -150,7 +150,7 @@ struct RequestDetailsView: View {
     
     private func loadSenderDetails() {
         Task {
-            senderUser = await authViewModel.fetchUser(with: request.senderUserId)
+            senderUser = await authViewModel.fetchUserData(with: request.senderUserId)
         }
     }
     

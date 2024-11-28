@@ -22,7 +22,7 @@ struct LoginView: View {
                 .applyBackground()
                 .ignoresSafeArea()
             VStack {
-                Text("Care4U")
+                Text("GoGig")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.top, 40)
@@ -47,7 +47,7 @@ struct LoginView: View {
                         dismiss()
                     }) {
                         Text("Login")
-                            .foregroundColor(.primaryText)
+                            .foregroundColor(.textPrimary)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.buttonPrimary)

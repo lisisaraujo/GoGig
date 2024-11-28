@@ -112,8 +112,8 @@ struct PostFormView: View {
                         Text(actionButtonText)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color("buttonPrimary"))
-                            .foregroundColor(Color("primaryText"))
+                            .background(Color.buttonPrimary)
+                            .foregroundColor(Color.textPrimary)
                             .cornerRadius(10)
                     }
                     .disabled(isLoading)

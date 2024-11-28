@@ -12,34 +12,38 @@ struct GoToLoginOrRegistrationSheetView: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 24) {
-                    Text("Welcome to Care4U")
+                    Text("GoGig")
                         .font(.title)
                         .fontWeight(.bold)
+                        .foregroundColor(.accent)
                     
                     Text("Please log in or register to continue.")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.textSecondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     
                     VStack(spacing: 16) {
-                        NavigationLink(destination: RegistrationView().environmentObject(authViewModel)) {
-                            Text("Register")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color("buttonPrimary"))
-                                .cornerRadius(10)
-                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                        }
-
+                        
                         NavigationLink(destination: LoginView().environmentObject(authViewModel)) {
                             Text("Login")
-                                .foregroundColor(.white)
+                                .foregroundColor(.textPrimary)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color("buttonSecondary"))
-                                .cornerRadius(10)
+                                .background(Color.buttonPrimary)
+                                .fontWeight(.bold)
+                                .cornerRadius(20)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+                        }
+                        
+                        NavigationLink(destination: RegistrationView().environmentObject(authViewModel)) {
+                            Text("Register")
+                                .foregroundColor(.buttonPrimary)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.buttonSecondary)
+                                .fontWeight(.bold)
+                                .cornerRadius(20)
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                         }
                     }
@@ -53,7 +57,7 @@ struct GoToLoginOrRegistrationSheetView: View {
                 Image(systemName: "xmark")
                                     .foregroundColor(Color("background"))
                                     .padding(10)
-                                    .background(Color("secondaryText"))
+                                    .background(Color.textSecondary)
                                     .clipShape(Circle())
                                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
             })

@@ -14,11 +14,11 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(.white)
+                .foregroundColor(.textPrimary)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color("buttonPrimary"))
-                .cornerRadius(10)
+                .background(Color.buttonPrimary)
+                .cornerRadius(20)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         }
     }
@@ -31,11 +31,11 @@ struct SecondaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(.white)
+                .foregroundColor(.buttonPrimary)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color("buttonSecondary"))
-                .cornerRadius(10)
+                .background(Color.buttonSecondary)
+                .cornerRadius(20)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         }
     }

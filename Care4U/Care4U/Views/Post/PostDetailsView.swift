@@ -135,7 +135,7 @@ struct PostDetailsView: View {
                 await authViewModel.checkAuth()
             }
             if let userId = postsViewModel.selectedPost?.userId {
-                await creatorUser = authViewModel.fetchUser(with: userId)
+                await creatorUser = authViewModel.fetchUserData(with: userId)
               
             }
             isLoading = false

@@ -35,7 +35,7 @@ struct ReviewCard: View {
                 .foregroundColor(.secondary)
         }.onAppear(perform: {
             Task {
-              reviewerData = await authViewModel.fetchUser(with: review.reviewerId)
+              reviewerData = await authViewModel.fetchUserData(with: review.reviewerId)
             }
         })
         .frame(width: 200, height: 120)

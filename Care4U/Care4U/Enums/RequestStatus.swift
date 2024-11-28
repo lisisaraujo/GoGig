@@ -26,7 +26,7 @@ enum RequestStatus: String, Codable {
     case .declined:
         return .red
     case .completed:
-          return .accent
+          return .buttonPrimary
     case .canceled:
           return .red
     }

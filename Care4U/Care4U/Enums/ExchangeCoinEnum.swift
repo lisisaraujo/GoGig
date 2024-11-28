@@ -10,6 +10,5 @@ import Foundation
 
 enum ExchangeCoinEnum: String, CaseIterable {
     case paid = "Paid",
-         exchange = "Exchange",
-         negotiable = "Negotiable"
+         exchange = "Exchange"
 }

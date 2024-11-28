@@ -9,10 +9,6 @@ import SwiftUI
 import CoreLocation
 import GooglePlaces
 
-import SwiftUI
-import CoreLocation
-import GooglePlaces
-
 struct SelectLocationView: View {
     @Binding var selectedLocation: String
     @Binding var selectedCoordinates: CLLocationCoordinate2D?
@@ -23,25 +19,25 @@ struct SelectLocationView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Location")
                 .font(.headline)
-                .foregroundColor(.primary)
+                .foregroundColor(.textSecondary)
 
             Button(action: {
                 isAutocompletePresented.toggle()
             }) {
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
-                        .foregroundColor(.blue)
+                        .foregroundColor(.accent)
                     Text(selectedLocation.isEmpty ? "Select Location" : selectedLocation)
-                        .foregroundColor(selectedLocation.isEmpty ? .secondary : .primary)
+                        .foregroundColor(selectedLocation.isEmpty ? .textSecondary : .textPrimary)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.accent)
                 }
                 .padding()
-                .cornerRadius(10)
+                .cornerRadius(20)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.accent.opacity(0.3), lineWidth: 2)
                 )
             }
             .sheet(isPresented: $isAutocompletePresented) {

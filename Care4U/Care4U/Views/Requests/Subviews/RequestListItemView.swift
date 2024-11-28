@@ -64,7 +64,7 @@ struct RequestListItemView: View {
             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
             .onAppear {
                 Task {
-                    userData = await authViewModel.fetchUser(with: request.senderUserId)
+                    userData = await authViewModel.fetchUserData(with: request.senderUserId)
                 }
             }
         }
