@@ -12,28 +12,46 @@ struct CreatorCardView: View {
     let title: String
     
     var body: some View {
-        VStack {
+        HStack(spacing: 15) {
             AsyncImage(url: URL(string: user?.profilePicURL ?? "")) { image in
                 image.resizable()
+                    .scaledToFill()
             } placeholder: {
                 Image(systemName: "person.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.gray)
             }
-            .frame(width: 100, height: 100)
+            .frame(width: 60, height: 60)
             .clipShape(Circle())
-            
-            VStack(alignment: .leading) {
+            .overlay(
+                Circle()
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 2)
+            )
+     
+            VStack(alignment: .leading, spacing: 5) {
                 Text(user?.fullName ?? "No name")
                     .font(.headline)
+                    .foregroundColor(.textPrimary)
                 Text(title)
                     .font(.subheadline)
                     .foregroundColor(.blue)
             }
+            
             Spacer()
+            
+           
             Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(.gray)
         }
         .padding()
-        .cornerRadius(12)
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.buttonSecondary.opacity(0.2))
+                .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+        )
+        .padding(.horizontal)
     }
 }
 

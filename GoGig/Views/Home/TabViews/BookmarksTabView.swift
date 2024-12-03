@@ -48,7 +48,7 @@ struct BookmarksTabView: View {
                     .navigationTitle("Bookmarks")
                     .navigationBarTitleDisplayMode(.inline)
                 } else {
-                    GoToLoginOrRegistrationSheetView(onClose: {
+                    LoginOrRegisterView(onClose: {
                         selectedTab = .search
                     })
                     .environmentObject(authViewModel)

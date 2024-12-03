@@ -47,7 +47,7 @@ struct AddPostTabView: View {
                 ).applyBackground()
             } else {
                 
-                GoToLoginOrRegistrationSheetView(onClose: {
+                LoginOrRegisterView(onClose: {
                     selectedTab = .search
                 }).applyBackground()
                     .environmentObject(authViewModel)

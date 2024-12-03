@@ -85,7 +85,7 @@ struct InboxTabView: View {
                 }
                 .applyBackground()
             } else {
-                GoToLoginOrRegistrationSheetView(onClose: {
+                LoginOrRegisterView(onClose: {
                     selectedTab = .search
                 })
                 .environmentObject(authViewModel)

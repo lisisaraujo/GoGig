@@ -44,7 +44,7 @@ struct RequestFormView: View {
             }
             .navigationTitle("Send Request")
         } else {
-            GoToLoginOrRegistrationSheetView(onClose: {
+            LoginOrRegisterView(onClose: {
                 dismiss()
             })
         }

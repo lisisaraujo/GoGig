@@ -24,7 +24,6 @@ struct PostDetailsView: View {
     @State private var requestMessage = ""
     @State private var contactInfo = ""
 
-    
     private var isCurrentUserCreator: Bool {
         guard let post = postsViewModel.selectedPost,
               let currentUserId = authViewModel.currentUser?.id else {
@@ -35,35 +34,18 @@ struct PostDetailsView: View {
     
     var body: some View {
         Group {
-       if let post = postsViewModel.selectedPost {
+            if let post = postsViewModel.selectedPost {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        PostHeaderView(post: post)
-                        PostContentView(post: post)
+                        PostCardView(post: post)
                         PostMetadataView(post: post)
-                        NavigationLink(destination: UserDetailsView(userId: creatorUser?.id ?? "")) {
-                            CreatorCardView(user: creatorUser, title: "View Profile")
-                        }
-                        
-                        if isCurrentUserCreator, authViewModel.isUserLoggedIn {
-                            Button("Delete Post") {
-                                showDeletionConfirmation = true
-                            }
-                            .buttonStyle(.borderedProminent)
-                                                       .tint(.red)
-                                                       .disabled(isDeleting)
-                            
-                        } else {
-                            
-                            Button("Send Request") {
-                            showRequestForm = true
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .frame(maxWidth: .infinity)
-                        }
+                        TagsView(exchangeCoins: post.exchangeCoins, categories: post.categories)
+                        CreatorView(creatorUser: creatorUser)
+                        ActionButtonsView2(isCurrentUserCreator: isCurrentUserCreator, isDeleting: isDeleting, showRequestForm: $showRequestForm, showDeletionConfirmation: $showDeletionConfirmation)
                     }
                     .padding()
-                }.applyBackground()
+                }
+                .applyBackground()
                 .navigationBarItems(trailing: editButton)
                 .sheet(isPresented: $showUserDetails) {
                     if let userId = postsViewModel.selectedPost?.userId {
@@ -72,9 +54,7 @@ struct PostDetailsView: View {
                     }
                 }
                 .sheet(isPresented: $showRequestForm) {
-
-                        RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
-
+                    RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
                 }
                 .alert("Request Sent", isPresented: $showRequestConfirmation) {
                     Button("OK", role: .cancel) {}
@@ -82,35 +62,34 @@ struct PostDetailsView: View {
                     Text("Your request has been sent.")
                 }
                 .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {
-                                    Button("Delete", role: .destructive) {
-                                        deletePost(postId: postId)
-                                    }
-                                    Button("Cancel", role: .cancel) {}
-                                } message: {
-                                    Text("Are you sure you want to delete this post? This action cannot be undone.")
-                                }
+                    Button("Delete", role: .destructive) {
+                        deletePost(postId: postId)
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Are you sure you want to delete this post? This action cannot be undone.")
+                }
             } else {
                 Text("Post not found")
                     .font(.headline)
                     .foregroundColor(.red)
             }
-        }.applyBackground()
+        }
+        .applyBackground()
         .navigationTitle("Post Details")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadData)
-        
     }
     
     private func deletePost(postId: String) {
         isDeleting = true
         Task {
-            let success = await postsViewModel.deleteSelectedPost(postId: postId) 
+            let success = await postsViewModel.deleteSelectedPost(postId: postId)
             isDeleting = false
             
             if success {
                 showDeletionConfirmation = false
                 dismiss()
-            } else {
             }
         }
     }
@@ -136,7 +115,6 @@ struct PostDetailsView: View {
             }
             if let userId = postsViewModel.selectedPost?.userId {
                 await creatorUser = authViewModel.fetchUserData(with: userId)
-              
             }
             isLoading = false
         }
@@ -152,44 +130,59 @@ struct PostDetailsView: View {
     }
 }
 
-struct PostHeaderView: View {
+private struct PostCardView: View {
     let post: Post
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        
+        VStack(alignment: .leading, spacing: 12) {
+            
+            HStack {
+                Label(post.type, systemImage: "tag")
+                Spacer()
+                Label(post.isActive ? "Active" : "Inactive", systemImage: post.isActive ? "checkmark.circle" : "xmark.circle")
+                    .foregroundColor(post.isActive ? .green : .red)
+            }
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+            
             Text(post.title)
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.bold)
-            Label(post.type, systemImage: "tag")
-            Label(post.isActive ? "Active" : "Inactive", systemImage: post.isActive ? "checkmark.circle" : "xmark.circle")
-        }
-        .font(.subheadline)
-        .foregroundColor(.secondary)
-    }
-}
-
-struct PostContentView: View {
-    let post: Post
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+            
             Text(post.description)
                 .font(.body)
+            
+        }
+        .padding()
+        .background(Color.secondary.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
 
-            TagsSectionView(title: "Exchange Coins", items: post.exchangeCoins, color: .blue)
-            TagsSectionView(title: "Categories", items: post.categories, color: .green)
+private struct TagsView: View {
+    let exchangeCoins: [String]
+    let categories: [String]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            TagSection(icon: "dollarsign.circle", items: exchangeCoins, color: .blue)
+            TagSection(icon: "tag", items: categories, color: .green)
         }
     }
 }
 
-struct TagsSectionView: View {
-    let title: String
+private struct TagSection: View {
+    let icon: String
     let items: [String]
     let color: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title).font(.headline)
+            Label("", systemImage: icon)
+                .font(.headline)
+                .foregroundColor(color)
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(items, id: \.self) { item in
@@ -205,12 +198,13 @@ struct TagsSectionView: View {
     }
 }
 
-struct PostMetadataView: View {
+private struct PostMetadataView: View {
     let post: Post
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        HStack {
             Label(post.postLocation, systemImage: "mappin.and.ellipse")
+            Spacer()
             Label(post.createdOn.formatted(date: .abbreviated, time: .shortened), systemImage: "calendar")
         }
         .font(.subheadline)
@@ -218,7 +212,36 @@ struct PostMetadataView: View {
     }
 }
 
+private struct CreatorView: View {
+    let creatorUser: User?
 
+    var body: some View {
+        NavigationLink(destination: UserDetailsView(userId: creatorUser?.id ?? "")) {
+            CreatorCardView(user: creatorUser, title: "View Profile")
+        }
+    }
+}
+
+private struct ActionButtonsView2: View {
+    let isCurrentUserCreator: Bool
+    let isDeleting: Bool
+    @Binding var showRequestForm: Bool
+    @Binding var showDeletionConfirmation: Bool
+
+    var body: some View {
+        if isCurrentUserCreator {
+            ButtonDelete(title: "Delete Post") {
+                showDeletionConfirmation = true
+            }
+            .disabled(isDeleting)
+            
+        } else {
+            ButtonPrimary(title: "Send Request") {
+                showRequestForm = true
+            }
+        }
+    }
+}
 
 #Preview {
     PostDetailsView(postId:"sample-post-id")

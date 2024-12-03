@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GoToLoginOrRegistrationSheetView: View {
+struct LoginOrRegisterView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     var onClose: () -> Void = {}
 
@@ -68,6 +68,6 @@ struct GoToLoginOrRegistrationSheetView: View {
 }
 
 #Preview {
-    GoToLoginOrRegistrationSheetView()
+    LoginOrRegisterView()
         .environmentObject(AuthViewModel())
 }
