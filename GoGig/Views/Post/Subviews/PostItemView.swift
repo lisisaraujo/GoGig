@@ -82,11 +82,6 @@ struct PostItemView: View {
         isBookmarked.toggle()
     }
     
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }
 }
 
 #Preview {

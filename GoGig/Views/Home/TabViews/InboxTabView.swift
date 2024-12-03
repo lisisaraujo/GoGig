@@ -13,10 +13,9 @@ struct InboxTabView: View {
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @Binding var selectedTab: HomeTabEnum
     @State var selectedInbox: InboxEnum = .received
-    @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack {
             if authViewModel.isUserLoggedIn {
                 VStack {
                     Picker("Inbox Type", selection: $selectedInbox) {
@@ -54,8 +53,8 @@ struct InboxTabView: View {
                             }
                         } else {
                             List(selectedInbox == .received ? inboxViewModel.receivedRequests : requestViewModel.sentRequests) { request in
-                                Button(action: {
-                                    navigationPath.append(request)
+                                NavigationLink(destination: {
+                                    RequestDetailsView(request: request)
                                 }) {
                                     RequestListItemView(request: request)
                                         .environmentObject(authViewModel)

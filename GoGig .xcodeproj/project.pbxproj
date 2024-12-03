@@ -14,7 +14,6 @@
 		A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F92CE106C0007DA925 /* EditProfileView.swift */; };
 		A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FB2CE1078C007DA925 /* MenuView.swift */; };
 		A74175002CE10B4F007DA925 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FF2CE10B4F007DA925 /* SampleData.swift */; };
-		A74175022CE23EA3007DA925 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175012CE23EA3007DA925 /* SideMenu.swift */; };
 		A74175042CE2AA79007DA925 /* EditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175032CE2AA79007DA925 /* EditPostView.swift */; };
 		A74175062CE36C16007DA925 /* PostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175052CE36C16007DA925 /* PostFormView.swift */; };
 		A74175082CE36E37007DA925 /* MultipleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */; };
@@ -44,6 +43,7 @@
 		A74FE32A2CF4BA5B00517D3C /* BackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74FE3292CF4BA5B00517D3C /* BackgroundModifier.swift */; };
 		A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */; };
 		A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */; };
+		A79850E72CFF5A2F00E9CB79 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79850E62CFF5A2F00E9CB79 /* DateFormatter.swift */; };
 		A79945102CCFB02600F4AF89 /* GoGig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799450F2CCFB02600F4AF89 /* GoGig.swift */; };
 		A79945122CCFB02600F4AF89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79945112CCFB02600F4AF89 /* ContentView.swift */; };
 		A79945192CCFB02800F4AF89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79945182CCFB02800F4AF89 /* Preview Assets.xcassets */; };
@@ -123,7 +123,6 @@
 		A74174F92CE106C0007DA925 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		A74174FB2CE1078C007DA925 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		A74174FF2CE10B4F007DA925 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		A74175012CE23EA3007DA925 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		A74175032CE2AA79007DA925 /* EditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostView.swift; sourceTree = "<group>"; };
 		A74175052CE36C16007DA925 /* PostFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormView.swift; sourceTree = "<group>"; };
 		A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionRow.swift; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		A74FE3292CF4BA5B00517D3C /* BackgroundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundModifier.swift; sourceTree = "<group>"; };
 		A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditorView.swift; sourceTree = "<group>"; };
 		A78AD7F62CD8DB910074EB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A79850E62CFF5A2F00E9CB79 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		A799450C2CCFB02600F4AF89 /* GoGig .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GoGig .app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A799450F2CCFB02600F4AF89 /* GoGig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGig.swift; sourceTree = "<group>"; };
 		A79945112CCFB02600F4AF89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -327,7 +327,6 @@
 		A74175412CE61761007DA925 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				A74175012CE23EA3007DA925 /* SideMenu.swift */,
 				A74174FB2CE1078C007DA925 /* MenuView.swift */,
 			);
 			path = Menu;
@@ -521,6 +520,7 @@
 				A799459A2CD1117E00F4AF89 /* CustomSecureFieldView.swift */,
 				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
 				A74175422CE61886007DA925 /* Buttons.swift */,
+				A79850E62CFF5A2F00E9CB79 /* DateFormatter.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -698,6 +698,7 @@
 				A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */,
 				A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */,
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,
+				A79850E72CFF5A2F00E9CB79 /* DateFormatter.swift in Sources */,
 				A741753C2CE5E92E007DA925 /* UserRepository.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
 				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
@@ -711,7 +712,6 @@
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */,
-				A74175022CE23EA3007DA925 /* SideMenu.swift in Sources */,
 				A799457D2CD012A200F4AF89 /* User.swift in Sources */,
 				A741752E2CE4FEE3007DA925 /* ReviewCard.swift in Sources */,
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,

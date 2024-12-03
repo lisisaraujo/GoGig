@@ -12,11 +12,10 @@ struct BookmarksTabView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Binding var selectedTab: HomeTabEnum
     @State private var isLoading = false
-    @State private var navigationPath = NavigationPath()
     @State private var text: String? = nil
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack {
             Group {
                 if authViewModel.isUserLoggedIn {
                     ZStack {
@@ -44,7 +43,6 @@ struct BookmarksTabView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .onAppear{
-                        navigationPath = NavigationPath()
                         loadBookmarkedPosts()
                     }
                     .navigationTitle("Bookmarks")

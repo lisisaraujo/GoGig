@@ -337,6 +337,96 @@ class AuthViewModel: ObservableObject {
         }
     }
 
+    private func deleteUserSentRequest(userId: String) async throws {
+        do {
+            // get a query of all posts that matches the users id
+            let querySnapshot = try await firebaseManager.database
+                .collection(firebaseManager.requestsCollectionName)
+                .whereField("senderUserId", isEqualTo: userId)
+                .getDocuments()
+            
+            // Loop through the results and delete each document
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+                print("Deleted request with ID: \(document.documentID)")
+            }
+            
+            print("All user sent requests deleted successfully")
+            
+        } catch {
+            print("Error deleting requests: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    private func deleteUserReceivedRequest(userId: String) async throws {
+        do {
+            // get a query of all posts that matches the users id
+            let querySnapshot = try await firebaseManager.database
+                .collection(firebaseManager.requestsCollectionName)
+                .whereField("recipientUserId", isEqualTo: userId)
+                .getDocuments()
+            
+            // Loop through the results and delete each document
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+                print("Deleted request with ID: \(document.documentID)")
+            }
+            
+            print("All user received requests deleted successfully")
+            
+        } catch {
+            print("Error deleting requests: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    private func deleteUserSentReviews(userId: String) async throws {
+        do {
+            // get a query of all posts that matches the users id
+            let querySnapshot = try await firebaseManager.database
+                .collection(firebaseManager.reviewsCollectionName)
+                .whereField("reviewerId", isEqualTo: userId)
+                .getDocuments()
+            
+            // Loop through the results and delete each document
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+                print("Deleted reviews with ID: \(document.documentID)")
+            }
+            
+            print("All user sent reviews deleted successfully")
+            
+        } catch {
+            print("Error deleting reviews: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    private func deleteUserReceivedReviews(userId: String) async throws {
+        do {
+            // get a query of all posts that matches the users id
+            let querySnapshot = try await firebaseManager.database
+                .collection(firebaseManager.reviewsCollectionName)
+                .whereField("userId", isEqualTo: userId)
+                .getDocuments()
+            
+            // Loop through the results and delete each document
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+                print("Deleted reviews with ID: \(document.documentID)")
+            }
+            
+            print("All user received reviews deleted successfully")
+            
+        } catch {
+            print("Error deleting reviews: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    
+    
     // main function to delete all user related data
     func deleteAllUserData() async throws {
         guard let userId = currentUser?.id else {
@@ -344,9 +434,13 @@ class AuthViewModel: ObservableObject {
         }
 
         do {
-            try await deleteUserData(userId: userId)
             try await deleteUserPosts(userId: userId)
             try await deleteStorageData(userId: userId)
+            try await deleteUserReceivedRequest(userId: userId)
+            try await deleteUserSentRequest(userId: userId)
+            try await deleteUserReceivedReviews(userId: userId)
+            try await deleteUserSentReviews(userId: userId)
+            try await deleteUserData(userId: userId)
             try await deleteAuthAccount()
             logout()
             self.currentUser = nil

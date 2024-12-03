@@ -16,6 +16,11 @@ class RequestViewModel: ObservableObject {
     @Published var sentRequests: [Request] = []
     @Published var errorMessage: String?
     
+    @Published var showToast = false
+     @Published var toastMessage = ""
+     @Published var isToastSuccess = false
+    
+    
     init() {
         fetchSentRequests()
     }
@@ -95,16 +100,19 @@ class RequestViewModel: ObservableObject {
         updateRequestStatus(requestId: requestId, newStatus: .canceled)
     }
     
-    func removeRequest(requestId: String) {
-        firebaseManager.database.collection(firebaseManager.requestsCollectionName).document(requestId).delete { error in
-            if let error = error {
-                self.errorMessage = "Error removing request: \(error.localizedDescription)"
-                print("Error removing request: \(error.localizedDescription)")
-            } else {
-                print("Request successfully removed")
-                self.fetchSentRequests()
+    func deleteRequest(requestId: String) {
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+            .document(requestId).delete { error in
+                if let error = error {
+                    self.toastMessage = "Failed to delete the request: \(error.localizedDescription)"
+                    self.isToastSuccess = false
+                } else {
+                    self.toastMessage = "Request deleted successfully."
+                    self.isToastSuccess = true
+                }
+                self.showToast = true
             }
-        }
     }
+
 
 }
