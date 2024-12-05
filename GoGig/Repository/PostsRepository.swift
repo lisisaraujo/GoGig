@@ -99,42 +99,42 @@ class PostsRepository {
     
     // obviously used AI help for this
     func fetchPostsWithinRadius(center: CLLocationCoordinate2D, radiusInKm: Double) async throws -> [Post] {
-           let earthRadiusInKm: Double = 6371
-           let lat = center.latitude
-           let lon = center.longitude
-           let angularRadius = radiusInKm / earthRadiusInKm
-           
-           let minLat = lat - angularRadius * 180 / .pi
-           let maxLat = lat + angularRadius * 180 / .pi
-           let minLon = lon - angularRadius * 180 / (.pi * cos(lat * .pi / 180))
-           let maxLon = lon + angularRadius * 180 / (.pi * cos(lat * .pi / 180))
-           
-           let query = firebaseManager.database.collection(firebaseManager.postsCollectionName)
-               .whereField("latitude", isGreaterThan: minLat)
-               .whereField("latitude", isLessThan: maxLat)
-               .whereField("longitude", isGreaterThan: minLon)
-               .whereField("longitude", isLessThan: maxLon)
-           
-           let snapshot = try await query.getDocuments()
-           return snapshot.documents.compactMap { try? $0.data(as: Post.self) }
-       }
+        let earthRadiusInKm: Double = 6371
+        let lat = center.latitude
+        let lon = center.longitude
+        let angularRadius = radiusInKm / earthRadiusInKm
+        
+        let minLat = lat - angularRadius * 180 / .pi
+        let maxLat = lat + angularRadius * 180 / .pi
+        let minLon = lon - angularRadius * 180 / (.pi * cos(lat * .pi / 180))
+        let maxLon = lon + angularRadius * 180 / (.pi * cos(lat * .pi / 180))
+        
+        let query = firebaseManager.database.collection(firebaseManager.postsCollectionName)
+            .whereField("latitude", isGreaterThan: minLat)
+            .whereField("latitude", isLessThan: maxLat)
+            .whereField("longitude", isGreaterThan: minLon)
+            .whereField("longitude", isLessThan: maxLon)
+        
+        let snapshot = try await query.getDocuments()
+        return snapshot.documents.compactMap { try? $0.data(as: Post.self) }
+    }
     
-     func deleteSelectedPost(postId: String) async throws {
-          do {
-              try await firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId).delete()
-              print("Post data deleted successfully")
-          } catch {
-              print("Error deleting Post data: \(error.localizedDescription)")
-              throw error
-          }
-      }
-
-        func updatePost(postId: String, updatedFields: [String: Any]) async throws {
-            guard !updatedFields.isEmpty else { return }
-            
-            let postRef = firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId)
-            try await postRef.updateData(updatedFields)
+    func deleteSelectedPost(postId: String) async throws {
+        do {
+            try await firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId).delete()
+            print("Post data deleted successfully")
+        } catch {
+            print("Error deleting Post data: \(error.localizedDescription)")
+            throw error
         }
     }
+    
+    func updatePost(postId: String, updatedFields: [String: Any]) async throws {
+        guard !updatedFields.isEmpty else { return }
+        
+        let postRef = firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId)
+        try await postRef.updateData(updatedFields)
+    }
+}
 
 

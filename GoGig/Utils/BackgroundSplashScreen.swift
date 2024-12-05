@@ -1,13 +1,13 @@
 //
-//  BackgroundModifier.swift
-//  Care4U
+//  BackgroundSplashScreen.swift
+//  GoGig 
 //
-//  Created by Lisis Ruschel on 25.11.24.
+//  Created by Lisis Ruschel on 05.12.24.
 //
 
 import SwiftUI
 
-struct BackgroundModifier: ViewModifier {
+struct BackgroundSplashScreen: ViewModifier {
         @Environment(\.colorScheme) var colorScheme
         
         func body(content: Content) -> some View {
@@ -15,7 +15,7 @@ struct BackgroundModifier: ViewModifier {
                 .background(
                     LinearGradient(
                         gradient: Gradient(colors: colorScheme == .dark
-                            ? [Color.black.opacity(0.4), Color.deepNavy.opacity(0.9)]
+                            ? [Color.black, Color.deepNavy]
                             : [Color("D0D9E0"), Color("F2F2F7")]),
                         startPoint: .bottomLeading,
                         endPoint: .topTrailing
@@ -26,7 +26,7 @@ struct BackgroundModifier: ViewModifier {
     }
 
 extension View {
-    func applyBackground() -> some View {
-        self.modifier(BackgroundModifier())
+    func background() -> some View {
+        self.modifier(BackgroundSplashScreen())
     }
 }

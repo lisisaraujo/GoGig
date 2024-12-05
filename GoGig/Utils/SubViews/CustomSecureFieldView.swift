@@ -18,7 +18,7 @@ struct CustomSecureFieldView: View {
         VStack(alignment: .leading, spacing: 5) {
             SecureField(placeholder, text: $text)
                 .padding(20)
-                .background(Color.textSecondary.opacity(0.1))
+                .background(Color.secondary.opacity(0.1))
                 .cornerRadius(15)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)

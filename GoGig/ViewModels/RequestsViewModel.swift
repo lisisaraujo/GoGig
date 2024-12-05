@@ -1,5 +1,5 @@
 //
-//  InboxViewModel.swift
+//  RequestViewModel.swift
 //  Care4U
 //
 //  Created by Lisis Ruschel on 13.11.24.
@@ -9,70 +9,53 @@ import Foundation
 import FirebaseFirestore
 import Combine
 
+@MainActor
 class RequestViewModel: ObservableObject {
+    
     private var firebaseManager = FirebaseManager.shared
+    private let repository = RequestRepository()
     
     @Published var currentRequest: Request?
     @Published var sentRequests: [Request] = []
     @Published var errorMessage: String?
-    
     @Published var showToast = false
-     @Published var toastMessage = ""
-     @Published var isToastSuccess = false
+    @Published var toastMessage = ""
+    @Published var isToastSuccess = false
     
+    @Published var receivedRequests: [Request] = []
+    @Published var pendingRequests: [Request] = []
     
     init() {
         fetchSentRequests()
+        fetchReceivedRequests()
+        getPendingRequests()
     }
     
     func sendRequest(recipientUserId: String, postId: String, postTitle: String, message: String?, contactInfo: String?) {
         guard let senderUserId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
-            print("Error: User not logged in")
             return
         }
         
         let request = Request(senderUserId: senderUserId, recipientUserId: recipientUserId, postId: postId, postTitle: postTitle, message: message, contactInfo: contactInfo)
         
-        do {
-            try firebaseManager.database.collection(firebaseManager.requestsCollectionName).addDocument(from: request) { error in
-                if let error = error {
-                    self.errorMessage = "Error sending request: \(error.localizedDescription)"
-                    print("Error sending request: \(error.localizedDescription)")
-                } else {
-                    print("Request sent successfully")
-                    self.fetchSentRequests()
-                }
+        Task {
+            do {
+                try await repository.sendRequest(request)
+                 fetchSentRequests()
+            } catch {
+                self.errorMessage = "Error sending request: \(error.localizedDescription)"
             }
-        } catch {
-            self.errorMessage = "Error sending request: \(error.localizedDescription)"
-            print("Error sending request: \(error.localizedDescription)")
         }
     }
     
     func updateRequestStatus(requestId: String, newStatus: RequestStatus, isRated: Bool = false) {
-        firebaseManager.database.collection(firebaseManager.requestsCollectionName).document(requestId).updateData([
-            "status": newStatus.rawValue,
-            "isRated": isRated
-        ]) { error in
-            if let error = error {
+        Task {
+            do {
+                try await repository.updateRequestStatus(requestId: requestId, newStatus: newStatus, isRated: isRated)
+                 fetchSentRequests()
+            } catch {
                 self.errorMessage = "Error updating request status: \(error.localizedDescription)"
-            } else {
-                self.fetchSentRequests()
-            }
-        }
-    }
-    
-    func fetchRequest(requestId: String) {
-        firebaseManager.database.collection(firebaseManager.requestsCollectionName).document(requestId).getDocument { (document, error) in
-            if let document = document, document.exists {
-                do {
-                    self.currentRequest = try document.data(as: Request.self)
-                } catch {
-                    self.errorMessage = "Error decoding request: \(error.localizedDescription)"
-                }
-            } else {
-                self.errorMessage = "Request does not exist"
             }
         }
     }
@@ -83,36 +66,87 @@ class RequestViewModel: ObservableObject {
             return
         }
         
-        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
-            .whereField("senderUserId", isEqualTo: userId)
-            .addSnapshotListener { querySnapshot, error in
-                if let error = error {
-                    self.errorMessage = "Error fetching sent requests: \(error.localizedDescription)"
-                    return
-                }
-                self.sentRequests = querySnapshot?.documents.compactMap { document in
-                    try? document.data(as: Request.self)
-                } ?? []
+        Task {
+            do {
+                let requests = try await repository.fetchSentRequests(for: userId)
+                self.sentRequests = requests
+            } catch {
+                self.errorMessage = "Error fetching sent requests: \(error.localizedDescription)"
             }
+        }
     }
     
+    func fetchReceivedRequests() {
+        guard let userId = firebaseManager.userId else {
+            self.errorMessage = "User not logged in"
+            return
+        }
+        
+        Task {
+            do {
+                let requests = try await repository.fetchReceivedRequests(for: userId)
+                self.receivedRequests = requests
+                self.errorMessage = nil
+            } catch {
+                self.errorMessage = "Error fetching received requests: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    func getPendingRequests() {
+        guard let userId = firebaseManager.userId else {
+            self.errorMessage = "User not logged in"
+            return
+        }
+        
+        Task {
+            do {
+                let requests = try await repository.fetchPendingRequests(for: userId)
+                self.pendingRequests = requests
+                self.errorMessage = nil
+            } catch {
+                self.errorMessage = "Error fetching pending requests: \(error.localizedDescription)"
+            }
+        }
+    }
+
     func cancelRequest(requestId: String) {
         updateRequestStatus(requestId: requestId, newStatus: .canceled)
     }
-    
+
     func deleteRequest(requestId: String) {
-        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
-            .document(requestId).delete { error in
-                if let error = error {
-                    self.toastMessage = "Failed to delete the request: \(error.localizedDescription)"
-                    self.isToastSuccess = false
-                } else {
-                    self.toastMessage = "Request deleted successfully."
-                    self.isToastSuccess = true
-                }
-                self.showToast = true
+        Task {
+            do {
+                try await repository.deleteRequest(requestId: requestId)
+                self.toastMessage = "Request deleted successfully."
+                self.isToastSuccess = true
+            } catch {
+                self.toastMessage = "Failed to delete the request: \(error.localizedDescription)"
+                self.isToastSuccess = false
             }
+            self.showToast = true
+        }
     }
 
+    func acceptRequest(requestId: String) {
+        updateRequestStatus(requestId: requestId, newStatus: .accepted)
+    }
 
+    func declineRequest(requestId: String) {
+        updateRequestStatus(requestId: requestId, newStatus: .declined)
+    }
+
+    
+    @MainActor
+    func markRequestAsCompleted(requestId: String) {
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+            .document(requestId).updateData([
+                "status": RequestStatus.completed.rawValue,
+                "completionDate": Timestamp(date: Date())
+            ]) { error in
+                if let error = error {
+                    self.errorMessage = "Failed to mark request as completed: \(error.localizedDescription)"
+                }
+            }
+    }
 }

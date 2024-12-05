@@ -48,7 +48,7 @@ struct CreatorCardView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.buttonSecondary.opacity(0.2))
+                .fill(Color.secondary.opacity(0.1))
                 .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
         )
         .padding(.horizontal)

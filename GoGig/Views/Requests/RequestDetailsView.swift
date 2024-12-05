@@ -32,7 +32,7 @@ struct RequestDetailsView: View {
                         Text(request.message ?? "No message provided")
                             .padding()
                             .frame(maxWidth: .infinity, minHeight: 150, alignment: .leading)
-                            .background(Color.buttonSecondary.opacity(0.2))
+                            .background(Color.secondary.opacity(0.1))
                             .cornerRadius(20)
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                         
@@ -60,7 +60,7 @@ struct RequestDetailsView: View {
                                 Text(request.contactInfo ?? "No contact information provided")
                                     .padding()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .background(Color.buttonSecondary.opacity(0.2))
+                                    .background(Color.secondary.opacity(0.1))
                                     .cornerRadius(20)
                                     .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                             }.padding(.bottom, 50)

@@ -26,7 +26,7 @@ struct CustomTextEditorView: View {
                 }
                 TextEditor(text: $text)
                     .padding(10)
-                    .background(Color.textSecondary.opacity(0.1))
+                    .background(Color.secondary.opacity(0.1))
                     .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)

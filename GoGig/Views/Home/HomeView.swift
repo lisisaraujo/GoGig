@@ -11,7 +11,6 @@ struct HomeView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var requestViewModel: RequestViewModel
-    @EnvironmentObject var inboxViewModel: InboxViewModel
     @State var selectedTab: HomeTabEnum = .search
     
     var body: some View {
@@ -34,7 +33,6 @@ struct HomeView: View {
                     
                     InboxTabView(selectedTab: $selectedTab)
                         .environmentObject(requestViewModel)
-                        .environmentObject(inboxViewModel)
                         .environmentObject(authViewModel)
                         .tag(HomeTabEnum.inbox)
                     
@@ -44,9 +42,9 @@ struct HomeView: View {
                         .tag(HomeTabEnum.personal)
                 }
                 .overlay(
-                    CustomTabBar(selectedTab: $selectedTab, inboxCount: inboxViewModel.pendingRequests.count)
-                        .padding(.horizontal)
-                        .padding(.bottom, 15),
+                    CustomTabBar(selectedTab: $selectedTab, inboxCount: requestViewModel.pendingRequests.count)
+                       
+                        .padding(.bottom, 0),
                     alignment: .bottom
                 )
             }
@@ -66,8 +64,8 @@ struct CustomTabBar: View {
                 Spacer()
             }
         }
-        .padding(.vertical, 15)
-        .background(Color.buttonPrimary.opacity(0.5))
+        .padding(20)
+        .background(Color.buttonPrimary.opacity(0.3))
         .cornerRadius(50)
         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
     }
@@ -93,7 +91,7 @@ struct TabBarItem: View {
                 if tab == .inbox && inboxCount > 0 {
                     Text("\(inboxCount)")
                         .font(.caption2)
-                        .foregroundColor(.white)
+                        .foregroundColor(.textPrimary)
                         .padding(5)
                         .background(Color.accent)
                         .clipShape(Circle())
@@ -112,5 +110,4 @@ struct TabBarItem: View {
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
         .environmentObject(RequestViewModel())
-        .environmentObject(InboxViewModel())
 }

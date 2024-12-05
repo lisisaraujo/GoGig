@@ -15,7 +15,7 @@ struct AboutMeView: View {
             Text(description ?? "No description provided")
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.buttonSecondary.opacity(0.2))
+                .background(Color.secondary.opacity(0.1))
                 .cornerRadius(20)
                 .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                

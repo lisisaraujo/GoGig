@@ -17,7 +17,7 @@ struct ButtonPrimary: View {
                 .foregroundColor(.textPrimary)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.buttonPrimary)
+                .background(Color.accent.opacity(0.9))
                 .cornerRadius(15)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         }
@@ -31,10 +31,10 @@ struct ButtonSecondary: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(.buttonPrimary)
+                .foregroundColor(.textPrimary)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.buttonSecondary)
+                .background(Color.buttonPrimary.opacity(0.7))
                 .cornerRadius(15)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         }

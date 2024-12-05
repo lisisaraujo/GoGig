@@ -65,7 +65,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-
+    
     func register(email: String, password: String, fullName: String, birthDate: Date, location: String, description: String?, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
         loadingState = .loading
         
@@ -120,14 +120,14 @@ class AuthViewModel: ObservableObject {
         guard let user = Auth.auth().currentUser, let email = user.email else {
             throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found"])
         }
-
+        
         let credential = EmailAuthProvider.credential(withEmail: email, password: password)
         try await user.reauthenticate(with: credential)
         print("User successfully reauthenticated")
     }
-
-
-     func fetchUserData(with id: String) async -> User? {
+    
+    
+    func fetchUserData(with id: String) async -> User? {
         print("Fetching user with ID: \(id)")
         do {
             let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
@@ -137,7 +137,7 @@ class AuthViewModel: ObservableObject {
                 resetUserData(for: id)
                 return nil
             }
-
+            
             let fetchedUser = try document.data(as: User.self)
             if id == firebaseManager.userId {
                 self.currentUser = fetchedUser
@@ -151,7 +151,7 @@ class AuthViewModel: ObservableObject {
             return nil
         }
     }
-
+    
     func fetchUserReviews(for userId: String) async {
         print("Fetching reviews for user ID: \(userId)")
         do {
@@ -164,7 +164,7 @@ class AuthViewModel: ObservableObject {
             self.userReviews = []
         }
     }
-
+    
     private func resetUserData(for id: String) {
         if id == currentUser?.id {
             self.currentUser = nil
@@ -172,7 +172,7 @@ class AuthViewModel: ObservableObject {
             self.selectedUser = nil
         }
     }
-
+    
     func logout() {
         do {
             try firebaseManager.auth.signOut()
@@ -182,8 +182,8 @@ class AuthViewModel: ObservableObject {
             print("Logout failed:", error.localizedDescription)
         }
     }
-
-
+    
+    
     
     private func createUser(withId id: String, email: String, fullName: String, birthDate: Date, location: String, description: String?, latitude: Double?, longitude: Double?, profilePicUrl: String?) async {
         let user = User(id: id, email: email, fullName: fullName, birthDate: birthDate, location: location, description: description, latitude: latitude, longitude: longitude, memberSince: Date(), profilePicURL: profilePicUrl)
@@ -218,7 +218,7 @@ class AuthViewModel: ObservableObject {
             completion(false)
             return
         }
-
+        
         loadingState = .loading
         Task {
             var updatedFields: [String: Any] = [:]
@@ -250,7 +250,7 @@ class AuthViewModel: ObservableObject {
                     updatedFields["profilePicURL"] = profilePicUrl
                 }
             }
-
+            
             // update firestore if there are any fields to update
             if !updatedFields.isEmpty {
                 do {
@@ -263,7 +263,7 @@ class AuthViewModel: ObservableObject {
                     if let newLongitude = updatedFields["longitude"] as? Double { self.currentUser?.longitude = newLongitude }
                     if let newDescription = updatedFields["description"] as? String { self.currentUser?.description = newDescription }
                     if let newProfilePicUrl = updatedFields["profilePicURL"] as? String { self.currentUser?.profilePicURL = newProfilePicUrl }
-
+                    
                     loadingState = .loaded
                     completion(true)
                     
@@ -278,7 +278,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-
+    
     // delete firestore user data
     private func deleteUserData(userId: String) async throws {
         do {
@@ -312,7 +312,7 @@ class AuthViewModel: ObservableObject {
             throw error
         }
     }
-
+    
     // delete Storage Data (profilePic)
     private func deleteStorageData(userId: String) async throws {
         let storageRef = Storage.storage().reference().child("\(firebaseManager.profilePicStorageRef)/\(userId).jpg")
@@ -323,7 +323,7 @@ class AuthViewModel: ObservableObject {
             print("Profile picture not found or already deleted: \(error.localizedDescription)")
         }
     }
-
+    
     // delete auth account
     private func deleteAuthAccount() async throws {
         guard let currentUser = Auth.auth().currentUser else {
@@ -337,7 +337,7 @@ class AuthViewModel: ObservableObject {
             throw error
         }
     }
-
+    
     private func deleteUserSentRequest(userId: String) async throws {
         do {
             // get a query of all posts that matches the users id
@@ -433,7 +433,7 @@ class AuthViewModel: ObservableObject {
         guard let userId = currentUser?.id else {
             throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found"])
         }
-
+        
         do {
             try await deleteUserPosts(userId: userId)
             try await deleteStorageData(userId: userId)
@@ -452,22 +452,16 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func addReview(_ review: Review, completion: @escaping (Result<Void, Error>) -> Void) {
+    func addReview(_ review: Review) async throws {
         do {
-            try firebaseManager.database.collection(firebaseManager.reviewsCollectionName).addDocument(from: review) { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    //update the user's average rating and review count
-                    self.updateUserRating(userId: review.userId, newRating: review.rating)
-                    completion(.success(()))
-                }
-            }
+            let _ = try  firebaseManager.database.collection(firebaseManager.reviewsCollectionName).addDocument(from: review)
+            
+            updateUserRating(userId: review.userId, newRating: review.rating)
         } catch {
-            completion(.failure(error))
+            throw error
         }
     }
-
+    
     private func updateUserRating(userId: String, newRating: Double) {
         let userRef = firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId)
         

@@ -15,14 +15,14 @@ struct SplashScreen: View {
     var body: some View {
         ZStack {
             Color.clear
-                .applyBackground()
+                .background()
                 .ignoresSafeArea()
 
             VStack {
                 Image("GoGig")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 300, height: 300)
                     .scaleEffect(scale)
                     .opacity(opacity)
                     .onAppear {

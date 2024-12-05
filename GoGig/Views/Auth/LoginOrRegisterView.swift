@@ -8,13 +8,15 @@ struct LoginOrRegisterView: View {
         NavigationStack {
             ZStack {
                 Color.clear
-                    .applyBackground()
+                    .background()
                     .ignoresSafeArea()
 
                 VStack(spacing: 24) {
                     Text("GoGig")
+                        .font(.custom("Genesys", size: 64))
                         .font(.title)
                         .fontWeight(.bold)
+                        .padding(.top, 40)
                         .foregroundColor(.accent)
                     
                     Text("Please log in or register to continue.")
@@ -30,20 +32,18 @@ struct LoginOrRegisterView: View {
                                 .foregroundColor(.textPrimary)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.buttonPrimary)
-                                .fontWeight(.bold)
-                                .cornerRadius(20)
+                                .background(Color.accent.opacity(0.9))
+                                .cornerRadius(15)
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                         }
                         
                         NavigationLink(destination: RegistrationView().environmentObject(authViewModel)) {
                             Text("Register")
-                                .foregroundColor(.buttonPrimary)
+                                .foregroundColor(.textPrimary)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.buttonSecondary)
-                                .fontWeight(.bold)
-                                .cornerRadius(20)
+                                .background(Color.buttonPrimary.opacity(0.7))
+                                .cornerRadius(15)
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                         }
                     }
@@ -57,7 +57,7 @@ struct LoginOrRegisterView: View {
                 Image(systemName: "xmark")
                                     .foregroundColor(Color("background"))
                                     .padding(10)
-                                    .background(Color.textSecondary)
+                                    .background(Color.textSecondary.opacity(0.5))
                                     .clipShape(Circle())
                                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
             })

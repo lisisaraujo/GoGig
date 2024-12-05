@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
-    @EnvironmentObject var inboxViewModel: InboxViewModel
+    @EnvironmentObject var requestViewModel: RequestViewModel
     @Binding var isPresented: Bool
     @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
@@ -26,7 +26,7 @@ struct MenuView: View {
     var body: some View {
         ZStack {
             Color.clear
-                .applyBackground()
+                .background()
 
             List {
                 Section {
@@ -38,14 +38,13 @@ struct MenuView: View {
                     }.foregroundColor(.buttonSecondary)
 
                     Button(action: {
-                        inboxViewModel.pendingRequests = []
+                        requestViewModel.pendingRequests = []
                         authViewModel.logout()
                         isPresented = false
                     }) {
                         Label("Logout", systemImage: "arrow.right.square")
                     }.foregroundColor(.buttonSecondary)
-                }     .listRowBackground(Color.buttonPrimary.opacity(0.2))
-
+                }     .listRowBackground(Color.surfaceBackground)
                 Section {
                     Button(action: {
                         showingDeletionSheet = true
@@ -53,7 +52,7 @@ struct MenuView: View {
                         Label("Delete My Account", systemImage: "trash")
                             .foregroundColor(.red)
                     }
-                }     .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                }     .listRowBackground(Color.surfaceBackground)
             }
             .scrollContentBackground(.hidden)
             .background(Color.clear)

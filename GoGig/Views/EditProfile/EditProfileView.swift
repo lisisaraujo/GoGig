@@ -60,17 +60,17 @@ struct EditProfileView: View {
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
                     }
-                }                .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                }                .listRowBackground(Color.surfaceBackground)
                 
                 Section(header: Text("Personal Information")) {
                     CustomTextFieldView(placeholder: "Full Name", text: $fullName, isRequired: true, errorMessage: "Required", showError: $showValidationErrors)
                 }
-                .listRowBackground(Color.buttonPrimary.opacity(0.2))
-
+                .listRowBackground(Color.surfaceBackground)
+                
                 Section(header: Text("About Me")) {
                     CustomTextEditorView(placeholder: "Description", text: $description, isRequired: true, errorMessage: "Required", showError: $showValidationErrors)
                 }
-                .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                .listRowBackground(Color.surfaceBackground)
 
                 Section(header: Text("Location")) {
                     SelectLocationView(
@@ -80,7 +80,7 @@ struct EditProfileView: View {
                     )
                     .environmentObject(authViewModel)
                 }
-                .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                .listRowBackground(Color.surfaceBackground)
             }
             .navigationTitle("Edit Profile")
                .navigationBarItems(trailing: Button("Save") {

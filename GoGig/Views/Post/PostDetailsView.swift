@@ -23,7 +23,7 @@ struct PostDetailsView: View {
     @State private var isDeleting = false
     @State private var requestMessage = ""
     @State private var contactInfo = ""
-
+    
     private var isCurrentUserCreator: Bool {
         guard let post = postsViewModel.selectedPost,
               let currentUserId = authViewModel.currentUser?.id else {
@@ -106,7 +106,7 @@ struct PostDetailsView: View {
             }
         }
     }
-
+    
     private func loadData() {
         Task {
             await postsViewModel.getSelectedPost(with: postId)
@@ -119,7 +119,7 @@ struct PostDetailsView: View {
             isLoading = false
         }
     }
-
+    
     @ViewBuilder
     private var editButton: some View {
         if isCurrentUserCreator {
@@ -132,7 +132,7 @@ struct PostDetailsView: View {
 
 private struct PostCardView: View {
     let post: Post
-
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 12) {
@@ -163,7 +163,7 @@ private struct PostCardView: View {
 private struct TagsView: View {
     let exchangeCoins: [String]
     let categories: [String]
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             TagSection(icon: "dollarsign.circle", items: exchangeCoins, color: .blue)
@@ -176,7 +176,7 @@ private struct TagSection: View {
     let icon: String
     let items: [String]
     let color: Color
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("", systemImage: icon)
@@ -200,7 +200,7 @@ private struct TagSection: View {
 
 private struct PostMetadataView: View {
     let post: Post
-
+    
     var body: some View {
         HStack {
             Label(post.postLocation, systemImage: "mappin.and.ellipse")
@@ -214,7 +214,7 @@ private struct PostMetadataView: View {
 
 private struct CreatorView: View {
     let creatorUser: User?
-
+    
     var body: some View {
         NavigationLink(destination: UserDetailsView(userId: creatorUser?.id ?? "")) {
             CreatorCardView(user: creatorUser, title: "View Profile")
@@ -227,7 +227,7 @@ private struct ActionButtonsView2: View {
     let isDeleting: Bool
     @Binding var showRequestForm: Bool
     @Binding var showDeletionConfirmation: Bool
-
+    
     var body: some View {
         if isCurrentUserCreator {
             ButtonDelete(title: "Delete Post") {

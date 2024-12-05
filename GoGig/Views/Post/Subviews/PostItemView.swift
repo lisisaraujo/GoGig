@@ -65,7 +65,7 @@ struct PostItemView: View {
             }
         }
         .padding()
-        .background(.buttonPrimary.opacity(0.2))
+        .background(Color.surfaceBackground)
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
         .onAppear {

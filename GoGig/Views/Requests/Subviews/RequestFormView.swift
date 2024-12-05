@@ -12,7 +12,7 @@ struct RequestFormView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var showValidationErrors = false
-
+    
     let post: Post
     let creatorUser: User
     @Binding var requestMessage: String
@@ -21,22 +21,30 @@ struct RequestFormView: View {
     
     var body: some View {
         if authViewModel.isUserLoggedIn {
-            Form {
-                Section(header: Text("Request Details")) {
-                    CustomTextEditorView(placeholder: "Message", text: $requestMessage, isRequired: true, errorMessage: "Message is required", showError: $showValidationErrors)
-                    
-                    CustomTextFieldView(placeholder: "Contact Info (Phone or Email)", text: $contactInfo, isRequired: true, errorMessage: "Contact info is required", showError: $showValidationErrors)
-                }
+            ZStack {
+                Color.clear.ignoresSafeArea()
+                    .applyBackground()
                 
-                Section {
-                    Button("Send Request") {
-                        showValidationErrors = true
-                        if isFormValid {
-                            Task {
-                                await onSubmit()
+                VStack(spacing: 20) {
+                    Form {
+                        Section(header: Text("Request Details")) {
+                            CustomTextEditorView(placeholder: "Message", text: $requestMessage, isRequired: true, errorMessage: "Message is required", showError: $showValidationErrors)
+                            
+                            CustomTextFieldView(placeholder: "Contact Info (Phone or Email)", text: $contactInfo, isRequired: true, errorMessage: "Contact info is required", showError: $showValidationErrors)
+                        }        .listRowBackground(Color.surfaceBackground)
+                        
+                        Section {
+                            ButtonPrimary(title: "Send Request") {
+                                showValidationErrors = true
+                                if isFormValid {
+                                    Task {
+                                        await onSubmit()
+                                    }
+                                }
                             }
-                        }
-                    }
+                        }        .listRowBackground(Color.surfaceBackground)
+                    }    .scrollContentBackground(.hidden)
+                        .listStyle(.plain)
                 }
             }
             .onAppear {
@@ -59,6 +67,6 @@ struct RequestFormView: View {
     private var isFormValid: Bool {
         !requestMessage.isEmpty && !contactInfo.isEmpty
     }
-
+    
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var inboxViewModel: InboxViewModel
+    @EnvironmentObject var requestsViewModel: RequestViewModel
     
     @State var email = ""
     @State var password = ""
@@ -26,7 +26,7 @@ struct LoginView: View {
                 .ignoresSafeArea()
             VStack {
                 Text("GoGig")
-                    .font(Font.custom("Genesys", size: 32, relativeTo: .title))
+                    .font(.custom("Genesys", size: 64))
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.top, 40)
@@ -46,24 +46,15 @@ struct LoginView: View {
                     
                     
                     
-                    Button(action: {
-                        print("logging in")
+                    ButtonPrimary(title: "Login"){
                         authViewModel.login(email: email, password: password) { success in
                             if success {
-                                inboxViewModel.getPendingRequests()
+                                requestsViewModel.getPendingRequests()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     dismiss()
                                 }
                             }
                         }
-                    }){
-                        Text("Login")
-                            .foregroundColor(.textPrimary)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.buttonPrimary)
-                            .cornerRadius(15)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
                     }
                     
                 }

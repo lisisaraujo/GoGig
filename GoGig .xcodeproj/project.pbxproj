@@ -34,7 +34,6 @@
 		A74175322CE500E8007DA925 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175312CE500E8007DA925 /* RatingView.swift */; };
 		A741753C2CE5E92E007DA925 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753B2CE5E92E007DA925 /* UserRepository.swift */; };
 		A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753D2CE5E947007DA925 /* RequestsRepository.swift */; };
-		A74175402CE5E954007DA925 /* InboxRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741753F2CE5E954007DA925 /* InboxRepository.swift */; };
 		A74175432CE61886007DA925 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175422CE61886007DA925 /* Buttons.swift */; };
 		A74175472CE75439007DA925 /* InboxEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175462CE75439007DA925 /* InboxEnum.swift */; };
 		A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175482CE77AB0007DA925 /* ReviewerCardView.swift */; };
@@ -107,6 +106,8 @@
 		A7A8B7A72CF9DA0100A14226 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = A7A8B7A62CF9DA0100A14226 /* FirebaseVertexAI */; };
 		A7B43CAC2CF9CDC800C66B7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */; };
 		A7D06F662D0090DE00EAB852 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */; };
+		A7D06F682D01A4A400EAB852 /* Genesys.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7D06F672D01A4A400EAB852 /* Genesys.ttf */; };
+		A7D06F6B2D01B4E800EAB852 /* BackgroundSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */; };
 		A7D0C90F2CF7433C00AFF92B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */; };
 		A7D1F03D2CFC943800A6800A /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1F03C2CFC943800A6800A /* ToastView.swift */; };
 		A7D1F0442CFC9A5300A6800A /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A7D1F0432CFC9A5300A6800A /* GooglePlaces */; };
@@ -142,7 +143,6 @@
 		A74175312CE500E8007DA925 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		A741753B2CE5E92E007DA925 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		A741753D2CE5E947007DA925 /* RequestsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsRepository.swift; sourceTree = "<group>"; };
-		A741753F2CE5E954007DA925 /* InboxRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxRepository.swift; sourceTree = "<group>"; };
 		A74175422CE61886007DA925 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		A74175462CE75439007DA925 /* InboxEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEnum.swift; sourceTree = "<group>"; };
 		A74175482CE77AB0007DA925 /* ReviewerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerCardView.swift; sourceTree = "<group>"; };
@@ -192,9 +192,11 @@
 		A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateEnum.swift; sourceTree = "<group>"; };
 		A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		A7D06F672D01A4A400EAB852 /* Genesys.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Genesys.ttf; path = "../../../../../../Downloads/Genesys 2/Genesys.ttf"; sourceTree = "<group>"; };
+		A7D06F692D01A6B100EAB852 /* GoGig--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoGig--Info.plist"; sourceTree = "<group>"; };
+		A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSplashScreen.swift; sourceTree = "<group>"; };
 		A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7D1F03C2CFC943800A6800A /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
-		A7D1F0482CFDB33100A6800A /* Genesys.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Genesys.ttf; sourceTree = "<group>"; };
 		A7E709A62CF9E50D0097D43E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -341,6 +343,7 @@
 		A79945032CCFB02600F4AF89 = {
 			isa = PBXGroup;
 			children = (
+				A7D06F692D01A6B100EAB852 /* GoGig--Info.plist */,
 				A799450E2CCFB02600F4AF89 /* GoGig */,
 				A799450D2CCFB02600F4AF89 /* Products */,
 			);
@@ -427,8 +430,8 @@
 			children = (
 				A799458C2CD0D78600F4AF89 /* AuthViewModel.swift */,
 				A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */,
-				A74175092CE37E53007DA925 /* UsersViewModel.swift */,
 				A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */,
+				A74175092CE37E53007DA925 /* UsersViewModel.swift */,
 				A74175212CE4E3AB007DA925 /* InboxViewModel.swift */,
 			);
 			path = ViewModels;
@@ -498,6 +501,7 @@
 				A74FE3292CF4BA5B00517D3C /* BackgroundModifier.swift */,
 				A7D1F03C2CFC943800A6800A /* ToastView.swift */,
 				A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */,
+				A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -533,7 +537,6 @@
 				A79945AE2CD123E700F4AF89 /* PostsRepository.swift */,
 				A741753B2CE5E92E007DA925 /* UserRepository.swift */,
 				A741753D2CE5E947007DA925 /* RequestsRepository.swift */,
-				A741753F2CE5E954007DA925 /* InboxRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -541,7 +544,7 @@
 		A7D1F0472CFDB2CE00A6800A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A7D1F0482CFDB33100A6800A /* Genesys.ttf */,
+				A7D06F672D01A4A400EAB852 /* Genesys.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A79945192CCFB02800F4AF89 /* Preview Assets.xcassets in Resources */,
+				A7D06F682D01A4A400EAB852 /* Genesys.ttf in Resources */,
 				A7D0C90F2CF7433C00AFF92B /* Assets.xcassets in Resources */,
 				A7B43CAC2CF9CDC800C66B7A /* GoogleService-Info.plist in Resources */,
 			);
@@ -688,6 +692,7 @@
 				A79850E72CFF5A2F00E9CB79 /* DateFormatter.swift in Sources */,
 				A741753C2CE5E92E007DA925 /* UserRepository.swift in Sources */,
 				A79945AF2CD123E700F4AF89 /* PostsRepository.swift in Sources */,
+				A7D06F6B2D01B4E800EAB852 /* BackgroundSplashScreen.swift in Sources */,
 				A79945AA2CD121E400F4AF89 /* PostItemView.swift in Sources */,
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
 				A741752C2CE4FA42007DA925 /* AddRatingView.swift in Sources */,
@@ -705,7 +710,6 @@
 				A79945832CD012CE00F4AF89 /* Chat.swift in Sources */,
 				A74175082CE36E37007DA925 /* MultipleSelectionRow.swift in Sources */,
 				A799458B2CD0154100F4AF89 /* CategoriesEnum.swift in Sources */,
-				A74175402CE5E954007DA925 /* InboxRepository.swift in Sources */,
 				A78AD7F72CD8DB910074EB6E /* AppDelegate.swift in Sources */,
 				A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */,
 				A799459F2CD11EC500F4AF89 /* SearchTabView.swift in Sources */,
@@ -860,7 +864,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"GoGig/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GoGig--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "GoGig ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -889,7 +895,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"GoGig/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GoGig--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "GoGig ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

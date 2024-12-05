@@ -21,58 +21,70 @@ struct AddRatingView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-            Form {
-                Section(header: Text("Rate Service Provider")) {
-                    HStack {
-                        ForEach(1...5, id: \.self) { number in
-                            Image(systemName: number <= rating ? "star.fill" : "star")
-                                .foregroundColor(.yellow)
-                                .onTapGesture {
-                                    rating = number
-                                }
+        ZStack {
+            Color.clear.ignoresSafeArea()
+                .applyBackground()
+            
+            VStack(spacing: 20) {
+                Form {
+                    Section(header: Text("Rate Service Provider")) {
+                        HStack {
+                            ForEach(1...5, id: \.self) { number in
+                                Image(systemName: number <= rating ? "star.fill" : "star")
+                                    .foregroundColor(.yellow)
+                                    .onTapGesture {
+                                        rating = number
+                                    }
+                            }
                         }
                     }
-                }
-                
-                Section(header: Text("Write a Review")) {
-                    TextEditor(text: $review)
-                        .frame(height: 100)
-                }
-                
-                Button("Submit Review") {
-                    submitReview()
-                }
-            }.applyBackground()
-            .navigationTitle("Rate Service")
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
-                   dismiss()
-                })
+                    
+                    Section(header: Text("Write a Review")) {
+                        TextEditor(text: $review)
+                            .frame(height: 100)
+                    }
+                    
+                    Button("Submit Review") {
+                        submitReview()
+                    }
+                } .scrollContentBackground(.hidden)
+                    .listStyle(.plain)
             }
         }
+        .navigationTitle("Rate Service")
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
+                dismiss()
+            })
+        }
+    }
     
     private func submitReview() {
-        guard let currentUserId = authViewModel.currentUser?.id else { return }
-        
-        let newReview = Review(
-            userId: serviceProvider.id!,
-            reviewerId: currentUserId,
-            requestId: requestId,
-            review: review,
-            rating: Double(rating)
-        )
-        
-        //add review to firestore
-        authViewModel.addReview(newReview) { result in
-            switch result {
-            case .success:
+        Task {
+            guard let currentUserId = authViewModel.currentUser?.id else { return }
+            
+            let newReview = Review(
+                userId: serviceProvider.id!,
+                reviewerId: currentUserId,
+                requestId: requestId,
+                review: review,
+                rating: Double(rating)
+            )
+            
+            do {
+                try await authViewModel.addReview(newReview)
                 requestViewModel.updateRequestStatus(requestId: requestId, newStatus: .completed, isRated: true)
-                alertMessage = "Your review has been submitted successfully."
                 
-            case .failure(let error):
-                alertMessage = "Failed to submit review: \(error.localizedDescription)"
+                await MainActor.run {
+                    alertMessage = "Your review has been submitted successfully."
+                    showAlert = true
+                }
+            } catch {
+                await MainActor.run {
+                    alertMessage = "Failed to submit review: \(error.localizedDescription)"
+                    showAlert = true
+                }
             }
-            showAlert = true
         }
     }
 }

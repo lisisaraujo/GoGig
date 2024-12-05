@@ -54,18 +54,18 @@ struct RegistrationView: View {
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
                     }
-                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                } .listRowBackground(Color.surfaceBackground)
                 
                 Section(header: Text("Personal Information")) {
                     CustomTextFieldView(placeholder: "Full Name", text: $fullName, isRequired: true, showError: $showValidationErrors)
                     CustomTextFieldView(placeholder: "Email", text: $email, isRequired: true, showError: $showValidationErrors)
                     CustomSecureFieldView(placeholder: "Password", text: $password, isRequired: true, showError: $showValidationErrors)
                     DatePicker("Birthday", selection: $birthday, displayedComponents: .date).padding(.bottom)
-                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                } .listRowBackground(Color.surfaceBackground)
                 
                 Section(header: Text("About Me")) {
                     CustomTextEditorView(placeholder: "About Me", text: $description, isRequired: true, showError: $showValidationErrors)
-                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                } .listRowBackground(Color.surfaceBackground)
                 
                 Section(header: Text("Location")) {
                     SelectLocationView(
@@ -73,7 +73,7 @@ struct RegistrationView: View {
                         selectedCoordinates: $authViewModel.userLocationCoordinates,
                         isAutocompletePresented: $isAutocompletePresented
                     )
-                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                } .listRowBackground(Color.surfaceBackground)
                 
                 Section {
                     Button("Register") {
@@ -87,7 +87,7 @@ struct RegistrationView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(15)
-                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                } .listRowBackground(Color.surfaceBackground)
             }
             .scrollContentBackground(.hidden)
                 .listStyle(.plain)

@@ -107,7 +107,7 @@ struct PostFormView: View {
                 .padding(.vertical)
                 .tint(Color.accent)
         }
-        .listRowBackground(Color.buttonPrimary.opacity(0.2))
+        .listRowBackground(Color.surfaceBackground)
     }
     
     private var exchangeCoinsSection: some View {
@@ -125,7 +125,7 @@ struct PostFormView: View {
                 }
             }
         }
-        .listRowBackground(Color.buttonPrimary.opacity(0.2))
+        .listRowBackground(Color.surfaceBackground)
     }
     
     private var categoriesSection: some View {
@@ -143,7 +143,7 @@ struct PostFormView: View {
                 }
             }
         }
-        .listRowBackground(Color.buttonPrimary.opacity(0.2))
+        .listRowBackground(Color.surfaceBackground)
     }
     
     private var locationSection: some View {
@@ -154,7 +154,7 @@ struct PostFormView: View {
                 isAutocompletePresented: $isAutocompletePresented
             )
         }
-        .listRowBackground(Color.buttonPrimary.opacity(0.2))
+        .listRowBackground(Color.surfaceBackground)
     }
     
     private var submitButtonSection: some View {
