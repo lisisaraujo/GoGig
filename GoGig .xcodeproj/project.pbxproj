@@ -21,7 +21,7 @@
 		A741750C2CE384AC007DA925 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */; };
 		A741750E2CE384DE007DA925 /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741750D2CE384DE007DA925 /* AboutMeView.swift */; };
 		A74175142CE3851A007DA925 /* ReviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175132CE3851A007DA925 /* ReviewRow.swift */; };
-		A74175162CE38534007DA925 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175152CE38534007DA925 /* PostListView.swift */; };
+		A74175162CE38534007DA925 /* PostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175152CE38534007DA925 /* PostsListView.swift */; };
 		A741751C2CE4DDAB007DA925 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751B2CE4DDAB007DA925 /* Request.swift */; };
 		A741751E2CE4DF98007DA925 /* RequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751D2CE4DF98007DA925 /* RequestStatus.swift */; };
 		A74175202CE4E19E007DA925 /* RequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */; };
@@ -106,6 +106,7 @@
 		A7A8B7A52CF9DA0100A14226 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A7A8B7A42CF9DA0100A14226 /* FirebaseStorageCombine-Community */; };
 		A7A8B7A72CF9DA0100A14226 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = A7A8B7A62CF9DA0100A14226 /* FirebaseVertexAI */; };
 		A7B43CAC2CF9CDC800C66B7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */; };
+		A7D06F662D0090DE00EAB852 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */; };
 		A7D0C90F2CF7433C00AFF92B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */; };
 		A7D1F03D2CFC943800A6800A /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1F03C2CFC943800A6800A /* ToastView.swift */; };
 		A7D1F0442CFC9A5300A6800A /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A7D1F0432CFC9A5300A6800A /* GooglePlaces */; };
@@ -128,7 +129,7 @@
 		A741750B2CE384AC007DA925 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		A741750D2CE384DE007DA925 /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
 		A74175132CE3851A007DA925 /* ReviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRow.swift; sourceTree = "<group>"; };
-		A74175152CE38534007DA925 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		A74175152CE38534007DA925 /* PostsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListView.swift; sourceTree = "<group>"; };
 		A741751B2CE4DDAB007DA925 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		A741751D2CE4DF98007DA925 /* RequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStatus.swift; sourceTree = "<group>"; };
 		A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsViewModel.swift; sourceTree = "<group>"; };
@@ -190,6 +191,7 @@
 		A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
 		A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateEnum.swift; sourceTree = "<group>"; };
 		A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7D1F03C2CFC943800A6800A /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		A7D1F0482CFDB33100A6800A /* Genesys.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Genesys.ttf; sourceTree = "<group>"; };
@@ -272,7 +274,7 @@
 			children = (
 				A74175072CE36E37007DA925 /* MultipleSelectionRow.swift */,
 				A74175052CE36C16007DA925 /* PostFormView.swift */,
-				A74175152CE38534007DA925 /* PostListView.swift */,
+				A74175152CE38534007DA925 /* PostsListView.swift */,
 				A79945A92CD121E400F4AF89 /* PostItemView.swift */,
 			);
 			path = Subviews;
@@ -495,6 +497,7 @@
 				A74174FF2CE10B4F007DA925 /* SampleData.swift */,
 				A74FE3292CF4BA5B00517D3C /* BackgroundModifier.swift */,
 				A7D1F03C2CFC943800A6800A /* ToastView.swift */,
+				A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -649,7 +652,7 @@
 				A74175242CE4E791007DA925 /* RequestFormView.swift in Sources */,
 				A7D1F03D2CFC943800A6800A /* ToastView.swift in Sources */,
 				A799459D2CD1120B00F4AF89 /* ImagePickerView.swift in Sources */,
-				A74175162CE38534007DA925 /* PostListView.swift in Sources */,
+				A74175162CE38534007DA925 /* PostsListView.swift in Sources */,
 				A74175042CE2AA79007DA925 /* EditPostView.swift in Sources */,
 				A741751E2CE4DF98007DA925 /* RequestStatus.swift in Sources */,
 				A74FE32A2CF4BA5B00517D3C /* BackgroundModifier.swift in Sources */,
@@ -693,6 +696,7 @@
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
 				A741754B2CE78095007DA925 /* RequestListItemView.swift in Sources */,
 				A79945792CD0128800F4AF89 /* ReviewsView.swift in Sources */,
+				A7D06F662D0090DE00EAB852 /* LoadingOverlay.swift in Sources */,
 				A79945A22CD11EE400F4AF89 /* BookmarksTabView.swift in Sources */,
 				A799459B2CD1117E00F4AF89 /* CustomSecureFieldView.swift in Sources */,
 				A79945B72CD27C7300F4AF89 /* LoadingStateEnum.swift in Sources */,

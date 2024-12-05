@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     @Binding var isPresented: Bool
     @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
@@ -23,49 +24,63 @@ struct MenuView: View {
     @State private var showErrorToast = false
 
     var body: some View {
-        List {
-            Section {
-                Button(action: {
-                    isPresented = false
-                    navigationPath.append("EditProfile")
-                }) {
-                    Label("Edit Profile", systemImage: "person.crop.circle")
-                }
+        ZStack {
+            Color.clear
+                .applyBackground()
 
-                Button(action: {
-                    authViewModel.logout()
-                    isPresented = false
-                }) {
-                    Label("Logout", systemImage: "arrow.right.square")
-                }
-            }
+            List {
+                Section {
+                    Button(action: {
+                        isPresented = false
+                        navigationPath.append("EditProfile")
+                    }) {
+                        Label("Edit Profile", systemImage: "person.crop.circle")
+                    }.foregroundColor(.buttonSecondary)
 
-            Section {
-                Button(action: {
-                    showingDeletionSheet = true
-                }) {
-                    Label("Delete My Account", systemImage: "trash")
-                        .foregroundColor(.red)
+                    Button(action: {
+                        inboxViewModel.pendingRequests = []
+                        authViewModel.logout()
+                        isPresented = false
+                    }) {
+                        Label("Logout", systemImage: "arrow.right.square")
+                    }.foregroundColor(.buttonSecondary)
+                }     .listRowBackground(Color.buttonPrimary.opacity(0.2))
+
+                Section {
+                    Button(action: {
+                        showingDeletionSheet = true
+                    }) {
+                        Label("Delete My Account", systemImage: "trash")
+                            .foregroundColor(.red)
+                    }
+                }     .listRowBackground(Color.buttonPrimary.opacity(0.2))
+            }
+            .scrollContentBackground(.hidden)
+            .background(Color.clear)
+            .listStyle(InsetGroupedListStyle())
+       
+            .sheet(isPresented: $showingDeletionSheet) {
+                ZStack {
+                    Color.clear
+                        .applyBackground()
+
+                    accountDeletionSheet.presentationDetents([.medium])
                 }
             }
-        }
-        .listStyle(InsetGroupedListStyle())
-        .sheet(isPresented: $showingDeletionSheet) {
-            accountDeletionSheet
-        }
-        .overlay(
-            VStack {
-                if showSuccessToast {
-                    ToastView(message: "Account successfully deleted!", isSuccess: true)
-                        .padding(.top, 50)
-                } else if showErrorToast, let errorMessage = errorMessage {
-                    ToastView(message: errorMessage, isSuccess: false)
-                        .padding(.top, 50)
+            .overlay(
+                VStack {
+                    if showSuccessToast {
+                        ToastView(message: "Account successfully deleted!", isSuccess: true)
+                            .padding(.top, 50)
+                    } else if showErrorToast, let errorMessage = errorMessage {
+                        ToastView(message: errorMessage, isSuccess: false)
+                            .padding(.top, 50)
+                    }
                 }
-            }
-            .animation(.easeInOut, value: showSuccessToast || showErrorToast)
-            .zIndex(1)
-        )
+                .animation(.easeInOut, value: showSuccessToast || showErrorToast)
+                .zIndex(1)
+            )
+        }
     }
 
     var accountDeletionSheet: some View {
@@ -93,7 +108,7 @@ struct MenuView: View {
                         resetState()
                     }
                     .padding()
-                    .foregroundColor(.red)
+                    .foregroundColor(.buttonSecondary)
 
                     Spacer()
 
@@ -101,7 +116,7 @@ struct MenuView: View {
                         handleDeleteButtonTapped()
                     }
                     .padding()
-                    .foregroundColor(.blue)
+                    .foregroundColor(.red)
                 }
             }
         }
@@ -122,13 +137,9 @@ struct MenuView: View {
         defer { isLoading = false }
 
         do {
-            // Reauthenticate with the provided password
             try await authViewModel.reauthenticateUser(password: password)
-
-            // Proceed with deletion
             try await authViewModel.deleteAllUserData()
 
-            // Success feedback
             resetState()
             showingDeletionSheet = false
             showSuccessToast = true

@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     
     @State var email = ""
     @State var password = ""
@@ -49,6 +50,7 @@ struct LoginView: View {
                         print("logging in")
                         authViewModel.login(email: email, password: password) { success in
                             if success {
+                                inboxViewModel.getPendingRequests()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     dismiss()
                                 }

@@ -14,6 +14,8 @@ struct PersonalTabView: View {
     @State private var showMenu = false
     @State private var navigationPath = NavigationPath()
     @State private var text: String? = "Posts"
+    
+    @State private var sheetBackgroundColor: Color = .clear
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -38,7 +40,10 @@ struct PersonalTabView: View {
                     }
                 )
                 .sheet(isPresented: $showMenu) {
-                    MenuView(isPresented: $showMenu, navigationPath: $navigationPath).applyBackground()
+                        MenuView(isPresented: $showMenu, navigationPath: $navigationPath)
+                        .presentationBackground(sheetBackgroundColor)
+                        .presentationDetents([.medium])
+                       
                 }
                 .navigationDestination(for: String.self) { destination in
                     switch destination {

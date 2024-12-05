@@ -29,12 +29,12 @@ struct RegistrationView: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    Button(action: {
-                        isImagePickerPresented.toggle()
-                    }) {
-                        VStack {
+            Color.clear.ignoresSafeArea()
+                .applyBackground()
+            Form {
+                Section(header: Text("Profile Picture")) {
+                    Button(action: { isImagePickerPresented.toggle() }) {
+                        HStack {
                             if let selectedImage = selectedImage {
                                 Image(uiImage: selectedImage)
                                     .resizable()
@@ -54,20 +54,28 @@ struct RegistrationView: View {
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
                     }
-                    
+                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                
+                Section(header: Text("Personal Information")) {
                     CustomTextFieldView(placeholder: "Full Name", text: $fullName, isRequired: true, showError: $showValidationErrors)
                     CustomTextFieldView(placeholder: "Email", text: $email, isRequired: true, showError: $showValidationErrors)
                     CustomSecureFieldView(placeholder: "Password", text: $password, isRequired: true, showError: $showValidationErrors)
+                    DatePicker("Birthday", selection: $birthday, displayedComponents: .date).padding(.bottom)
+                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                
+                Section(header: Text("About Me")) {
                     CustomTextEditorView(placeholder: "About Me", text: $description, isRequired: true, showError: $showValidationErrors)
-                    
-         
+                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                
+                Section(header: Text("Location")) {
                     SelectLocationView(
                         selectedLocation: $authViewModel.userLocation,
                         selectedCoordinates: $authViewModel.userLocationCoordinates,
                         isAutocompletePresented: $isAutocompletePresented
                     )
-                    
-                   
+                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                
+                Section {
                     Button("Register") {
                         showValidationErrors = true
                         if isFormValid {
@@ -78,32 +86,36 @@ struct RegistrationView: View {
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
-                    .cornerRadius(10)
-                }
-                .padding()
+                    .cornerRadius(15)
+                } .listRowBackground(Color.buttonPrimary.opacity(0.2))
             }
-            .applyBackground()
+            .scrollContentBackground(.hidden)
+                .listStyle(.plain)
+                .navigationBarTitleDisplayMode(.inline)
+                .padding()
+            .navigationTitle("Registration")
             .alert(isPresented: $authViewModel.showAlert) {
                 Alert(title: Text("Error"), message: Text(authViewModel.alertMessage), dismissButton: .default(Text("OK")))
             }
-            
-            if isLoading {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
-                
-                VStack {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(1.5)
-                    
-                    Text("Registering...")
-                        .foregroundColor(.white)
-                        .padding(.top)
+            .overlay(
+                Group {
+                    if isLoading {
+                        Color.black.opacity(0.4)
+                            .edgesIgnoringSafeArea(.all)
+                        VStack {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(1.5)
+                            Text("Registering...")
+                                .foregroundColor(.white)
+                                .padding(.top)
+                        }
+                        .frame(width: 200, height: 200)
+                        .background(Color.gray.opacity(0.7))
+                        .cornerRadius(20)
+                    }
                 }
-                .frame(width: 200, height: 200)
-                .background(Color.gray.opacity(0.7))
-                .cornerRadius(20)
-            }
+            )
         }
     }
     

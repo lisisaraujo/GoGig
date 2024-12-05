@@ -176,12 +176,13 @@ class AuthViewModel: ObservableObject {
     func logout() {
         do {
             try firebaseManager.auth.signOut()
-            self.currentUser = nil
-            print("User is logged out")
+            resetAllProperties()
+            print("User is logged out and all properties reset")
         } catch {
-            print(error.localizedDescription)
+            print("Logout failed:", error.localizedDescription)
         }
     }
+
 
     
     private func createUser(withId id: String, email: String, fullName: String, birthDate: Date, location: String, description: String?, latitude: Double?, longitude: Double?, profilePicUrl: String?) async {
@@ -442,7 +443,7 @@ class AuthViewModel: ObservableObject {
             try await deleteUserSentReviews(userId: userId)
             try await deleteUserData(userId: userId)
             try await deleteAuthAccount()
-            logout()
+            resetAllProperties()
             self.currentUser = nil
             print("All user data successfully deleted")
         } catch {
@@ -484,5 +485,19 @@ class AuthViewModel: ObservableObject {
                 ])
             }
         }
+    }
+    
+    func resetAllProperties() {
+        self.currentUser = nil
+        self.selectedUser = nil
+        self.userReviews = []
+        self.loadingState = .idle
+        self.userLocation = ""
+        self.userLocationCoordinates = nil
+        self.showAlert = false
+        self.alertMessage = ""
+        self.showToast = false
+        self.toastMessage = ""
+        self.isToastSuccess = false
     }
 }

@@ -8,18 +8,22 @@
 import SwiftUI
 
 struct BackgroundModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.deepNavy, Color.background]),
-                    startPoint: .bottomLeading,
-                    endPoint: .topTrailing
+        @Environment(\.colorScheme) var colorScheme
+        
+        func body(content: Content) -> some View {
+            content
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: colorScheme == .dark
+                            ? [Color.deepNavy, Color.background]
+                            : [Color("D0D9E0"), Color("F2F2F7")]),
+                        startPoint: .bottomLeading,
+                        endPoint: .topTrailing
+                    )
+                    .ignoresSafeArea()
                 )
-                .ignoresSafeArea()
-            )
+        }
     }
-}
 
 extension View {
     func applyBackground() -> some View {

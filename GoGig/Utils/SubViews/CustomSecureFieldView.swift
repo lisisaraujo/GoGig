@@ -17,10 +17,13 @@ struct CustomSecureFieldView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             SecureField(placeholder, text: $text)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(10)
-                .padding(.horizontal)
+                .padding(20)
+                .background(Color.textSecondary.opacity(0.1))
+                .cornerRadius(15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.accent.opacity(0.3), lineWidth: 2)
+                )
             
             if isRequired && text.isEmpty && showError {
                 Text(errorMessage)

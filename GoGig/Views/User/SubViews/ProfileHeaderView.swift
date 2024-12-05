@@ -16,6 +16,7 @@ struct ProfileHeaderView: View {
         VStack {
             AsyncImage(url: URL(string: user.profilePicURL ?? "")) { image in
                 image.resizable()
+                    .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Image(systemName: "person.circle.fill")
                     .resizable()

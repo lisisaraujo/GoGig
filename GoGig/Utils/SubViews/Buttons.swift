@@ -48,10 +48,9 @@ struct ButtonDelete: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.red)
                 .padding()
-                .frame(maxWidth: .infinity)
-                .background(.red)
+                .background(.clear)
                 .cornerRadius(15)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         }

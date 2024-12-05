@@ -21,6 +21,8 @@ struct EditProfileView: View {
     @State private var description = ""
     @State private var isImagePickerPresented = false
     @State private var isAutocompletePresented = false
+    @State private var profileImageURL: String?
+    @State private var isLoading = false
     
     @State private var localSelectedLocation: String = ""
     @State private var localSelectedCoordinates: CLLocationCoordinate2D?
@@ -42,11 +44,15 @@ struct EditProfileView: View {
                                     .frame(width: 100, height: 100)
                                     .clipShape(Circle())
                             } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 100, height: 100)
-                                    .foregroundColor(.gray)
+                                AsyncImage(url: URL(string: profileImageURL ?? "")) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .foregroundColor(.gray)
+                                }
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
                             }
                             Text("Change Profile Picture")
                         }
@@ -54,8 +60,7 @@ struct EditProfileView: View {
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
                     }
-                }
-                .listRowBackground(Color.buttonPrimary.opacity(0.2))
+                }                .listRowBackground(Color.buttonPrimary.opacity(0.2))
                 
                 Section(header: Text("Personal Information")) {
                     CustomTextFieldView(placeholder: "Full Name", text: $fullName, isRequired: true, errorMessage: "Required", showError: $showValidationErrors)
@@ -78,14 +83,63 @@ struct EditProfileView: View {
                 .listRowBackground(Color.buttonPrimary.opacity(0.2))
             }
             .navigationTitle("Edit Profile")
-            .navigationBarItems(trailing: Button("Save") {
-                saveChanges()
-            })
-            .scrollContentBackground(.hidden)
-            .applyBackground()
-        }
-        .onAppear {
-            loadUserData()
+               .navigationBarItems(trailing: Button("Save") {
+                   saveChanges()
+               })
+               .scrollContentBackground(.hidden)
+               .applyBackground()
+           }
+           .overlay(
+               Group {
+                   if isLoading {
+                       LoadingOverlay(message: "Saving...")
+                   }
+               }
+           )
+           .overlay(
+               Group {
+                   if authViewModel.showToast {
+                       ToastView(message: authViewModel.toastMessage, isSuccess: authViewModel.isToastSuccess)
+                           .zIndex(2)
+                           .animation(.easeInOut, value: authViewModel.showToast)
+                           .transition(.move(edge: .top))
+                           .onAppear {
+                               DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                   authViewModel.showToast = false
+                               }
+                           }
+                   }
+               },
+               alignment: .top
+           )
+           .onAppear {
+               loadUserData()
+           }
+       }
+
+    private func saveChanges() {
+        isLoading = true
+        Task {
+             authViewModel.updateUserData(
+                fullName: fullName,
+                location: localSelectedLocation,
+                description: description,
+                latitude: localSelectedCoordinates?.latitude,
+                longitude: localSelectedCoordinates?.longitude,
+                profileImage: selectedImage
+            ) { success in
+                DispatchQueue.main.async {
+                    isLoading = false
+                    if success {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            self.dismiss()
+                        }
+                    }
+                    authViewModel.showToast = true
+                    authViewModel.toastMessage = success ? "Profile updated successfully" : "Failed to update profile"
+                    authViewModel.isToastSuccess = success
+                }
+            }
         }
     }
     
@@ -95,31 +149,10 @@ struct EditProfileView: View {
             description = user.description ?? ""
             localSelectedLocation = user.location
             localSelectedCoordinates = CLLocationCoordinate2D(latitude: user.latitude!, longitude: user.longitude!)
+            profileImageURL = user.profilePicURL
         }
     }
     
-    private func saveChanges() {
-        Task {
-            authViewModel.updateUserData(
-                fullName: fullName,
-                location: localSelectedLocation,
-                description: description,
-                latitude: localSelectedCoordinates?.latitude,
-                longitude: localSelectedCoordinates?.longitude,
-                profileImage: selectedImage
-            ) { success in
-                DispatchQueue.main.async {
-                    if success {
-                        dismiss()
-                    } else {
-                        print("Update failed")
-                    }
-                }
-            }
-        }
-        authViewModel.userLocation = localSelectedLocation
-        authViewModel.userLocationCoordinates = localSelectedCoordinates
-    }
 }
 
 #Preview {
