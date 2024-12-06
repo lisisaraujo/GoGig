@@ -31,6 +31,12 @@ class PostsViewModel: ObservableObject {
     
     @Published var errorMessage: String?
     
+    @Published var showAlert = false
+    @Published var alertMessage = ""
+    @Published var showToast = false
+    @Published var toastMessage = ""
+    @Published var isToastSuccess = false
+    
     private var currentFilters: (type: PostTypeEnum?, searchText: String?, maxDistance: Double?, userLocation: CLLocationCoordinate2D?) = (nil, nil, nil, nil)
     
     init() {
@@ -109,15 +115,16 @@ class PostsViewModel: ObservableObject {
         }
     }
     
-    func createPost(type: String, title: String, description: String, selectedCategories: [CategoriesEnum], exchangeCoins: [String], isActive: Bool, latitude: Double?, longitude: Double?, postLocation: String) {
-        
+    @MainActor
+    func createPost(type: String, title: String, description: String, selectedCategories: [CategoriesEnum], exchangeCoins: [String], isActive: Bool, latitude: Double?, longitude: Double?, postLocation: String) async {
         guard let userId = firebaseManager.userId else {
-            print("User ID is not available")
+            self.toastMessage = "User not logged in. Cannot create post."
+            self.isToastSuccess = false
+            self.showToast = true
             return
         }
-        
+
         let categoryStrings = selectedCategories.map { $0.rawValue }
-        
         let newPost = Post(
             userId: userId,
             type: type,
@@ -131,18 +138,20 @@ class PostsViewModel: ObservableObject {
             longitude: longitude,
             postLocation: postLocation
         )
-        
-        Task {
-            do {
-                try await repo.createPost(post: newPost)
-                // The listener will automatically update allPosts and filteredPosts
-                self.updateSuccess = true
-            } catch {
-                print("Failed to create post:", error.localizedDescription)
-                self.updateSuccess = false
-            }
+
+        do {
+            try await repo.createPost(post: newPost)
+            self.updateSuccess = true
+            self.toastMessage = "Post created successfully!"
+            self.isToastSuccess = true
+        } catch {
+            self.updateSuccess = false
+            self.toastMessage = "Failed to create post: \(error.localizedDescription)"
+            self.isToastSuccess = false
         }
+        self.showToast = true
     }
+
     
     func getSelectedPost(with id: String) async {
         await repo.fetchSelectedPost(with: id)
@@ -210,26 +219,34 @@ class PostsViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func deleteSelectedPost(postId: String) async -> Bool {
         do {
             try await firebaseManager.database.collection(firebaseManager.postsCollectionName).document(postId).delete()
-            print("Post data deleted successfully")
+            self.toastMessage = "Post deleted successfully!"
+            self.isToastSuccess = true
+            self.showToast = true
             return true
         } catch {
-            print("Error deleting Post data: \(error.localizedDescription)")
+            self.toastMessage = "Error deleting post: \(error.localizedDescription)"
+            self.isToastSuccess = false
+            self.showToast = true
             return false
         }
     }
     
     
+    @MainActor
     func updatePost(type: String?, title: String?, description: String?, isActive: Bool?, exchangeCoins: [String]?, categories: [String]?, latitude: Double?, longitude: Double?, postLocation: String?) async {
         guard let postId = selectedPost?.id else {
-            print("No selected post to update")
+            self.toastMessage = "No selected post to update."
+            self.isToastSuccess = false
+            self.showToast = true
             return
         }
-        
+
         var updatedFields: [String: Any] = [:]
-        
+
         if let type = type { updatedFields["type"] = type }
         if let title = title { updatedFields["title"] = title }
         if let description = description { updatedFields["description"] = description }
@@ -239,11 +256,11 @@ class PostsViewModel: ObservableObject {
         if let latitude = latitude { updatedFields["latitude"] = latitude }
         if let longitude = longitude { updatedFields["longitude"] = longitude }
         if let postLocation = postLocation { updatedFields["postLocation"] = postLocation }
-        
+
         do {
             try await repo.updatePost(postId: postId, updatedFields: updatedFields)
-            
-            // update selectedPost
+
+            // Update local state
             selectedPost?.type = type ?? selectedPost?.type ?? ""
             selectedPost?.title = title ?? selectedPost?.title ?? ""
             selectedPost?.description = description ?? selectedPost?.description ?? ""
@@ -253,18 +270,24 @@ class PostsViewModel: ObservableObject {
             selectedPost?.latitude = latitude ?? selectedPost?.latitude
             selectedPost?.longitude = longitude ?? selectedPost?.longitude
             selectedPost?.postLocation = postLocation ?? selectedPost?.postLocation ?? ""
-            
-            // update post in allPosts
+
+            // Update the post in allPosts
             if let index = allPosts.firstIndex(where: { $0.id == postId }) {
                 allPosts[index] = selectedPost!
             }
-            
-            updateSuccess = true
+
+            self.updateSuccess = true
+            self.toastMessage = "Post updated successfully!"
+            self.isToastSuccess = true
         } catch {
-            print("Error updating post: \(error.localizedDescription)")
-            updateSuccess = false
+            self.updateSuccess = false
+            self.toastMessage = "Error updating post: \(error.localizedDescription)"
+            self.isToastSuccess = false
         }
+
+        self.showToast = true
     }
+
     
 }
 

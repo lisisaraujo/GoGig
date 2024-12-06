@@ -49,7 +49,6 @@ struct LoginView: View {
                     ButtonPrimary(title: "Login"){
                         authViewModel.login(email: email, password: password) { success in
                             if success {
-                                requestsViewModel.getPendingRequests()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     dismiss()
                                 }

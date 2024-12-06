@@ -23,35 +23,71 @@ class RequestRepository {
         ])
     }
 
-    func fetchRequest(requestId: String) async throws -> Request {
-        let document = try await firebaseManager.database.collection(firebaseManager.requestsCollectionName).document(requestId).getDocument()
-        return try document.data(as: Request.self)
-    }
-
-    func fetchSentRequests(for userId: String) async throws -> [Request] {
-        let snapshot = try await firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+    func listenToSentRequests(for userId: String, completion: @escaping ([Request]?, Error?) -> Void) {
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
             .whereField("senderUserId", isEqualTo: userId)
-            .getDocuments()
-        return snapshot.documents.compactMap { try? $0.data(as: Request.self) }
+            .addSnapshotListener { snapshot, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else {
+                    completion(nil, nil)
+                    return
+                }
+                
+                let requests = documents.compactMap { try? $0.data(as: Request.self) }
+                completion(requests, nil)
+            }
     }
 
-    func fetchReceivedRequests(for userId: String) async throws -> [Request] {
-        let snapshot = try await firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+    func listenToReceivedRequests(for userId: String, completion: @escaping ([Request]?, Error?) -> Void) {
+        firebaseManager.database.collection(firebaseManager.requestsCollectionName)
             .whereField("recipientUserId", isEqualTo: userId)
-            .getDocuments()
-        return snapshot.documents.compactMap { try? $0.data(as: Request.self) }
+            .addSnapshotListener { snapshot, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else {
+                    completion(nil, nil)
+                    return
+                }
+                
+                let requests = documents.compactMap { try? $0.data(as: Request.self) }
+                completion(requests, nil)
+            }
     }
 
-    func fetchPendingRequests(for userId: String) async throws -> [Request] {
-        let snapshot = try await firebaseManager.database.collection(firebaseManager.requestsCollectionName)
-            .whereField("recipientUserId", isEqualTo: userId)
-            .whereField("status", isEqualTo: "Pending")
-            .getDocuments()
-        return snapshot.documents.compactMap { try? $0.data(as: Request.self) }
-    }
 
     func deleteRequest(requestId: String) async throws {
         try await firebaseManager.database.collection(firebaseManager.requestsCollectionName).document(requestId).delete()
     }
+    
+    func listenToPendingRequests(for userId: String, completion: @escaping ([Request]?, Error?) -> Void) {
+        let query = firebaseManager.database.collection(firebaseManager.requestsCollectionName)
+            .whereField("recipientUserId", isEqualTo: userId)
+            .whereField("status", isEqualTo: "Pending")
+        
+        query.addSnapshotListener { snapshot, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                completion(nil, nil)
+                return
+            }
+            
+            let requests = documents.compactMap { document -> Request? in
+                try? document.data(as: Request.self)
+            }
+            completion(requests, nil)
+        }
+    }
+
     
 }

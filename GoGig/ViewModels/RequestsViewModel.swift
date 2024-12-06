@@ -16,6 +16,8 @@ class RequestViewModel: ObservableObject {
     private let repository = RequestRepository()
     
     @Published var currentRequest: Request?
+    @Published var requests: [Request]?
+    @Published var selectedRequestID: String?
     @Published var sentRequests: [Request] = []
     @Published var errorMessage: String?
     @Published var showToast = false
@@ -26,116 +28,168 @@ class RequestViewModel: ObservableObject {
     @Published var pendingRequests: [Request] = []
     
     init() {
-        fetchSentRequests()
-        fetchReceivedRequests()
-        getPendingRequests()
+setupListeners()
+        
     }
     
-    func sendRequest(recipientUserId: String, postId: String, postTitle: String, message: String?, contactInfo: String?) {
-        guard let senderUserId = firebaseManager.userId else {
+    private func setupListeners() {
+        guard let userId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
             return
         }
+
+        setupSentRequestsListener(userId: userId)
+        setupReceivedRequestsListener(userId: userId)
+        setupPendingRequestsListener()
+
+    }
+    
+    
+    func sendRequest(recipientUserId: String, postId: String, postTitle: String, message: String, contactInfo: String) {
+        guard let senderUserId = firebaseManager.userId else {
+            
+            Task { @MainActor in
+                self.toastMessage = "Error: User not logged in."
+                self.isToastSuccess = false
+                self.showToast = true
+            }
+            return
+        }
         
-        let request = Request(senderUserId: senderUserId, recipientUserId: recipientUserId, postId: postId, postTitle: postTitle, message: message, contactInfo: contactInfo)
+        let request = Request(
+            senderUserId: senderUserId,
+            recipientUserId: recipientUserId,
+            postId: postId,
+            postTitle: postTitle,
+            message: message,
+            contactInfo: contactInfo
+        )
         
         Task {
             do {
                 try await repository.sendRequest(request)
-                 fetchSentRequests()
+                await MainActor.run {
+                    self.toastMessage = "Request sent successfully!"
+                    self.isToastSuccess = true
+                    self.showToast = true
+                }
             } catch {
-                self.errorMessage = "Error sending request: \(error.localizedDescription)"
+                await MainActor.run {
+                    self.toastMessage = "Failed to send request: \(error.localizedDescription)"
+                    self.isToastSuccess = false
+                    self.showToast = true
+                }
             }
         }
     }
+    
     
     func updateRequestStatus(requestId: String, newStatus: RequestStatus, isRated: Bool = false) {
         Task {
             do {
                 try await repository.updateRequestStatus(requestId: requestId, newStatus: newStatus, isRated: isRated)
-                 fetchSentRequests()
             } catch {
                 self.errorMessage = "Error updating request status: \(error.localizedDescription)"
             }
         }
     }
     
-    func fetchSentRequests() {
+    private func setupSentRequestsListener(userId: String) {
+            repository.listenToSentRequests(for: userId) { [weak self] requests, error in
+                guard let self = self else { return }
+
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Error listening to sent requests: \(error.localizedDescription)"
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.sentRequests = requests ?? []
+                }
+            }
+        }
+
+        private func setupReceivedRequestsListener(userId: String) {
+            repository.listenToReceivedRequests(for: userId) { [weak self] requests, error in
+                guard let self = self else { return }
+
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Error listening to received requests: \(error.localizedDescription)"
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.receivedRequests = requests ?? []
+                }
+            }
+        }
+    
+    
+    func setupPendingRequestsListener() {
         guard let userId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
             return
         }
         
-        Task {
-            do {
-                let requests = try await repository.fetchSentRequests(for: userId)
-                self.sentRequests = requests
-            } catch {
-                self.errorMessage = "Error fetching sent requests: \(error.localizedDescription)"
+        repository.listenToPendingRequests(for: userId) { [weak self] requests, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Listening to pending requests failed:", error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.errorMessage = "Failed to fetch pending requests: \(error.localizedDescription)"
+                }
+                return
+            }
+            
+            guard let requests = requests else {
+                print("No pending requests found.")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingRequests = requests
+                self.errorMessage = nil
             }
         }
     }
     
-    func fetchReceivedRequests() {
-        guard let userId = firebaseManager.userId else {
-            self.errorMessage = "User not logged in"
-            return
-        }
-        
-        Task {
-            do {
-                let requests = try await repository.fetchReceivedRequests(for: userId)
-                self.receivedRequests = requests
-                self.errorMessage = nil
-            } catch {
-                self.errorMessage = "Error fetching received requests: \(error.localizedDescription)"
-            }
-        }
-    }
-
-    func getPendingRequests() {
-        guard let userId = firebaseManager.userId else {
-            self.errorMessage = "User not logged in"
-            return
-        }
-        
-        Task {
-            do {
-                let requests = try await repository.fetchPendingRequests(for: userId)
-                self.pendingRequests = requests
-                self.errorMessage = nil
-            } catch {
-                self.errorMessage = "Error fetching pending requests: \(error.localizedDescription)"
-            }
-        }
-    }
-
     func cancelRequest(requestId: String) {
         updateRequestStatus(requestId: requestId, newStatus: .canceled)
     }
-
+    
     func deleteRequest(requestId: String) {
         Task {
             do {
                 try await repository.deleteRequest(requestId: requestId)
-                self.toastMessage = "Request deleted successfully."
-                self.isToastSuccess = true
+                await MainActor.run {
+                    self.toastMessage = "Request deleted successfully."
+                    self.isToastSuccess = true
+                    self.showToast = true
+                }
             } catch {
-                self.toastMessage = "Failed to delete the request: \(error.localizedDescription)"
-                self.isToastSuccess = false
+                await MainActor.run {
+                    self.toastMessage = "Failed to delete the request: \(error.localizedDescription)"
+                    self.isToastSuccess = false
+                    self.showToast = true
+                }
             }
-            self.showToast = true
         }
     }
-
+    
+    
     func acceptRequest(requestId: String) {
         updateRequestStatus(requestId: requestId, newStatus: .accepted)
     }
-
+    
     func declineRequest(requestId: String) {
         updateRequestStatus(requestId: requestId, newStatus: .declined)
     }
-
+    
     
     @MainActor
     func markRequestAsCompleted(requestId: String) {

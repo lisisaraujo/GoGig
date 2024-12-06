@@ -64,25 +64,6 @@ struct PostFormView: View {
                     }
                 }
             )
-            .overlay(
-                Group {
-                    if authViewModel.showToast {
-                        ToastView(message: authViewModel.toastMessage, isSuccess: authViewModel.isToastSuccess)
-                            .zIndex(2)
-                            .animation(.easeInOut, value: authViewModel.showToast)
-                            .transition(.move(edge: .top))
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    authViewModel.showToast = false
-                                }
-                            }
-                    }
-                },
-                alignment: .top
-            )
-            
-            
-     
         }
         .onAppear {
             if !isEditMode {
@@ -194,22 +175,21 @@ struct PostFormView: View {
         showValidationErrors = true
         missingExchangeCoinsError = selectedExchangeCoins.isEmpty
         missingCategoriesError = selectedCategories.isEmpty
-        
+
         if isFormValid {
             isLoading = true
             Task {
                 let success = await onSubmit()
                 isLoading = false
-                authViewModel.toastMessage = success ? "\(isEditMode ? "Post updated successfully!" : "Post created successfully!")" :  "\(isEditMode ? "Failed to update post. Try again." : "Failed to create post. Try again.")"
-                authViewModel.isToastSuccess = success
-                authViewModel.showToast = true
                 
                 if success {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { dismiss() }
+                    dismiss() 
                 }
             }
         }
     }
+
+
     
     private func clearFields() {
         title = ""

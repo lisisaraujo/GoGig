@@ -33,63 +33,83 @@ struct PostDetailsView: View {
     }
     
     var body: some View {
-        Group {
-            if let post = postsViewModel.selectedPost {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        PostCardView(post: post)
-                        PostMetadataView(post: post)
-                        TagsView(exchangeCoins: post.exchangeCoins, categories: post.categories)
-                        CreatorView(creatorUser: creatorUser)
-                        ActionButtonsView2(isCurrentUserCreator: isCurrentUserCreator, isDeleting: isDeleting, showRequestForm: $showRequestForm, showDeletionConfirmation: $showDeletionConfirmation)
+        ZStack {
+            Group {
+                if let post = postsViewModel.selectedPost {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            PostCardView(post: post)
+                            PostMetadataView(post: post)
+                            TagsView(exchangeCoins: post.exchangeCoins, categories: post.categories)
+                            CreatorView(creatorUser: creatorUser)
+                            ActionButtonsView2(isCurrentUserCreator: isCurrentUserCreator, isDeleting: isDeleting, showRequestForm: $showRequestForm, showDeletionConfirmation: $showDeletionConfirmation)
+                        }
+                        .padding()
                     }
-                    .padding()
-                }
-                .applyBackground()
-                .navigationBarItems(trailing: editButton)
-                .sheet(isPresented: $showUserDetails) {
-                    if let userId = postsViewModel.selectedPost?.userId {
-                        UserDetailsView(userId: userId)
-                            .environmentObject(authViewModel)
+                    .applyBackground()
+                    .navigationBarItems(trailing: editButton)
+                    .sheet(isPresented: $showUserDetails) {
+                        if let userId = postsViewModel.selectedPost?.userId {
+                            UserDetailsView(userId: userId)
+                                .environmentObject(authViewModel)
+                        }
                     }
-                }
-                .sheet(isPresented: $showRequestForm) {
-                    RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
-                }
-                .alert("Request Sent", isPresented: $showRequestConfirmation) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text("Your request has been sent.")
-                }
-                .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {
-                    Button("Delete", role: .destructive) {
-                        deletePost(postId: postId)
+                    .sheet(isPresented: $showRequestForm) {
+                        RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
                     }
-                    Button("Cancel", role: .cancel) {}
-                } message: {
-                    Text("Are you sure you want to delete this post? This action cannot be undone.")
+                    
+                    .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {
+                                  Button("Delete", role: .destructive) {
+                                      deletePost(postId: postId)
+                                  }
+                                  Button("Cancel", role: .cancel) {}
+                              } message: {
+                                  Text("Are you sure you want to delete this post? This action cannot be undone.")
+                              }
+                } else {
+                    Text("Post not found")
+                        .font(.headline)
+                        .foregroundColor(.red)
                 }
-            } else {
-                Text("Post not found")
-                    .font(.headline)
-                    .foregroundColor(.red)
+            }
+            .applyBackground()
+            .navigationTitle("Post Details")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear(perform: loadData)
+
+            if requestViewModel.showToast {
+                ToastView(message: requestViewModel.toastMessage, isSuccess: requestViewModel.isToastSuccess)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            requestViewModel.showToast = false
+                        }
+                    }
+                    .animation(.easeInOut, value: requestViewModel.showToast)
+            }
+            
+            if postsViewModel.showToast {
+                ToastView(message: postsViewModel.toastMessage, isSuccess: postsViewModel.isToastSuccess)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            postsViewModel.showToast = false
+                        }
+                    }
+                    .animation(.easeInOut, value: postsViewModel.showToast)
             }
         }
-        .applyBackground()
-        .navigationTitle("Post Details")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear(perform: loadData)
     }
+
     
     private func deletePost(postId: String) {
         isDeleting = true
         Task {
             let success = await postsViewModel.deleteSelectedPost(postId: postId)
             isDeleting = false
-            
+
             if success {
-                showDeletionConfirmation = false
-                dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    dismiss()
+                }
             }
         }
     }

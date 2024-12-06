@@ -57,7 +57,7 @@ struct AddPostTabView: View {
     }
     
     private func createPost() async -> Bool {
-        postsViewModel.createPost(
+        await postsViewModel.createPost(
             type: selectedType.rawValue,
             title: title,
             description: description,
@@ -71,7 +71,10 @@ struct AddPostTabView: View {
         
         // wait for a short time to allow the operation to complete
         try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-        selectedTab = .search
+        
+        if postsViewModel.updateSuccess{
+            selectedTab = .search
+        }
         
         return postsViewModel.updateSuccess
         

@@ -40,6 +40,21 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func addReview(_ review: Review) async {
+        do {
+            let _ = try firebaseManager.database.collection(firebaseManager.reviewsCollectionName).addDocument(from: review)
+            updateUserRating(userId: review.userId, newRating: review.rating)
+            
+            self.toastMessage = "Review submitted successfully."
+            self.isToastSuccess = true
+        } catch {
+            self.toastMessage = "Failed to submit review: \(error.localizedDescription)"
+            self.isToastSuccess = false
+        }
+        self.showToast = true
+    }
+    
     func login(email: String, password: String, completion: @escaping (Bool) -> Void) {
         firebaseManager.auth.signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -452,15 +467,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func addReview(_ review: Review) async throws {
-        do {
-            let _ = try  firebaseManager.database.collection(firebaseManager.reviewsCollectionName).addDocument(from: review)
-            
-            updateUserRating(userId: review.userId, newRating: review.rating)
-        } catch {
-            throw error
-        }
-    }
+
     
     private func updateUserRating(userId: String, newRating: Double) {
         let userRef = firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userId)

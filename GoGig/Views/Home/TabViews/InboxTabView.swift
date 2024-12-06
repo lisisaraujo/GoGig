@@ -12,10 +12,9 @@ struct InboxTabView: View {
     @EnvironmentObject var requestViewModel: RequestViewModel
     @Binding var selectedTab: HomeTabEnum
     @State var selectedInbox: InboxEnum = .received
-    @State private var navigationPath = NavigationPath()
 
-     var body: some View {
-         NavigationStack(path: $navigationPath) {
+    var body: some View {
+        NavigationStack {
             if authViewModel.isUserLoggedIn {
                 VStack {
                     Picker("Inbox Type", selection: $selectedInbox) {
@@ -28,13 +27,6 @@ struct InboxTabView: View {
                     .background(Color.buttonPrimary.opacity(0.5))
                     .cornerRadius(50)
                     .padding(.horizontal)
-                    .onChange(of: selectedInbox) { _, _ in
-                        if selectedInbox == .received {
-                            requestViewModel.fetchReceivedRequests()
-                        } else {
-                            requestViewModel.fetchSentRequests()
-                        }
-                    }
                     
                     if let errorMessage = requestViewModel.errorMessage {
                         Text("Error: \(errorMessage)")
@@ -55,6 +47,8 @@ struct InboxTabView: View {
                             List(selectedInbox == .received ? requestViewModel.receivedRequests : requestViewModel.sentRequests) { request in
                                 NavigationLink(destination: {
                                     RequestDetailsView(request: request)
+                                        .environmentObject(authViewModel)
+                                        .environmentObject(requestViewModel)
                                 }) {
                                     RequestListItemView(request: request)
                                         .environmentObject(authViewModel)
@@ -67,18 +61,24 @@ struct InboxTabView: View {
                             .background(Color.clear)
                             .listStyle(.plain)
                         }
+                        
+                        
+                        if requestViewModel.showToast {
+                            ToastView(message: requestViewModel.toastMessage, isSuccess: requestViewModel.isToastSuccess)
+                                .animation(.easeInOut, value: requestViewModel.showToast)
+                                .transition(.move(edge: .top))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        requestViewModel.showToast = false
+                                    }
+                                }
+                        }
+                        
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .refreshable {
-                        requestViewModel.fetchReceivedRequests()
-                    }
                 }
                 .navigationTitle("Inbox")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    requestViewModel.fetchReceivedRequests()
-                    requestViewModel.fetchSentRequests()
-                }
                 .applyBackground()
             } else {
                 LoginOrRegisterView(onClose: {
@@ -87,9 +87,8 @@ struct InboxTabView: View {
                 .environmentObject(authViewModel)
             }
         }
-       
     }
-}
+    }
 
 #Preview {
     InboxTabView(selectedTab: .constant(.search))

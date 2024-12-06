@@ -30,9 +30,8 @@ struct SearchTabView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .accentColor(.textPrimary)
-                .background(Color.surfaceBackground)
-                .cornerRadius(50)
+                .background(Color.buttonPrimary.opacity(0.3))
+                .cornerRadius(20)
                 .padding(.horizontal)
                 
                 //   MARK: Searchbar
@@ -77,6 +76,19 @@ struct SearchTabView: View {
                         .background(Color.clear)
                         .listStyle(.plain)
                     }
+                    
+                    if postsViewModel.showToast {
+                                ToastView(message: postsViewModel.toastMessage, isSuccess: postsViewModel.isToastSuccess)
+                                    .zIndex(2)
+                                    .animation(.easeInOut, value: postsViewModel.showToast)
+                                    .transition(.move(edge: .top))
+                                    .onAppear {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                            postsViewModel.showToast = false
+                                        }
+                                    }
+                            }
+                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

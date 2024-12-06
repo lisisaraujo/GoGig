@@ -17,7 +17,7 @@ struct RequestDetailsView: View {
     @State private var showDeclineConfirmation = false
     @State private var showRatingView = false
     @State var senderUser: User?
-    @State var request: Request
+    let request: Request
     
     var body: some View {
         ZStack {
@@ -29,7 +29,7 @@ struct RequestDetailsView: View {
                             .padding(.bottom)
                             .foregroundColor(Color.textPrimary)
                         
-                        Text(request.message ?? "No message provided")
+                        Text(request.message)
                             .padding()
                             .frame(maxWidth: .infinity, minHeight: 150, alignment: .leading)
                             .background(Color.secondary.opacity(0.1))
@@ -57,7 +57,7 @@ struct RequestDetailsView: View {
                                     .font(.headline)
                                     .foregroundColor(.textPrimary)
                                 
-                                Text(request.contactInfo ?? "No contact information provided")
+                                Text(request.contactInfo)
                                     .padding()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(Color.secondary.opacity(0.1))
@@ -66,10 +66,11 @@ struct RequestDetailsView: View {
                             }.padding(.bottom, 50)
                         }
                         
-                        if request.status == .accepted && !request.isRated {
+                        if request.status == .accepted && !request.isRated && request.senderUserId != authViewModel.currentUser?.id {
                             Button("Rate Service") {
                                 showRatingView = true
                             }
+
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(.buttonPrimary.opacity(0.9))
@@ -129,6 +130,7 @@ struct RequestDetailsView: View {
                         }
                         
                         Spacer()
+                        
                         if let senderUser = senderUser {
                             Text("From:")
                                 .font(.headline)
@@ -181,28 +183,29 @@ struct RequestDetailsView: View {
                 } message: {
                     Text("If you decline, this request will be removed from your history. Are you sure?")
                 }
-
-            }
-        }
-        .onAppear {
-            loadSenderDetails()
-        }
-        .onChange(of: request.status) { oldStatus ,newStatus in
-            if newStatus != oldStatus {
+                
+            }      .onAppear {
                 loadSenderDetails()
             }
+            .onChange(of: request.status) { oldStatus ,newStatus in
+                if newStatus != oldStatus {
+                    loadSenderDetails()
+                }
+            }
+
+            
+            if authViewModel.showToast {
+                ToastView(message: authViewModel.toastMessage, isSuccess: authViewModel.isToastSuccess)
+                    .animation(.easeInOut, value: authViewModel.showToast)
+                    .transition(.move(edge: .top))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            authViewModel.showToast = false
+                        }
+                    }
+            }
+            
         }
-        
-        if requestViewModel.showToast {
-                       ToastView(message: requestViewModel.toastMessage, isSuccess: requestViewModel.isToastSuccess)
-                           .animation(.easeInOut, value: requestViewModel.showToast)
-                           .transition(.move(edge: .top))
-                           .onAppear {
-                               DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                   requestViewModel.showToast = false
-                               }
-                           }
-                   }
     }
     
     private func loadSenderDetails() {
@@ -213,24 +216,25 @@ struct RequestDetailsView: View {
     
     private func acceptRequest() {
         requestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .accepted)
-        request.status = .accepted
+        
     }
     
     private func deleteRequest() {
-        requestViewModel.deleteRequest(requestId: request.id!) 
-        dismiss()
+        requestViewModel.deleteRequest(requestId: request.id!)
+            dismiss()
+        
     }
-
+    
     private func declineRequest() {
         requestViewModel.updateRequestStatus(requestId: request.id!, newStatus: .declined)
-        request.status = .declined
+        
     }
-
+    
 }
 
 
 #Preview {
-    RequestDetailsView(senderUser: sampleUser, request: sampleRequest)
+    RequestDetailsView(request: sampleRequest)
         .environmentObject(AuthViewModel())
         .environmentObject(RequestViewModel())
 }

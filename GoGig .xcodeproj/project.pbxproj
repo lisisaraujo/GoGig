@@ -25,7 +25,6 @@
 		A741751C2CE4DDAB007DA925 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751B2CE4DDAB007DA925 /* Request.swift */; };
 		A741751E2CE4DF98007DA925 /* RequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751D2CE4DF98007DA925 /* RequestStatus.swift */; };
 		A74175202CE4E19E007DA925 /* RequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */; };
-		A74175222CE4E3AB007DA925 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175212CE4E3AB007DA925 /* InboxViewModel.swift */; };
 		A74175242CE4E791007DA925 /* RequestFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175232CE4E791007DA925 /* RequestFormView.swift */; };
 		A74175292CE4F5C9007DA925 /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74175282CE4F5C9007DA925 /* RequestDetailsView.swift */; };
 		A741752C2CE4FA42007DA925 /* AddRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741752B2CE4FA42007DA925 /* AddRatingView.swift */; };
@@ -134,7 +133,6 @@
 		A741751B2CE4DDAB007DA925 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		A741751D2CE4DF98007DA925 /* RequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStatus.swift; sourceTree = "<group>"; };
 		A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsViewModel.swift; sourceTree = "<group>"; };
-		A74175212CE4E3AB007DA925 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
 		A74175232CE4E791007DA925 /* RequestFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFormView.swift; sourceTree = "<group>"; };
 		A74175282CE4F5C9007DA925 /* RequestDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDetailsView.swift; sourceTree = "<group>"; };
 		A741752B2CE4FA42007DA925 /* AddRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRatingView.swift; sourceTree = "<group>"; };
@@ -432,7 +430,6 @@
 				A79945AB2CD1225200F4AF89 /* PostsViewModel.swift */,
 				A741751F2CE4E19E007DA925 /* RequestsViewModel.swift */,
 				A74175092CE37E53007DA925 /* UsersViewModel.swift */,
-				A74175212CE4E3AB007DA925 /* InboxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -716,7 +713,6 @@
 				A79945912CD0DA0000F4AF89 /* SortOderEnum.swift in Sources */,
 				A79945992CD110ED00F4AF89 /* CustomTextFieldView.swift in Sources */,
 				A79945892CD0150B00F4AF89 /* ExchangeCoinEnum.swift in Sources */,
-				A74175222CE4E3AB007DA925 /* InboxViewModel.swift in Sources */,
 				A79945852CD012D500F4AF89 /* Message.swift in Sources */,
 				A799456B2CD011B100F4AF89 /* PostDetailsView.swift in Sources */,
 				A74175002CE10B4F007DA925 /* SampleData.swift in Sources */,

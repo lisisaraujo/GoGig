@@ -42,7 +42,7 @@ struct RequestListItemView: View {
                         .foregroundColor(Color.gray)
                 }
                 
-                Text(request.message!)
+                Text(request.message)
                     .font(.subheadline)
                     .foregroundColor(Color.textSecondary)
                     .lineLimit(2)

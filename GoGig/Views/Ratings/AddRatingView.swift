@@ -17,8 +17,6 @@ struct AddRatingView: View {
     
     @State private var rating: Int = 0
     @State private var review: String = ""
-    @State private var showAlert = false
-    @State private var alertMessage = ""
     
     var body: some View {
         ZStack {
@@ -47,16 +45,13 @@ struct AddRatingView: View {
                     Button("Submit Review") {
                         submitReview()
                     }
-                } .scrollContentBackground(.hidden)
-                    .listStyle(.plain)
+                }
+                .scrollContentBackground(.hidden)
+                .listStyle(.plain)
             }
+            
         }
         .navigationTitle("Rate Service")
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Review Submitted"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
-                dismiss()
-            })
-        }
     }
     
     private func submitReview() {
@@ -71,20 +66,11 @@ struct AddRatingView: View {
                 rating: Double(rating)
             )
             
-            do {
-                try await authViewModel.addReview(newReview)
-                requestViewModel.updateRequestStatus(requestId: requestId, newStatus: .completed, isRated: true)
-                
-                await MainActor.run {
-                    alertMessage = "Your review has been submitted successfully."
-                    showAlert = true
-                }
-            } catch {
-                await MainActor.run {
-                    alertMessage = "Failed to submit review: \(error.localizedDescription)"
-                    showAlert = true
-                }
-            }
+            await authViewModel.addReview(newReview)
+            requestViewModel.updateRequestStatus(requestId: requestId, newStatus: .completed, isRated: true)
+                dismiss()
+            
         }
     }
 }
+

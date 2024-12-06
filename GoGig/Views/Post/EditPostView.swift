@@ -65,16 +65,14 @@ struct EditPostView: View {
             isActive: isActive,
             exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
             categories: selectedCategories.map { $0.rawValue },
-            latitude: postsViewModel.selectedCoordinates?.latitude,
-            longitude: postsViewModel.selectedCoordinates?.longitude,
-            postLocation: postsViewModel.selectedLocation
+            latitude: localSelectedCoordinates?.latitude,
+            longitude: localSelectedCoordinates?.longitude,
+            postLocation: localSelectedLocation
         )
-        
-        // wait for a short time to allow the operation to complete
-        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
         return postsViewModel.updateSuccess
     }
+
 }
 
 #Preview {

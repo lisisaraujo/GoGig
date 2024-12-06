@@ -41,9 +41,10 @@ struct HomeView: View {
                         .environmentObject(postsViewModel)
                         .tag(HomeTabEnum.personal)
                 }
+                .toolbarBackground(.hidden, for: .tabBar)
                 .overlay(
                     CustomTabBar(selectedTab: $selectedTab, inboxCount: requestViewModel.pendingRequests.count)
-                       
+                        .background(Color.clear)
                         .padding(.bottom, 0),
                     alignment: .bottom
                 )
@@ -64,7 +65,7 @@ struct CustomTabBar: View {
                 Spacer()
             }
         }
-        .padding(20)
+        .padding(15)
         .background(Color.buttonPrimary.opacity(0.3))
         .cornerRadius(50)
         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)

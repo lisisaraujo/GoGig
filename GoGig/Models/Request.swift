@@ -17,11 +17,11 @@ struct Request: Codable, Identifiable, Hashable {
     var status: RequestStatus = .pending
     var timestamp: Date = Date()
     var completionDate: Date?
-    var message: String?
-    var contactInfo: String?
+    var message: String
+    var contactInfo: String
     var isRated: Bool
     
-    init(id: String? = nil, senderUserId: String, recipientUserId: String, postId: String, postTitle: String, status: RequestStatus = .pending, timestamp: Date = Date(), completionDate: Date? = nil, message: String? = nil, contactInfo: String? = nil, isRated: Bool = false) {
+    init(id: String? = nil, senderUserId: String, recipientUserId: String, postId: String, postTitle: String, status: RequestStatus = .pending, timestamp: Date = Date(), completionDate: Date? = nil, message: String, contactInfo: String, isRated: Bool = false) {
         self.id = id
         self.senderUserId = senderUserId
         self.recipientUserId = recipientUserId
