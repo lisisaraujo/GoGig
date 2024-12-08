@@ -345,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				A7D06F692D01A6B100EAB852 /* GoGig--Info.plist */,
+				A7D06F852D060AFA00EAB852 /* img */,
 				A799450E2CCFB02600F4AF89 /* GoGig */,
 				A799450D2CCFB02600F4AF89 /* Products */,
 			);
@@ -361,7 +362,6 @@
 		A799450E2CCFB02600F4AF89 /* GoGig */ = {
 			isa = PBXGroup;
 			children = (
-				A7D06F852D060AFA00EAB852 /* img */,
 				A7D1F0472CFDB2CE00A6800A /* Fonts */,
 				A79945552CD0105200F4AF89 /* Manager */,
 				A78AD7F52CD8DB830074EB6E /* API */,
