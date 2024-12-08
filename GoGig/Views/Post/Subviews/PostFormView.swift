@@ -18,8 +18,8 @@ struct PostFormView: View {
     @Binding var description: String
     @Binding var selectedType: PostTypeEnum
     @Binding var isActive: Bool
-    @Binding var selectedExchangeCoins: [ExchangeCoinEnum]
-    @Binding var selectedCategories: [CategoriesEnum]
+    @Binding var selectedExchangeCoins: [String]
+    @Binding var selectedCategories: [String]
     @Binding var selectedLocation: String
     @Binding var selectedCoordinates: CLLocationCoordinate2D?
     
@@ -95,8 +95,8 @@ struct PostFormView: View {
         Section(header: headerWithToggle("Exchange Coins", isExpanded: $showExchangeCoins)) {
             if showExchangeCoins {
                 ForEach(ExchangeCoinEnum.allCases, id: \.self) { coin in
-                    MultipleSelectionRow(title: coin.rawValue, isSelected: selectedExchangeCoins.contains(coin)) {
-                        toggleSelection(for: coin, in: &selectedExchangeCoins)
+                    MultipleSelectionRow(title: coin.rawValue, isSelected: selectedExchangeCoins.contains(coin.rawValue)) {
+                        toggleSelection(for: coin.rawValue, in: &selectedExchangeCoins)
                     }
                 }
                 if missingExchangeCoinsError {
@@ -113,8 +113,8 @@ struct PostFormView: View {
         Section(header: headerWithToggle("Categories", isExpanded: $showCategories)) {
             if showCategories {
                 ForEach(CategoriesEnum.allCases, id: \.self) { category in
-                    MultipleSelectionRow(title: category.rawValue, isSelected: selectedCategories.contains(category)) {
-                        toggleSelection(for: category, in: &selectedCategories)
+                    MultipleSelectionRow(title: category.rawValue, isSelected: selectedCategories.contains(category.rawValue)) {
+                        toggleSelection(for: category.rawValue, in: &selectedCategories)
                     }
                 }
                 if missingCategoriesError {

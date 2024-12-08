@@ -13,21 +13,20 @@ struct AddPostTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var selectedTab: HomeTabEnum
     @Environment(\.dismiss) private var dismiss
-
     
     @State private var title = ""
     @State private var description = ""
     @State private var selectedType: PostTypeEnum = .offer
     @State private var isActive = true
-    @State private var selectedExchangeCoins: [ExchangeCoinEnum] = []
-    @State private var selectedCategories: [CategoriesEnum] = []
+    @State private var selectedExchangeCoins: [String] = []
+    @State private var selectedCategories: [String] = []
     
     @State private var localSelectedLocation: String = ""
     @State private var localSelectedCoordinates: CLLocationCoordinate2D?
-
+    
     var body: some View {
         NavigationStack {
-            if authViewModel.isUserLoggedIn{
+            if authViewModel.isUserLoggedIn {
                 PostFormView(
                     title: $title,
                     description: $description,
@@ -42,16 +41,16 @@ struct AddPostTabView: View {
                     actionButtonText: "Create Post",
                     loadingMessage: "Adding post...",
                     onSubmit: {
-                        await createPost()
+                     
+                            await createPost()
+                    
                     }
                 ).applyBackground()
             } else {
-                
                 LoginOrRegisterView(onClose: {
                     selectedTab = .search
                 }).applyBackground()
                     .environmentObject(authViewModel)
-                
             }
         }
     }
@@ -62,23 +61,22 @@ struct AddPostTabView: View {
             title: title,
             description: description,
             selectedCategories: selectedCategories,
-            exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
+            exchangeCoins: selectedExchangeCoins,
             isActive: isActive,
             latitude: localSelectedCoordinates?.latitude,
             longitude: localSelectedCoordinates?.longitude,
             postLocation: localSelectedLocation
         )
         
-        // wait for a short time to allow the operation to complete
-        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // Wait 1 second
         
-        if postsViewModel.updateSuccess{
+        if postsViewModel.updateSuccess {
             selectedTab = .search
+            dismiss() // Dismiss the AddPostTabView
+            return true
         }
         
-        return postsViewModel.updateSuccess
-        
- 
+        return false
     }
 }
 
@@ -87,3 +85,4 @@ struct AddPostTabView: View {
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
 }
+

@@ -54,6 +54,7 @@ struct HomeView: View {
 }
 
 struct CustomTabBar: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var selectedTab: HomeTabEnum
     let inboxCount: Int
     
@@ -62,6 +63,7 @@ struct CustomTabBar: View {
             ForEach(HomeTabEnum.allCases, id: \.self) { tab in
                 Spacer()
                 TabBarItem(tab: tab, selectedTab: $selectedTab, inboxCount: inboxCount)
+                    .environmentObject(authViewModel)
                 Spacer()
             }
         }
@@ -73,6 +75,7 @@ struct CustomTabBar: View {
 }
 
 struct TabBarItem: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     let tab: HomeTabEnum
     @Binding var selectedTab: HomeTabEnum
     let inboxCount: Int
@@ -89,7 +92,7 @@ struct TabBarItem: View {
         }
         .overlay(
             Group {
-                if tab == .inbox && inboxCount > 0 {
+                if authViewModel.isUserLoggedIn && tab == .inbox && inboxCount > 0 {
                     Text("\(inboxCount)")
                         .font(.caption2)
                         .foregroundColor(.textPrimary)
@@ -104,6 +107,8 @@ struct TabBarItem: View {
             selectedTab = tab
         }
     }
+    
+  
 }
 
 #Preview {

@@ -28,11 +28,11 @@ struct InboxTabView: View {
                     .cornerRadius(50)
                     .padding(.horizontal)
                     
-                    if let errorMessage = requestViewModel.errorMessage {
-                        Text("Error: \(errorMessage)")
-                            .foregroundColor(.red)
-                            .padding()
-                    }
+//                    if let errorMessage = requestViewModel.errorMessage {
+//                        Text("Error: \(errorMessage)")
+//                            .foregroundColor(.red)
+//                            .padding()
+//                    }
                     
                     ZStack {
                         if (selectedInbox == .received ? requestViewModel.receivedRequests : requestViewModel.sentRequests).isEmpty {

@@ -16,8 +16,8 @@ struct EditPostView: View {
     @State private var description: String = ""
     @State private var selectedType: PostTypeEnum = .offer
     @State private var isActive: Bool = true
-    @State private var selectedExchangeCoins: [ExchangeCoinEnum] = []
-    @State private var selectedCategories: [CategoriesEnum] = []
+    @State private var selectedExchangeCoins: [String] = []
+    @State private var selectedCategories: [String] = []
     @State private var localSelectedLocation: String = ""
     @State private var localSelectedCoordinates: CLLocationCoordinate2D?
 
@@ -51,8 +51,8 @@ struct EditPostView: View {
         description = post.description
         selectedType = PostTypeEnum(rawValue: post.type) ?? .offer
         isActive = post.isActive
-        selectedExchangeCoins = post.exchangeCoins.compactMap { ExchangeCoinEnum(rawValue: $0) }
-        selectedCategories = post.categories.compactMap { CategoriesEnum(rawValue: $0) }
+        selectedExchangeCoins = post.exchangeCoins
+        selectedCategories = post.categories
         localSelectedLocation = post.postLocation
         localSelectedCoordinates = CLLocationCoordinate2D(latitude: post.latitude!, longitude:post.latitude!)
     }
@@ -63,8 +63,8 @@ struct EditPostView: View {
             title: title,
             description: description,
             isActive: isActive,
-            exchangeCoins: selectedExchangeCoins.map { $0.rawValue },
-            categories: selectedCategories.map { $0.rawValue },
+            exchangeCoins: selectedExchangeCoins,
+            categories: selectedCategories,
             latitude: localSelectedCoordinates?.latitude,
             longitude: localSelectedCoordinates?.longitude,
             postLocation: localSelectedLocation

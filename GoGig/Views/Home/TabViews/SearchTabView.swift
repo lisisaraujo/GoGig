@@ -104,6 +104,9 @@ struct SearchTabView: View {
         .onAppear {
             navigationPath = NavigationPath()
             filterPosts()
+  //  postsViewModel.addRandomPosts(postsList: randomPostsDE)
+//      postsViewModel.addRandomPosts(postsList: randomPosts)
+  
         }
         .sheet(isPresented: $showLocationPicker) {
             LocationPickerView()

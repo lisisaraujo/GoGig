@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */; };
 		A74174F32CDCC9D0007DA925 /* SelectLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */; };
-		A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F42CDCEE4D007DA925 /* LocationManager.swift */; };
 		A74174F72CDE1F7B007DA925 /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */; };
 		A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174F92CE106C0007DA925 /* EditProfileView.swift */; };
 		A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74174FB2CE1078C007DA925 /* MenuView.swift */; };
@@ -107,6 +106,8 @@
 		A7D06F662D0090DE00EAB852 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */; };
 		A7D06F682D01A4A400EAB852 /* Genesys.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7D06F672D01A4A400EAB852 /* Genesys.ttf */; };
 		A7D06F6B2D01B4E800EAB852 /* BackgroundSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */; };
+		A7D06F6D2D03505600EAB852 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F6C2D03505600EAB852 /* DeleteAccountView.swift */; };
+		A7D06F862D060AFA00EAB852 /* img in Resources */ = {isa = PBXBuildFile; fileRef = A7D06F852D060AFA00EAB852 /* img */; };
 		A7D0C90F2CF7433C00AFF92B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */; };
 		A7D1F03D2CFC943800A6800A /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1F03C2CFC943800A6800A /* ToastView.swift */; };
 		A7D1F0442CFC9A5300A6800A /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A7D1F0432CFC9A5300A6800A /* GooglePlaces */; };
@@ -117,7 +118,6 @@
 /* Begin PBXFileReference section */
 		A74174F02CD9196C007DA925 /* AutocompleteControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteControllerView.swift; sourceTree = "<group>"; };
 		A74174F22CDCC9D0007DA925 /* SelectLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationView.swift; sourceTree = "<group>"; };
-		A74174F42CDCEE4D007DA925 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A74174F62CDE1F7B007DA925 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
 		A74174F92CE106C0007DA925 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		A74174FB2CE1078C007DA925 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -193,6 +193,8 @@
 		A7D06F672D01A4A400EAB852 /* Genesys.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Genesys.ttf; path = "../../../../../../Downloads/Genesys 2/Genesys.ttf"; sourceTree = "<group>"; };
 		A7D06F692D01A6B100EAB852 /* GoGig--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoGig--Info.plist"; sourceTree = "<group>"; };
 		A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSplashScreen.swift; sourceTree = "<group>"; };
+		A7D06F6C2D03505600EAB852 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
+		A7D06F852D060AFA00EAB852 /* img */ = {isa = PBXFileReference; lastKnownFileType = folder; path = img; sourceTree = "<group>"; };
 		A7D0C90E2CF7433C00AFF92B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7D1F03C2CFC943800A6800A /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		A7E709A62CF9E50D0097D43E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				A74174FB2CE1078C007DA925 /* MenuView.swift */,
+				A7D06F6C2D03505600EAB852 /* DeleteAccountView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 		A799450E2CCFB02600F4AF89 /* GoGig */ = {
 			isa = PBXGroup;
 			children = (
+				A7D06F852D060AFA00EAB852 /* img */,
 				A7D1F0472CFDB2CE00A6800A /* Fonts */,
 				A79945552CD0105200F4AF89 /* Manager */,
 				A78AD7F52CD8DB830074EB6E /* API */,
@@ -418,7 +422,6 @@
 			isa = PBXGroup;
 			children = (
 				A799458E2CD0D7DF00F4AF89 /* FirebaseManager.swift */,
-				A74174F42CDCEE4D007DA925 /* LocationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7D06F862D060AFA00EAB852 /* img in Resources */,
 				A79945192CCFB02800F4AF89 /* Preview Assets.xcassets in Resources */,
 				A7D06F682D01A4A400EAB852 /* Genesys.ttf in Resources */,
 				A7D0C90F2CF7433C00AFF92B /* Assets.xcassets in Resources */,
@@ -680,9 +684,9 @@
 				A741754F2CE7AFC3007DA925 /* CreatorCardView.swift in Sources */,
 				A74174FA2CE106C0007DA925 /* EditProfileView.swift in Sources */,
 				A74175432CE61886007DA925 /* Buttons.swift in Sources */,
-				A74174F52CDCEE4D007DA925 /* LocationManager.swift in Sources */,
 				A79945612CD0110F00F4AF89 /* RegistrationView.swift in Sources */,
 				A74175322CE500E8007DA925 /* RatingView.swift in Sources */,
+				A7D06F6D2D03505600EAB852 /* DeleteAccountView.swift in Sources */,
 				A741753E2CE5E947007DA925 /* RequestsRepository.swift in Sources */,
 				A74175492CE77AB0007DA925 /* ReviewerCardView.swift in Sources */,
 				A79945A42CD11EF000F4AF89 /* InboxTabView.swift in Sources */,

@@ -116,7 +116,7 @@ class PostsViewModel: ObservableObject {
     }
     
     @MainActor
-    func createPost(type: String, title: String, description: String, selectedCategories: [CategoriesEnum], exchangeCoins: [String], isActive: Bool, latitude: Double?, longitude: Double?, postLocation: String) async {
+    func createPost(type: String, title: String, description: String, selectedCategories: [String], exchangeCoins: [String], isActive: Bool, latitude: Double?, longitude: Double?, postLocation: String) async {
         guard let userId = firebaseManager.userId else {
             self.toastMessage = "User not logged in. Cannot create post."
             self.isToastSuccess = false
@@ -124,7 +124,7 @@ class PostsViewModel: ObservableObject {
             return
         }
 
-        let categoryStrings = selectedCategories.map { $0.rawValue }
+        let categoryStrings = selectedCategories.map { $0 }
         let newPost = Post(
             userId: userId,
             type: type,
@@ -287,6 +287,24 @@ class PostsViewModel: ObservableObject {
 
         self.showToast = true
     }
+    
+    func addRandomPosts(postsList: [Post]){
+        for post in postsList {
+            Task {
+              await createPost(
+                    type: post.type,
+                    title: post.title,
+                    description: post.description,
+                    selectedCategories: post.categories,
+                    exchangeCoins: post.exchangeCoins,
+                    isActive: post.isActive,
+                    latitude: post.latitude,
+                    longitude: post.longitude,
+                    postLocation: post.postLocation
+                )
+            }
+        }
+      }
 
     
 }
