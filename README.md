@@ -1,10 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lf0EMZwr)
 
-# Care4U
+# GoGig: Gig Economy Service Exchange App
 
-**Your go-to app for finding and offering services like cooking, cleaning, or personal assistance.**
+**Your Go-To App for Getting Things Done or Earning on the Side!**
 
-Care4U is a social support app that allows users to offer or seek services such as cooking, cleaning, or personal assistance. Users can mark their services as paid, in exchange, or both. The app serves as a network to quickly find someone to help with tasks while also providing opportunities for individuals to earn extra money by sharing their hobbies, like cooking.
+GoGig is a mobile application designed to connect people who need services with those offering their skills. Whether you're looking to get help with everyday tasks or earn extra money by sharing your hobbies and expertise, GoGig makes it easy to find and offer services.
 
 ## Design
 <p>
@@ -19,11 +19,12 @@ Here are the features that Care4U offers:
 - [x] User Authentication (Login and Register)
 - [x] Profile Management (Edit Profile, View My Posts)
 - [x] Tab Navigation Menu
-- [x] Homepage with Search and Offers
-- [x] Add Post Functionality
+- [x] Search and Offer Services
+- [x] Add Post 
 - [x] Bookmarking Posts
-- [x] User Inbox for Messaging (Bonus Feature)
+- [x] Request services and Connect
 - [x] User Reviews and Ratings
+
 
 ## Technical Structure
 
@@ -36,13 +37,9 @@ Data is stored using Firebase. User authentication details, posts, and user prof
 #### API Calls
 The app utilizes the Google Places API to enhance the search functionality for services offered by users.
 
-#### 3rd-Party Frameworks
-Care4U integrates several third-party frameworks:
-- ...
-- ...
 
 ## Outlook
-In the future, we plan to enhance Care4U with additional features:
+In the future, I plan to enhance GoGig with additional features:
 
 - [ ] Planned Feature: Advanced Filtering Options for Posts
 - [ ] Planned Feature: Live Messaging Chat
