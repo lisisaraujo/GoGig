@@ -16,6 +16,7 @@ struct SearchTabView: View {
     @State private var showLocationPicker = false
     @Binding var selectedTab: HomeTabEnum
     @State private var navigationPath = NavigationPath()
+    @State private var text: String? = nil
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -49,51 +50,55 @@ struct SearchTabView: View {
                 }
                 .padding()
                 .background(Color.secondary.opacity(0.1))
-                .cornerRadius(10)
+                .cornerRadius(15)
                 .padding(.horizontal)
                 
                 //   MARK: Posts list
-                ZStack {
-                    if postsViewModel.filteredPosts.isEmpty {
-                        VStack {
-                            Spacer()
-                            Text("No Posts in your area yet.")
-                                .foregroundColor(.secondary)
-                                .font(.headline)
-                            Spacer()
-                        }
-                    } else {
-                        List(postsViewModel.filteredPosts) { post in
-                            
-                            NavigationLink(destination: PostDetailsView(postId: post.id!)) {
-                                PostItemView(post: post)
-                                    .frame(maxWidth: .infinity)
-                                
-                            }.listRowBackground(Color.clear)
-                        }
-                            
-                        .scrollContentBackground(.hidden)
-                        .background(Color.clear)
-                        .listStyle(.plain)
-                    }
-                    
-                    if postsViewModel.showToast {
-                                ToastView(message: postsViewModel.toastMessage, isSuccess: postsViewModel.isToastSuccess)
-                                    .zIndex(2)
-                                    .animation(.easeInOut, value: postsViewModel.showToast)
-                                    .transition(.move(edge: .top))
-                                    .onAppear {
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                            postsViewModel.showToast = false
-                                        }
-                                    }
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        if postsViewModel.filteredPosts.isEmpty {
+                            VStack {
+                                Spacer()
+                                Text("No Posts in your area yet.")
+                                    .foregroundColor(.secondary)
+                                    .font(.headline)
+                                Spacer()
                             }
-                    
+                        } else {
+                            PostsListView(posts: postsViewModel.filteredPosts, text: $text) .environmentObject(postsViewModel)
+                                .environmentObject(authViewModel)
+                            
+                            //                        List(postsViewModel.filteredPosts) { post in
+                            //
+                            //                            NavigationLink(destination: PostDetailsView(postId: post.id!)) {
+                            //                                PostItemView(post: post)
+                            //
+                            //                            }.listRowBackground(Color.clear)
+                            //                        }
+                            //
+                            //                        .scrollContentBackground(.hidden)
+                            //                        .background(Color.clear)
+                            //                        .listStyle(.plain)
+                        }
+                        
+                        if postsViewModel.showToast {
+                            ToastView(message: postsViewModel.toastMessage, isSuccess: postsViewModel.isToastSuccess)
+                                .zIndex(2)
+                                .animation(.easeInOut, value: postsViewModel.showToast)
+                                .transition(.move(edge: .top))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        postsViewModel.showToast = false
+                                    }
+                                }
+                        }
+                        
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .applyBackground()
-        
+            
         }
         .onChange(of: searchText) { _, _ in
             filterPosts()
@@ -104,12 +109,14 @@ struct SearchTabView: View {
         .onAppear {
             navigationPath = NavigationPath()
             filterPosts()
-  //  postsViewModel.addRandomPosts(postsList: randomPostsDE)
-//      postsViewModel.addRandomPosts(postsList: randomPosts)
-  
+            //  postsViewModel.addRandomPosts(postsList: randomPostsDE)
+            //      postsViewModel.addRandomPosts(postsList: randomPosts)
+            
         }
         .sheet(isPresented: $showLocationPicker) {
             LocationPickerView()
+                .presentationCornerRadius(50)
+                .presentationDetents([.medium])
         }
     }
     

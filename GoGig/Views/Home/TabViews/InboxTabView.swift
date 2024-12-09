@@ -86,6 +86,8 @@ struct InboxTabView: View {
                 })
                 .environmentObject(authViewModel)
             }
+        }.onAppear(){
+            
         }
     }
     }

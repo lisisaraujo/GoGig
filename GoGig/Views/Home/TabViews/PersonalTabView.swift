@@ -11,49 +11,32 @@ struct PersonalTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     @Binding var selectedTab: HomeTabEnum
-    @State private var showMenu = false
-    @State private var navigationPath = NavigationPath()
-    @State private var text: String? = "Posts"
-    
-    @State private var sheetBackgroundColor: Color = .clear
+    @State private var text: String? = "My Posts"
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack {
             if authViewModel.isUserLoggedIn {
                 ScrollView {
                     if let user = authViewModel.currentUser {
                         LazyVStack(spacing: 20) {
                             ProfileHeaderView(user: user, imageSize: 150, date: user.memberSince)
+                            RatingView(rating: user.averageRating, reviewCount: user.reviewCount, userId: user.id!)
+                                .environmentObject(postsViewModel)
+                                .environmentObject(authViewModel)
                             AboutMeView(description: user.description)
                             PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == user.id }, text: $text)
                         }
                     }
-                }.applyBackground()
+                }
+                .applyBackground()
                 .navigationBarItems(trailing:
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.8)) {
-                            showMenu = true
-                        }
-                    }) {
+                                        NavigationLink(destination: MenuView( selectedTab: $selectedTab)
+                        .environmentObject(authViewModel)
+                                  ) {
                         Image(systemName: "ellipsis")
                             .foregroundColor(.accent)
                     }
                 )
-                .sheet(isPresented: $showMenu) {
-                        MenuView(isPresented: $showMenu, navigationPath: $navigationPath)
-                        .presentationBackground(sheetBackgroundColor)
-                        .presentationDetents([.medium])
-                       
-                }
-                .navigationDestination(for: String.self) { destination in
-                    switch destination {
-                    case "EditProfile":
-                        EditProfileView()
-                            .environmentObject(authViewModel)
-                    default:
-                        EmptyView()
-                    }
-                }
             } else {
                 LoginOrRegisterView(onClose: {
                     selectedTab = .search
@@ -62,7 +45,6 @@ struct PersonalTabView: View {
             }
         }
         .onAppear {
-            navigationPath = NavigationPath()
             Task {
                 await authViewModel.checkAuth()
             }

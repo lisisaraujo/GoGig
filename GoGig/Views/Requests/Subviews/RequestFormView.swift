@@ -51,10 +51,12 @@ struct RequestFormView: View {
                 clearFields()
             }
             .navigationTitle("Send Request")
-        } else {
-            LoginOrRegisterView(onClose: {
-                dismiss()
-            })
+        }  else {
+            VStack {
+                LoginOrRegisterView(onClose: {
+                    dismiss()
+                })
+            }
         }
     }
     

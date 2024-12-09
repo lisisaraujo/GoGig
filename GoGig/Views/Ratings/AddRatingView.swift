@@ -14,6 +14,7 @@ struct AddRatingView: View {
     @Environment(\.dismiss) private var dismiss
     let serviceProvider: User
     let requestId: String
+    @State private var showValidationErrors = false
     
     @State private var rating: Int = 0
     @State private var review: String = ""
@@ -25,26 +26,30 @@ struct AddRatingView: View {
             
             VStack(spacing: 20) {
                 Form {
-                    Section(header: Text("Rate Service Provider")) {
+                    Section(header: Text("Write a Review")) {
+                        CustomTextEditorView(placeholder: "Leave a review", text: $review, isRequired: true, errorMessage: "Message is required", showError: $showValidationErrors)
+                    }.listRowBackground(Color.surfaceBackground)
+                    
+                    Section(header: Text("Rate Service")) {
                         HStack {
+                            Spacer()
                             ForEach(1...5, id: \.self) { number in
                                 Image(systemName: number <= rating ? "star.fill" : "star")
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(.accent)
+                                    .font(.system(size: 25))
                                     .onTapGesture {
                                         rating = number
                                     }
                             }
+                            Spacer()
                         }
+                        .padding(.vertical, 20)
                     }
+                    .listRowBackground(Color.surfaceBackground)
                     
-                    Section(header: Text("Write a Review")) {
-                        TextEditor(text: $review)
-                            .frame(height: 100)
-                    }
-                    
-                    Button("Submit Review") {
+                    ButtonPrimary(title: "Submit Review") {
                         submitReview()
-                    }
+                    }.listRowBackground(Color.clear)
                 }
                 .scrollContentBackground(.hidden)
                 .listStyle(.plain)
@@ -74,3 +79,9 @@ struct AddRatingView: View {
     }
 }
 
+
+#Preview {
+    AddRatingView(serviceProvider: sampleUser, requestId: "id")
+            .environmentObject(AuthViewModel())
+            .environmentObject(RequestViewModel())
+}

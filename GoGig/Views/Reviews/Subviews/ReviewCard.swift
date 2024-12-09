@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-
 struct ReviewCard: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     let review: Review
@@ -27,23 +26,23 @@ struct ReviewCard: View {
             }
             
             Text(review.review)
-                .font(.subheadline)
-                .lineLimit(3)
+                .font(.body)
             
             Text(review.timestamp.formatted(date: .abbreviated, time: .omitted))
                 .font(.caption)
                 .foregroundColor(.secondary)
-        }.onAppear(perform: {
-            Task {
-              reviewerData = await authViewModel.fetchUserData(with: review.reviewerId)
-            }
-        })
-        .frame(width: 200, height: 120)
+        }
         .padding()
-        .cornerRadius(10)
+        .background(Color.surfaceBackground)
+        .cornerRadius(15)
         .shadow(radius: 2)
+        .padding(.horizontal)
+        .onAppear {
+            Task {
+                reviewerData = await authViewModel.fetchUserData(with: review.reviewerId)
+            }
+        }
     }
-        
 }
 
 

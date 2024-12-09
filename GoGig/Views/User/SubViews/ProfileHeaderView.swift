@@ -24,7 +24,7 @@ struct ProfileHeaderView: View {
             }
             .frame(width: imageSize, height: imageSize)
             .clipShape(Circle())
-            .overlay(Circle().stroke(Color.buttonPrimary.opacity(0.5), lineWidth: 2))
+            .overlay(Circle().stroke(Color.buttonPrimary, lineWidth: 3))
             .shadow(radius: 5)
             
         

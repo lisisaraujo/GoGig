@@ -53,6 +53,7 @@ struct RegistrationView: View {
                     }
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
+                            .presentationCornerRadius(50)
                     }
                 } .listRowBackground(Color.surfaceBackground)
                 

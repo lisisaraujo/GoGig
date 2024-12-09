@@ -32,7 +32,7 @@ setupListeners()
         
     }
     
-    private func setupListeners() {
+     func setupListeners() {
         guard let userId = firebaseManager.userId else {
             self.errorMessage = "User not logged in"
             return

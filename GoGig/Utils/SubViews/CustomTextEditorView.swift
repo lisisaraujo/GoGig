@@ -30,7 +30,7 @@ struct CustomTextEditorView: View {
                     .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.accent.opacity(0.3), lineWidth: 2)
+                            .stroke(Color.accent.opacity(0.4), lineWidth: 2)
                     )
                     .frame(height: 150)
             }

@@ -49,9 +49,11 @@ struct LoginView: View {
                     ButtonPrimary(title: "Login"){
                         authViewModel.login(email: email, password: password) { success in
                             if success {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    dismiss()
-                                }
+                                requestsViewModel.setupListeners()
+                                   
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        dismiss()
+                                    }
                             }
                         }
                     }

@@ -17,11 +17,11 @@ struct ReviewerCardView: View {
             } placeholder: {
                 Image(systemName: "person.circle")
             }
-            .frame(width: 30, height: 30)
+            .frame(width: 50, height: 50)
             .clipShape(Circle())
             
             Text(reviewer?.fullName ?? "Unknown Reviewer")
-                .font(.caption)
+                .font(.subheadline)
                 .fontWeight(.semibold)
 
             Spacer()

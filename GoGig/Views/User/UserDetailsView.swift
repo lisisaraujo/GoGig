@@ -17,40 +17,46 @@ struct UserDetailsView: View {
     @State private var text: String? = "Posts"
     
     var body: some View {
-        ScrollView {
+        ZStack {
+            ScrollView {
+                if let user = user {
+                    VStack(spacing: 20) {
+                        ProfileHeaderView(user: user, imageSize: 150, date: user.memberSince)
+                            .environmentObject(postsViewModel)
+                            .environmentObject(authViewModel)
+                        RatingView(rating: user.averageRating, reviewCount: user.reviewCount, userId: user.id!)
+                            .environmentObject(postsViewModel)
+                            .environmentObject(authViewModel)
+                        AboutMeView(description: user.description)
+                            .environmentObject(postsViewModel)
+                            .environmentObject(authViewModel)
+                        PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, text: $text)
+                            .environmentObject(postsViewModel)
+                            .environmentObject(authViewModel)
+                    }
+                    .padding()
+                } else if !isLoading {
+                    VStack {
+                        Spacer()
+                        Text("User not found")
+                            .font(.headline)
+                            .foregroundColor(.pink)
+                        Spacer()
+                    }
+                    .padding()
+                }
+            }
+            
             if isLoading {
                 ProgressView()
+                    .foregroundColor(Color.accent)
+                    .scaleEffect(1.5)
                     .padding()
-            } else if let user = user {
-                VStack(spacing: 20) {
-                    ProfileHeaderView(user: user, imageSize: 120, date: user.memberSince)
-                        .environmentObject(postsViewModel)
-                        .environmentObject(authViewModel)
-                    RatingView(rating: user.averageRating, reviewCount: user.reviewCount)
-                        .environmentObject(postsViewModel)
-                        .environmentObject(authViewModel)
-                    AboutMeView(description: user.description)
-                        .environmentObject(postsViewModel)
-                        .environmentObject(authViewModel)
-                    ReviewsScrollView(reviews: authViewModel.userReviews)
-                        .environmentObject(postsViewModel)
-                        .environmentObject(authViewModel)
-                    PostsListView(posts: postsViewModel.allPosts.filter { $0.userId == userId }, text: $text)
-                        .environmentObject(postsViewModel)
-                        .environmentObject(authViewModel)
-                }
-                .padding()
-            } else {
-                VStack {
-                    Spacer()
-                    Text("User not found")
-                        .font(.headline)
-                        .foregroundColor(.pink)
-                    Spacer()
-                }
-                .padding()
+                    .background(Color.black.opacity(0.1))
+                    .cornerRadius(10)
             }
-        }.applyBackground()
+        }
+        .applyBackground()
         .navigationTitle("User Profile")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -67,7 +73,7 @@ struct UserDetailsView: View {
                 await authViewModel.fetchUserData(with: userId)
                 user = authViewModel.selectedUser
             }
-           await authViewModel.fetchUserReviews(for: userId)
+            await authViewModel.fetchUserReviews(for: userId)
             await MainActor.run {
                 isLoading = false
             }

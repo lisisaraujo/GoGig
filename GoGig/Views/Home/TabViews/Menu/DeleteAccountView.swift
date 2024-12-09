@@ -21,7 +21,8 @@ struct DeleteAccountView: View {
     var body: some View {
         ZStack {
             Color.clear.ignoresSafeArea()
-              //  .applyBackground()
+                .applyBackground()
+            
             VStack(spacing: 20) {
                 if isLoading {
                     ProgressView("Deleting...")

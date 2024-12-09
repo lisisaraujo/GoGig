@@ -48,14 +48,16 @@ struct PostItemView: View {
             }.padding(.bottom, 5)
             
             Text(post.description)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 .font(.subheadline)
                 .foregroundColor(Color.textSecondary)
                 .lineLimit(2)
                 .padding(.bottom, 10)
+       
             
             
             HStack {
-          
                 
                 Spacer()
                 

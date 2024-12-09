@@ -9,52 +9,68 @@ import SwiftUI
 
 struct MenuView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @EnvironmentObject var postsViewModel: PostsViewModel
-    @EnvironmentObject var requestViewModel: RequestViewModel
-    @Binding var isPresented: Bool
-    @Binding var navigationPath: NavigationPath
-    @Environment(\.dismiss) var dismiss
-
+    //@Environment(\.dismiss) private var dismiss
+    @Binding var selectedTab: HomeTabEnum
+    
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        if authViewModel.isUserLoggedIn{
             List {
                 Section {
-                    Button(action: {
-                        isPresented = false
-                        navigationPath.append("EditProfile")
-                    }) {
-                        Label("Edit Profile", systemImage: "person.crop.circle")
-                    }.foregroundColor(.buttonSecondary)
-
-                    Button(action: {
-                        requestViewModel.pendingRequests = []
-                        authViewModel.logout()
-                        isPresented = false
-                    }) {
-                        Label("Logout", systemImage: "arrow.right.square")
-                    }.foregroundColor(.buttonSecondary)
-                }
-                .listRowBackground(Color.surfaceBackground)
-
-                Section {
-                        NavigationLink(destination: DeleteAccountView()) {
-                            Label("Delete My Account", systemImage: "trash")
-                                .foregroundColor(.red)
+                    NavigationLink(destination: EditProfileView()
+                        .environmentObject(authViewModel)) {
+                            MenuRow(icon: "person.crop.circle", text: "Edit Profile", color: .blue)
                         }
+                    
+                    Button(action: {
+                        authViewModel.logout()
+                    }) {
+                        MenuRow(icon: "arrow.right.square", text: "Logout", color: .blue)
+                    }
+                }.listRowBackground(Color.surfaceBackground)
                 
-                }
-                .listRowBackground(Color.surfaceBackground)
-            }.background()
-            .scrollContentBackground(.hidden)
-            .background(Color.clear)
+                Section {
+                    NavigationLink(destination: DeleteAccountView()    .environmentObject(authViewModel)) {
+                        MenuRow(icon: "trash", text: "Delete Account", color: .red)
+                    }
+                }.listRowBackground(Color.surfaceBackground)
+            }
             .listStyle(InsetGroupedListStyle())
+            .scrollContentBackground(.hidden)
+            .applyBackground()
+            .navigationTitle("Menu")
+            .navigationBarTitleDisplayMode(.inline)
+            
+        } else {
+            VStack {
+                LoginOrRegisterView(onClose: {
+                    selectedTab = .personal
+                })
+            }
         }
     }
 }
 
-
-#Preview {
-    MenuView(isPresented: .constant(true), navigationPath: .constant(NavigationPath()))
-        .environmentObject(AuthViewModel())
-        .environmentObject(PostsViewModel())
-}
+    struct MenuRow: View {
+        let icon: String
+        let text: String
+        let color: Color
+        
+        var body: some View {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                    .frame(width: 30)
+                Text(text)
+                    .foregroundColor(.primary)
+            }
+            .padding(.vertical, 8)
+        }
+    }
+    
+    #Preview {
+        NavigationStack{
+            MenuView(selectedTab: .constant(.search))
+                .environmentObject(AuthViewModel())
+                .environmentObject(PostsViewModel())
+        }
+    }

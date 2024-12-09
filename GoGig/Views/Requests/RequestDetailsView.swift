@@ -79,6 +79,8 @@ struct RequestDetailsView: View {
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                             .sheet(isPresented: $showRatingView) {
                                 AddRatingView(serviceProvider: senderUser!, requestId: request.id!)
+                                    .presentationCornerRadius(50)
+                                    .presentationDetents([.medium])
                             }
                         } else if request.status == .pending && request.senderUserId != authViewModel.currentUser?.id {
                             VStack {
@@ -132,25 +134,11 @@ struct RequestDetailsView: View {
                         Spacer()
                         
                         if let senderUser = senderUser {
-                            Text("From:")
-                                .font(.headline)
-                                .padding(.bottom, 5)
-                                .foregroundColor(Color.textPrimary)
                             
                             NavigationLink(destination: UserDetailsView(userId: senderUser.id!)) {
-                                VStack {
-                                    ProfileHeaderView(user: senderUser, imageSize: 80, date: senderUser.memberSince)
-                                        .padding(.vertical, 10)
+                                NavigationLink(destination: UserDetailsView(userId: senderUser.id ?? "")) {
+                                    CreatorCardView(user: senderUser, title: "View Profile")
                                 }
-                                .frame(maxWidth: .infinity)
-                                .background(Color.buttonPrimary.opacity(0.2))
-                                .cornerRadius(20)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.buttonPrimary.opacity(0.5), lineWidth: 1)
-                                )
-                                .padding(.horizontal)
                             }
                             .buttonStyle(PlainButtonStyle())
                             .padding(.vertical, 10)

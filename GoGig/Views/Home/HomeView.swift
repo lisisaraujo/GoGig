@@ -13,6 +13,11 @@ struct HomeView: View {
     @EnvironmentObject var requestViewModel: RequestViewModel
     @State var selectedTab: HomeTabEnum = .search
     
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.black
+        UITabBar.appearance().isTranslucent = true
+     }
+    
     var body: some View {
             ZStack(alignment: .bottom) {
                 TabView(selection: $selectedTab) {
@@ -41,7 +46,6 @@ struct HomeView: View {
                         .environmentObject(postsViewModel)
                         .tag(HomeTabEnum.personal)
                 }
-                .toolbarBackground(.hidden, for: .tabBar)
                 .overlay(
                     CustomTabBar(selectedTab: $selectedTab, inboxCount: requestViewModel.pendingRequests.count)
                         .background(Color.clear)

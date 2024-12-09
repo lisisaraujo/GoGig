@@ -52,10 +52,13 @@ struct PostDetailsView: View {
                         if let userId = postsViewModel.selectedPost?.userId {
                             UserDetailsView(userId: userId)
                                 .environmentObject(authViewModel)
+                                .presentationCornerRadius(50)
                         }
                     }
                     .sheet(isPresented: $showRequestForm) {
                         RequestFormView(post: post, creatorUser: creatorUser!, requestMessage: $requestMessage, contactInfo: $contactInfo, onSubmit: sendRequest)
+                            .presentationCornerRadius(50)
+                            .presentationDetents([.medium])
                     }
                     
                     .alert("Confirm Deletion", isPresented: $showDeletionConfirmation) {

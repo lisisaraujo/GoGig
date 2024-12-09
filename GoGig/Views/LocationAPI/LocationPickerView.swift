@@ -36,8 +36,11 @@ struct LocationPickerView: View {
                     get: { postsViewModel.selectedCoordinates ?? CLLocationCoordinate2D() },
                     set: { postsViewModel.selectedCoordinates = $0 }
                 )
-            )
-        }
+            ) .presentationCornerRadius(50)
+                .presentationDetents([.medium])
+                .background()
+    
+                   }
     }
 }
 

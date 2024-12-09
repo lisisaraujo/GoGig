@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PostsListView: View {
+    @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     let posts: [Post]
     @Binding var text: String?
     
@@ -19,8 +21,13 @@ struct PostsListView: View {
             }
             
             ForEach(posts, id: \.id) { post in
-                NavigationLink(destination: PostDetailsView(postId: post.id!)){
+                NavigationLink(destination: PostDetailsView(postId: post.id!)
+                    .environmentObject(postsViewModel)
+                    .environmentObject(authViewModel)
+                ){
                     PostItemView(post: post)
+                        .environmentObject(postsViewModel)
+                        .environmentObject(authViewModel)
                 }
             }
         }
@@ -30,6 +37,10 @@ struct PostsListView: View {
     }
 }
 
-//#Preview {
-//    PostsListView(selectedTab: .constant(.search))
-//}
+#Preview {
+    NavigationStack{
+        PostsListView(posts: randomPosts, text: .constant("postview"))
+            .environmentObject(PostsViewModel())
+            .environmentObject(AuthViewModel())
+    }
+}

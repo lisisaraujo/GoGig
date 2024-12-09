@@ -22,7 +22,7 @@ struct CustomTextFieldView: View {
                 .cornerRadius(15)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.accent.opacity(0.3), lineWidth: 2)
+                        .stroke(Color.accent.opacity(0.4), lineWidth: 2)
                 )
             
             if isRequired && text.isEmpty && showError {

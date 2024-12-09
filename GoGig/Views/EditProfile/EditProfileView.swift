@@ -59,6 +59,7 @@ struct EditProfileView: View {
                     }
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePickerView(selectedImage: $selectedImage)
+                            .presentationCornerRadius(50)
                     }
                 }                .listRowBackground(Color.surfaceBackground)
                 
@@ -156,7 +157,10 @@ struct EditProfileView: View {
 }
 
 #Preview {
-    EditProfileView()
-        .environmentObject(AuthViewModel())
+    NavigationStack{
+        EditProfileView()
+            .environmentObject(AuthViewModel())
+            .environmentObject(PostsViewModel())
+    }
 }
         
