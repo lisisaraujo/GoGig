@@ -16,7 +16,7 @@ struct BackgroundModifier: ViewModifier {
                     LinearGradient(
                         gradient: Gradient(colors: colorScheme == .dark
                             ? [Color.black.opacity(0.4), Color.deepNavy.opacity(0.9)]
-                            : [Color("D0D9E0"), Color("F2F2F7")]),
+                            : [Color.black.opacity(0.4), Color.deepNavy.opacity(0.9)]),
                         startPoint: .bottomLeading,
                         endPoint: .topTrailing
                     )

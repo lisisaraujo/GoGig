@@ -70,7 +70,6 @@ struct UserDetailsView: View {
             if userId == authViewModel.currentUser?.id {
                 user = authViewModel.currentUser
             } else {
-                await authViewModel.fetchUserData(with: userId)
                 user = authViewModel.selectedUser
             }
             await authViewModel.fetchUserReviews(for: userId)

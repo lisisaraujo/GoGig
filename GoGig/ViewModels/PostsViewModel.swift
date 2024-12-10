@@ -77,7 +77,8 @@ class PostsViewModel: ObservableObject {
         if let searchText = currentFilters.searchText, !searchText.isEmpty {
             filtered = filtered.filter { post in
                 post.title.localizedCaseInsensitiveContains(searchText) ||
-                post.description.localizedCaseInsensitiveContains(searchText)
+                post.description.localizedCaseInsensitiveContains(searchText) ||
+                post.postLocation.localizedCaseInsensitiveContains(searchText)
             }
         }
         

@@ -12,6 +12,7 @@ import GooglePlaces
 struct RegistrationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var requestsViewModel: RequestViewModel
     @Environment(\.dismiss) private var dismiss
     
     @State private var fullName = ""
@@ -135,6 +136,7 @@ struct RegistrationView: View {
         ) { success in
             isLoading = false
             if success {
+                requestsViewModel.setupListeners()
                 dismiss()
             }
         }
@@ -149,4 +151,5 @@ struct RegistrationView: View {
     RegistrationView()
         .environmentObject(AuthViewModel())
         .environmentObject(PostsViewModel())
+        .environmentObject(RequestViewModel())
 }
