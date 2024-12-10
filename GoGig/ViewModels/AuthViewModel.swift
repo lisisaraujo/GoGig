@@ -48,6 +48,9 @@ class AuthViewModel: ObservableObject {
             updateUserRating(userId: review.userId, newRating: review.rating)
             
             self.toastMessage = "Review submitted successfully."
+            Task {
+                await fetchUserReviews(for: review.userId)
+            }
             self.isToastSuccess = true
         } catch {
             self.toastMessage = "Failed to submit review: \(error.localizedDescription)"
