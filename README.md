@@ -8,11 +8,19 @@ GoGig is a mobile application designed to connect people who need services with 
 
 ## Design
 <p>
+<<<<<<< HEAD
  <img src="./GoGig/img/home.png" width="200">
  <img src="./GoGig/img/inbox.png" width="200">
   <img src="./GoGig/img/filter.png" width="200">
    <img src="./GoGig/img/postDetails.png" width="200">
    <img src="./GoGig/img/requestDetails.png" width="200">
+=======
+ <img src="./img/home.png" width="200">
+  <img src="./img/inbox.png" width="200">
+  <img src="./img/filter.png" width="200">
+   <img src="./img/postDetails.png" width="200">
+  <img src="./img/requestDetails.png" width="200">
+>>>>>>> 4d5d2f80497b5b82f438a6b5506d4804968992e3
 </p>
 
 ## Features
