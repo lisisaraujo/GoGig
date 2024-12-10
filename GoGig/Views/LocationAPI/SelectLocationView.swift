@@ -38,11 +38,19 @@ struct SelectLocationView: View {
                 )
             }
             .sheet(isPresented: $isAutocompletePresented) {
-                HStack(spacing: 20){
-                    AutocompleteControllerView(location: $selectedLocation, selectedCoordinates: $selectedCoordinates)
-                        .presentationDetents([.medium])
-                        .presentationCornerRadius(50)
+                ZStack {
+                    Color.clear.ignoresSafeArea()
+                        .applyBackground()
+                    
+                    VStack {
+                        Spacer().frame(height: 20)
+                        
+                        AutocompleteControllerView(location: $selectedLocation, selectedCoordinates: $selectedCoordinates)
+                            .applyBackground()
+                    }
                 }
+                .presentationDetents([.medium])
+                .presentationCornerRadius(50)
             }
         }
         .padding()

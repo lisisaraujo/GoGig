@@ -59,11 +59,16 @@ struct PostItemView: View {
             
             HStack {
                 
-                Spacer()
-                
-                Text(post.exchangeCoins.joined(separator: "• "))
+                Text(post.exchangeCoins.joined(separator: " • "))
                     .font(.footnote)
                     .foregroundColor(Color.accent)
+          
+                
+                Spacer()
+                Label(post.type, systemImage: "tag")
+                    .foregroundColor(Color.blue)
+                    .font(.footnote)
+             
             }
         }
         .padding()
