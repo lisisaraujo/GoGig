@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
     
     @Published var currentUser: User?
     @Published var selectedUser: User?
+    @Published var reviewerUser: User?
     @Published var userReviews: [Review] = []
     @Published var loadingState: LoadingStateEnum = .idle
     @Published var userLocation: String = ""
@@ -158,6 +159,31 @@ class AuthViewModel: ObservableObject {
                 self.currentUser = fetchedUser
             } else {
                 self.selectedUser = fetchedUser
+            }
+            return fetchedUser
+        } catch {
+            print("Error fetching user:", error)
+            resetUserData(for: id)
+            return nil
+        }
+    }
+    
+    func fetchReviwerData(with id: String) async -> User? {
+        print("Fetching user with ID: \(id)")
+        do {
+            let document = try await firebaseManager.database.collection(firebaseManager.usersCollectionName).document(id).getDocument()
+            
+            guard document.exists else {
+                print("No such document!")
+                resetUserData(for: id)
+                return nil
+            }
+            
+            let fetchedUser = try document.data(as: User.self)
+            if id == firebaseManager.userId {
+                self.currentUser = fetchedUser
+            } else {
+                self.reviewerUser = fetchedUser
             }
             return fetchedUser
         } catch {

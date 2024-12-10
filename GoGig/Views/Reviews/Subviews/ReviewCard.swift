@@ -39,7 +39,7 @@ struct ReviewCard: View {
         .padding(.horizontal)
         .onAppear {
             Task {
-                reviewerData = await authViewModel.fetchUserData(with: review.reviewerId)
+                reviewerData = await authViewModel.fetchReviwerData(with: review.reviewerId)
             }
         }
     }
