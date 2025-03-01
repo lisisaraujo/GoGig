@@ -24,12 +24,117 @@ class AuthViewModel: ObservableObject {
     @Published var loadingState: LoadingStateEnum = .idle
     @Published var userLocation: String = ""
     @Published var userLocationCoordinates: CLLocationCoordinate2D?
+    @Published var allowNavigateToRegistration = false
     
     @Published var showAlert = false
     @Published var alertMessage = ""
     @Published var showToast = false
     @Published var toastMessage = ""
     @Published var isToastSuccess = false
+
+
+    func registerEmailPassword(email: String, password: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error as NSError? {
+                DispatchQueue.main.async {
+                    switch error.code {
+                    case AuthErrorCode.emailAlreadyInUse.rawValue:
+                        self.alertMessage = "This email is already registered. Try logging in instead."
+                    case AuthErrorCode.invalidEmail.rawValue:
+                        self.alertMessage = "Invalid email format. Please enter a valid email."
+                    case AuthErrorCode.weakPassword.rawValue:
+                        self.alertMessage = "Your password is too weak. Please use at least 8 characters, including an uppercase letter, a number, and a special character."
+                    case 17999: // Catching internal Firebase error (often weak password)
+                        self.alertMessage = "Your password does not meet security requirements. Please choose a stronger password."
+                    default:
+                        self.alertMessage = "Registration failed: \(error.localizedDescription)"
+                    }
+
+                    self.showAlert = true
+                    print("Firebase Auth Error: \(error.localizedDescription) (Code: \(error.code))")
+                }
+                completion(false)
+                return
+            }
+
+            // Send verification email
+            result?.user.sendEmailVerification(completion: nil)
+            completion(true)
+        }
+    }
+
+    func evaluatePasswordStrength(_ password: String) -> PasswordStrength {
+        let length = password.count >= 8
+        let hasUppercase = containsUppercase(password)
+        let hasNumber = containsNumber(password)
+        let hasSpecialCharacter = containsSpecialCharacter(password)
+
+        if length && hasUppercase && hasNumber && hasSpecialCharacter {
+            return .strong
+        } else if length && (hasUppercase || hasNumber || hasSpecialCharacter) {
+            return .medium
+        } else {
+            return .weak
+        }
+    }
+
+    func containsUppercase(_ text: String) -> Bool {
+        return text.range(of: "[A-Z]", options: .regularExpression) != nil
+    }
+
+    func containsNumber(_ text: String) -> Bool {
+        return text.range(of: "[0-9]", options: .regularExpression) != nil
+    }
+
+    func containsSpecialCharacter(_ text: String) -> Bool {
+        return text.range(of: "[@$!%*?&]", options: .regularExpression) != nil
+    }
+
+
+
+       func checkEmailVerification(completion: @escaping (Bool) -> Void) {
+           Auth.auth().currentUser?.reload { _ in
+               let isVerified = Auth.auth().currentUser?.isEmailVerified ?? false
+               completion(isVerified)
+           }
+       }
+
+        func completeUserProfile(fullName: String, birthDate: Date, description: String, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
+            guard let userID = Auth.auth().currentUser?.uid else {
+                completion(false)
+                return
+            }
+
+            let userData: [String: Any] = [
+                "fullName": fullName,
+                "birthDate": birthDate,
+                "description": description
+            ]
+
+            firebaseManager.database.collection(firebaseManager.usersCollectionName).document(userID).setData(userData, merge: true) { error in
+                if let error = error {
+                    print("Error saving user data: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+                completion(true)
+            }
+        }
+
+        func loginUserAutomatically() {
+            // Redirect user to home screen or main dashboard
+        }
+
+
+    
+    private func handleError(_ error: Error, message: String) {
+        print("\(message): \(error.localizedDescription)")
+        DispatchQueue.main.async {
+            self.alertMessage = "\(message): \(error.localizedDescription)"
+            self.showAlert = true
+        }
+    }
+
     
     var isUserLoggedIn: Bool {
         return currentUser != nil
@@ -60,69 +165,130 @@ class AuthViewModel: ObservableObject {
     }
     
     func login(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        firebaseManager.auth.signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
+        guard !email.isEmpty, !password.isEmpty else {
+            DispatchQueue.main.async {
+                self.alertMessage = "Email and password cannot be empty."
                 self.showAlert = true
-                self.alertMessage = "Login failed: \(error.localizedDescription)"
-                completion(false)
-                return
             }
-            
-            guard let authResult else {
-                completion(false)
-                return
-            }
-            
-            Task {
-                await self.fetchUserData(with: authResult.user.uid)
-                DispatchQueue.main.async {
-                    self.showToast = true
-                    self.toastMessage = "Successfully logged in"
-                    self.isToastSuccess = true
-                    completion(true)
-                }
-            }
+            completion(false)
+            return
         }
-    }
-    
-    func register(email: String, password: String, fullName: String, birthDate: Date, location: String, description: String?, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
-        loadingState = .loading
-        
-        Task {
-            do {
-                let authResult = try await firebaseManager.auth.createUser(withEmail: email, password: password)
-                let userID = authResult.user.uid
-                print("User with email '\(email)' is registered with id '\(userID)'")
-                
-                var profilePicUrl: String? = nil
-                if let image = profileImage {
-                    profilePicUrl = await uploadProfilePicture(image, for: userID)
-                }
-                
-                await createUser(withId: userID, email: email, fullName: fullName, birthDate: birthDate, location: location, description: description, latitude: latitude, longitude: longitude, profilePicUrl: profilePicUrl)
-                loadingState = .loaded
-                await checkAuth()
-                
+
+        // Sign out any existing session before login
+        try? Auth.auth().signOut()
+
+        firebaseManager.auth.signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error as NSError? {
                 DispatchQueue.main.async {
-                    self.showToast = true
-                    self.toastMessage = "Registration completed successfully"
-                    self.isToastSuccess = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    switch error.code {
+                    case AuthErrorCode.invalidEmail.rawValue:
+                        self.alertMessage = "Invalid email format. Please enter a valid email."
+                    case AuthErrorCode.wrongPassword.rawValue:
+                        self.alertMessage = "Incorrect password. Please try again."
+                    case AuthErrorCode.userNotFound.rawValue:
+                        self.alertMessage = "No account found with this email."
+                    case AuthErrorCode.userDisabled.rawValue:
+                        self.alertMessage = "This account has been disabled. Please contact support."
+                    default:
+                        self.alertMessage = "Login failed. Please check your credentials."
+                    }
+                    self.showAlert = true
+                }
+                completion(false)
+                return
+            }
+
+            guard let user = authResult?.user else {
+                completion(false)
+                return
+            }
+
+            // Prevent unverified users from accessing the system
+            if !user.isEmailVerified {
+                DispatchQueue.main.async {
+                    self.alertMessage = "Please verify your email before logging in."
+                    self.showAlert = true
+                }
+                try? Auth.auth().signOut()
+                completion(false)
+                return
+            }
+
+            Task {
+                do {
+                    await self.fetchUserData(with: user.uid)
+                    DispatchQueue.main.async {
+                        self.showToast = true
+                        self.toastMessage = "Successfully logged in"
+                        self.isToastSuccess = true
                         completion(true)
                     }
-                }
-            } catch {
-                print("Registration failed:", error.localizedDescription)
-                loadingState = .error(error)
-                
-                DispatchQueue.main.async {
-                    self.showAlert = true
-                    self.alertMessage = "Registration failed: \(error.localizedDescription)"
+                } catch {
+                    DispatchQueue.main.async {
+                        self.alertMessage = "Error loading user data."
+                        self.showAlert = true
+                    }
                     completion(false)
                 }
             }
         }
     }
+
+
+
+    
+    func register(email: String, password: String, fullName: String, birthDate: Date, location: String, description: String?, latitude: Double?, longitude: Double?, profileImage: UIImage?, completion: @escaping (Bool) -> Void) {
+        loadingState = .loading
+
+        Task {
+            do {
+                let authResult = try await firebaseManager.auth.createUser(withEmail: email, password: password)
+                let userID = authResult.user.uid
+
+                // Send email verification
+                try await authResult.user.sendEmailVerification()
+
+                var profilePicUrl: String? = nil
+                if let image = profileImage {
+                    profilePicUrl = await uploadProfilePicture(image, for: userID)
+                }
+
+                await createUser(withId: userID, email: email, fullName: fullName, birthDate: birthDate, location: location, description: description, latitude: latitude, longitude: longitude, profilePicUrl: profilePicUrl)
+
+                loadingState = .loaded
+                await checkAuth()
+
+                DispatchQueue.main.async {
+                    self.showToast = true
+                    self.toastMessage = "Registration successful! Please verify your email."
+                    self.isToastSuccess = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        completion(true)
+                    }
+                }
+            } catch let error as NSError {
+                loadingState = .error(error)
+
+                DispatchQueue.main.async {
+                    switch error.code {
+                    case AuthErrorCode.emailAlreadyInUse.rawValue:
+                        self.alertMessage = "This email is already registered."
+                    case AuthErrorCode.invalidEmail.rawValue:
+                        self.alertMessage = "Invalid email format. Please enter a valid email."
+                    case AuthErrorCode.weakPassword.rawValue:
+                        self.alertMessage = "Password is too weak. Please follow the password guidelines."
+                    default:
+                        self.alertMessage = "Registration failed. Please try again."
+                    }
+                    self.showAlert = true
+                }
+                completion(false)
+            }
+        }
+    }
+
+
+
     
     
     
@@ -530,4 +696,21 @@ class AuthViewModel: ObservableObject {
         self.toastMessage = ""
         self.isToastSuccess = false
     }
+    
+    private func batchDelete(collection: String, field: String, value: String) async throws {
+        let batch = firebaseManager.database.batch()
+        
+        let querySnapshot = try await firebaseManager.database
+            .collection(collection)
+            .whereField(field, isEqualTo: value)
+            .getDocuments()
+        
+        for document in querySnapshot.documents {
+            batch.deleteDocument(document.reference)
+        }
+        
+        try await batch.commit()
+        print("Batch deletion completed for \(collection).")
+    }
+
 }

@@ -124,7 +124,7 @@ class PostsViewModel: ObservableObject {
             self.showToast = true
             return
         }
-
+        
         let categoryStrings = selectedCategories.map { $0 }
         let newPost = Post(
             userId: userId,
@@ -139,7 +139,7 @@ class PostsViewModel: ObservableObject {
             longitude: longitude,
             postLocation: postLocation
         )
-
+        
         do {
             try await repo.createPost(post: newPost)
             self.updateSuccess = true
@@ -152,7 +152,7 @@ class PostsViewModel: ObservableObject {
         }
         self.showToast = true
     }
-
+    
     
     func getSelectedPost(with id: String) async {
         await repo.fetchSelectedPost(with: id)
@@ -245,9 +245,9 @@ class PostsViewModel: ObservableObject {
             self.showToast = true
             return
         }
-
+        
         var updatedFields: [String: Any] = [:]
-
+        
         if let type = type { updatedFields["type"] = type }
         if let title = title { updatedFields["title"] = title }
         if let description = description { updatedFields["description"] = description }
@@ -257,10 +257,10 @@ class PostsViewModel: ObservableObject {
         if let latitude = latitude { updatedFields["latitude"] = latitude }
         if let longitude = longitude { updatedFields["longitude"] = longitude }
         if let postLocation = postLocation { updatedFields["postLocation"] = postLocation }
-
+        
         do {
             try await repo.updatePost(postId: postId, updatedFields: updatedFields)
-
+            
             // Update local state
             selectedPost?.type = type ?? selectedPost?.type ?? ""
             selectedPost?.title = title ?? selectedPost?.title ?? ""
@@ -271,12 +271,12 @@ class PostsViewModel: ObservableObject {
             selectedPost?.latitude = latitude ?? selectedPost?.latitude
             selectedPost?.longitude = longitude ?? selectedPost?.longitude
             selectedPost?.postLocation = postLocation ?? selectedPost?.postLocation ?? ""
-
+            
             // Update the post in allPosts
             if let index = allPosts.firstIndex(where: { $0.id == postId }) {
                 allPosts[index] = selectedPost!
             }
-
+            
             self.updateSuccess = true
             self.toastMessage = "Post updated successfully!"
             self.isToastSuccess = true
@@ -285,14 +285,14 @@ class PostsViewModel: ObservableObject {
             self.toastMessage = "Error updating post: \(error.localizedDescription)"
             self.isToastSuccess = false
         }
-
+        
         self.showToast = true
     }
     
     func addRandomPosts(postsList: [Post]){
         for post in postsList {
             Task {
-              await createPost(
+                await createPost(
                     type: post.type,
                     title: post.title,
                     description: post.description,
@@ -305,8 +305,8 @@ class PostsViewModel: ObservableObject {
                 )
             }
         }
-      }
-
+    }
+    
     
 }
 

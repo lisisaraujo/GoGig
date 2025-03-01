@@ -103,6 +103,10 @@
 		A7A8B7A52CF9DA0100A14226 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A7A8B7A42CF9DA0100A14226 /* FirebaseStorageCombine-Community */; };
 		A7A8B7A72CF9DA0100A14226 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = A7A8B7A62CF9DA0100A14226 /* FirebaseVertexAI */; };
 		A7B43CAC2CF9CDC800C66B7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */; };
+		A7B950882D739E4E0051F830 /* InitialRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B950872D739E4E0051F830 /* InitialRegistrationView.swift */; };
+		A7B9508A2D73A8AD0051F830 /* PasswordStrength.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B950892D73A8AD0051F830 /* PasswordStrength.swift */; };
+		A7B9508C2D73A9320051F830 /* RequirementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B9508B2D73A9320051F830 /* RequirementView.swift */; };
+		A7B9508E2D73AB680051F830 /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B9508D2D73AB680051F830 /* PasswordInputView.swift */; };
 		A7D06F662D0090DE00EAB852 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */; };
 		A7D06F682D01A4A400EAB852 /* Genesys.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7D06F672D01A4A400EAB852 /* Genesys.ttf */; };
 		A7D06F6B2D01B4E800EAB852 /* BackgroundSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */; };
@@ -189,6 +193,10 @@
 		A79945B42CD27A9800F4AF89 /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
 		A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateEnum.swift; sourceTree = "<group>"; };
 		A7B43CAB2CF9CDC800C66B7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A7B950872D739E4E0051F830 /* InitialRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialRegistrationView.swift; sourceTree = "<group>"; };
+		A7B950892D73A8AD0051F830 /* PasswordStrength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrength.swift; sourceTree = "<group>"; };
+		A7B9508B2D73A9320051F830 /* RequirementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementView.swift; sourceTree = "<group>"; };
+		A7B9508D2D73AB680051F830 /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		A7D06F672D01A4A400EAB852 /* Genesys.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Genesys.ttf; path = "../../../../../../Downloads/Genesys 2/Genesys.ttf"; sourceTree = "<group>"; };
 		A7D06F692D01A6B100EAB852 /* GoGig--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoGig--Info.plist"; sourceTree = "<group>"; };
@@ -449,6 +457,7 @@
 				A79945B62CD27C7300F4AF89 /* LoadingStateEnum.swift */,
 				A741751D2CE4DF98007DA925 /* RequestStatus.swift */,
 				A74175462CE75439007DA925 /* InboxEnum.swift */,
+				A7B950892D73A8AD0051F830 /* PasswordStrength.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -468,6 +477,7 @@
 				A79945942CD1017300F4AF89 /* LoginOrRegisterView.swift */,
 				A799455E2CD0110500F4AF89 /* LoginView.swift */,
 				A79945602CD0110F00F4AF89 /* RegistrationView.swift */,
+				A7B950872D739E4E0051F830 /* InitialRegistrationView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -502,6 +512,7 @@
 				A7D1F03C2CFC943800A6800A /* ToastView.swift */,
 				A7D06F652D0090DE00EAB852 /* LoadingOverlay.swift */,
 				A7D06F6A2D01B4E800EAB852 /* BackgroundSplashScreen.swift */,
+				A7B9508B2D73A9320051F830 /* RequirementView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -514,6 +525,7 @@
 				A78AD7F02CD513A50074EB6E /* CustomTextEditorView.swift */,
 				A74175422CE61886007DA925 /* Buttons.swift */,
 				A79850E62CFF5A2F00E9CB79 /* DateFormatter.swift */,
+				A7B9508D2D73AB680051F830 /* PasswordInputView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -664,11 +676,14 @@
 				A78AD7F12CD513A50074EB6E /* CustomTextEditorView.swift in Sources */,
 				A74174F12CD9196C007DA925 /* AutocompleteControllerView.swift in Sources */,
 				A74175202CE4E19E007DA925 /* RequestsViewModel.swift in Sources */,
+				A7B9508E2D73AB680051F830 /* PasswordInputView.swift in Sources */,
 				A799458F2CD0D7DF00F4AF89 /* FirebaseManager.swift in Sources */,
 				A79945652CD0116800F4AF89 /* HomeView.swift in Sources */,
+				A7B9508A2D73A8AD0051F830 /* PasswordStrength.swift in Sources */,
 				A74175302CE4FFE4007DA925 /* ReviewsScrollView.swift in Sources */,
 				A74175292CE4F5C9007DA925 /* RequestDetailsView.swift in Sources */,
 				A79945B12CD124A100F4AF89 /* DataErrorEnum.swift in Sources */,
+				A7B9508C2D73A9320051F830 /* RequirementView.swift in Sources */,
 				A79945952CD1017300F4AF89 /* LoginOrRegisterView.swift in Sources */,
 				A79945812CD012C000F4AF89 /* Review.swift in Sources */,
 				A74175472CE75439007DA925 /* InboxEnum.swift in Sources */,
@@ -698,6 +713,7 @@
 				A79945752CD0125700F4AF89 /* UserDetailsView.swift in Sources */,
 				A741752C2CE4FA42007DA925 /* AddRatingView.swift in Sources */,
 				A74174FC2CE1078C007DA925 /* MenuView.swift in Sources */,
+				A7B950882D739E4E0051F830 /* InitialRegistrationView.swift in Sources */,
 				A79945A62CD11F0700F4AF89 /* PersonalTabView.swift in Sources */,
 				A799455F2CD0110500F4AF89 /* LoginView.swift in Sources */,
 				A741754B2CE78095007DA925 /* RequestListItemView.swift in Sources */,

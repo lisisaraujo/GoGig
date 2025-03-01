@@ -37,7 +37,7 @@ struct LoginOrRegisterView: View {
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                         }
                         
-                        NavigationLink(destination: RegistrationView().environmentObject(authViewModel)) {
+                        NavigationLink(destination: InitialRegistrationView().environmentObject(authViewModel)) {
                             Text("Register")
                                 .foregroundColor(.textPrimary)
                                 .padding()

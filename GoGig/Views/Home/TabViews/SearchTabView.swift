@@ -69,17 +69,17 @@ struct SearchTabView: View {
                                 PostsListView(posts: postsViewModel.filteredPosts, text: $text) .environmentObject(postsViewModel)
                                     .environmentObject(authViewModel)
                                 
-                                //                        List(postsViewModel.filteredPosts) { post in
-                                //
-                                //                            NavigationLink(destination: PostDetailsView(postId: post.id!)) {
-                                //                                PostItemView(post: post)
-                                //
-                                //                            }.listRowBackground(Color.clear)
-                                //                        }
-                                //
-                                //                        .scrollContentBackground(.hidden)
-                                //                        .background(Color.clear)
-                                //                        .listStyle(.plain)
+                                                        List(postsViewModel.filteredPosts) { post in
+                                
+                                                        NavigationLink(destination: PostDetailsView(postId: post.id!)) {
+                                                            PostItemView(post: post)
+                            
+                                                           }.listRowBackground(Color.clear)
+                                                       }
+                            
+                                                       .scrollContentBackground(.hidden)
+                                                       .background(Color.clear)
+                                                    .listStyle(.plain)
                             }
                           
                         }

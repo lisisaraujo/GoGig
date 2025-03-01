@@ -23,6 +23,7 @@ class FirebaseManager {
     let reviewsCollectionName = "reviews"
     let requestsCollectionName = "requests"
     let profilePicStorageRef = "profile_pictures"
+    let failedSignupsCollectionName = "failed_signups"
     
     var userId: String? {
         auth.currentUser?.uid
